@@ -22,7 +22,7 @@ export const cc_data = writable({
 		supplies: ''
 	},
 	transportation: {
-		has_car: 'no',
+		has_car: 'No',
 		other_transport: ''
 	},
 	personal_expenses: {

@@ -1,54 +1,53 @@
 <script>
-	export let steps = [], currentActive = 1;
+	export let steps = [],
+		currentActive = 1;
 	let circles, progress;
-	
+
 	export const handleProgress = (stepIncrement) => {
 		circles = document.querySelectorAll('.circle');
-		if(stepIncrement == 1){
-			currentActive++
+		if (stepIncrement == 1) {
+			currentActive++;
 
-			if(currentActive > circles.length) {
-					currentActive = circles.length
+			if (currentActive > circles.length) {
+				currentActive = circles.length;
 			}
 		} else {
-			currentActive--
+			currentActive--;
 
-			if(currentActive < 1) {
-					currentActive = 1 
+			if (currentActive < 1) {
+				currentActive = 1;
 			}
 		}
-        update()
-	}
+		update();
+	};
 
 	const goToProgress = (step) => {
 		currentActive = step;
-		update()
-	}
-	
+		update();
+	};
+
 	function update() {
-    circles.forEach((circle, idx) => {
-        if(idx < currentActive) {
-            circle.classList.add('active')
-        } else {
-            circle.classList.remove('active')
-        }
-    })
+		circles.forEach((circle, idx) => {
+			if (idx < currentActive) {
+				circle.classList.add('active');
+			} else {
+				circle.classList.remove('active');
+			}
+		});
 
-    const actives = document.querySelectorAll('.active');
+		const actives = document.querySelectorAll('.active');
 
-    progress.style.width = (actives.length - 1) / (circles.length - 1) * 100 + '%';
+		progress.style.width = ((actives.length - 1) / (circles.length - 1)) * 100 + '%';
 	}
-	
 </script>
 
 <div class="progress-container" bind:this={circles}>
-	<div class="progress" bind:this={progress}></div>
+	<div class="progress" bind:this={progress} />
 	{#each steps as step, i}
-	<!-- svelte-ignore a11y-click-events-have-key-events -->
-	<div class="circle {i == 0 ? 'active' : ''}" data-title={step}>{i+1}</div>
+		<!-- svelte-ignore a11y-click-events-have-key-events -->
+		<div class="circle {i == 0 ? 'active' : ''}" data-title={step}>{i + 1}</div>
 	{/each}
 </div>
-
 
 <style>
 	.progress-container {
@@ -86,7 +85,7 @@
 
 	.circle {
 		background-color: #fff;
-		color: #999;
+		color: rgb(20, 20, 20);
 		border-radius: 50%;
 		height: 30px;
 		width: 30px;
@@ -97,20 +96,20 @@
 		transition: 0.4s ease;
 		cursor: pointer;
 	}
-	
-	.circle::after{
-		content: attr(data-title) " ";
+
+	.circle::after {
+		content: attr(data-title) ' ';
 		position: absolute;
 		bottom: 35px;
 		color: #999;
 		transition: 0.4s ease;
 	}
-	
+
 	.circle.active::after {
-		color: #3498db;
+		color: #006747;
 	}
 
 	.circle.active {
-		border-color: #3498db;
+		border-color: #006747;
 	}
 </style>
