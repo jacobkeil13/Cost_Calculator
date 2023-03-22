@@ -1,5 +1,38 @@
 import { writable } from 'svelte/store';
 
+export const dropdownOptions = writable(
+	{
+		student_information: {
+			level: [
+				{ value: "graduate", label: "Graduate" },
+				{ value: "undergraduate", label: "Undergraduate" },
+			],
+			tuition: [
+				{ value: "in-state", label: "In-State" },
+				{ value: "out-of-state", label: "Out-Of-State" },
+			],
+			semester: [
+				{ value: "spring", label: "Spring" },
+				{ value: "fall", label: "Fall" },
+				{ value: "summer-a", label: "Summer A" },
+				{ value: "summer-b", label: "Summer B" },
+				{ value: "summer-ab", label: "Summer AB" },
+				{ value: "summer-c", label: "Summer C" },
+			]
+		},
+		housing_food: {
+			living: [
+				{ value: "on-campus", label: "On-Campus" },
+				{ value: "off-campus-parents", label: "Off-Campus with parents/family" },
+				{ value: "off-campus-alone", label: "Off-Campus without parents/family" },
+			],
+			housing: [
+
+			]
+		}
+	}
+);
+
 export const cc_data = writable({
 	student_information: {
 		level: '',
@@ -12,9 +45,24 @@ export const cc_data = writable({
 		other_fees: ''
 	},
 	housing_food: {
-		living: '',
-		housing: '',
-		llc: '',
+		living: {
+			on_campus: {
+				housing: '',
+				llc: '',
+			},
+			off_campus_parents: {
+				utility_fees: ''
+			},
+			off_campus_alone: {
+				rent: '',
+				electric: '',
+				water: '',
+				natural_gas: '',
+				internet: '',
+				cable: '',
+				phone: '',
+			}
+		},
 		food_plan: ''
 	},
 	books_supplies: {
@@ -22,7 +70,13 @@ export const cc_data = writable({
 		supplies: ''
 	},
 	transportation: {
-		has_car: 'No',
+		vehicle: {
+			has_vehicle: 'No',
+			car_payment: '',
+			insurance: '',
+			gas: '',
+			maintenance: '',
+		},
 		other_transport: ''
 	},
 	personal_expenses: {
@@ -43,6 +97,11 @@ export const cc_data = writable({
 		laundry: ''
 	},
 	funding: {
+		fl_prepaid: {
+			has_fl_prepaid: 'No',
+			when_purchased: '',
+			prepaid_plan: ''
+		},
 		grants: '',
 		scholarships: '',
 		loans: '',
@@ -51,7 +110,7 @@ export const cc_data = writable({
 			hourly_wage: '',
 			hours_per_week: ''
 		},
-		job_1: {
+		job_2: {
 			hourly_wage: '',
 			hours_per_week: ''
 		},

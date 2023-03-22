@@ -1,7 +1,7 @@
 <script>
 	export let steps = [],
 		currentActive = 1;
-	let circles, progress;
+	let circles, progress, windowX;
 
 	export const handleProgress = (stepIncrement) => {
 		circles = document.querySelectorAll('.circle');
@@ -21,11 +21,6 @@
 		update();
 	};
 
-	const goToProgress = (step) => {
-		currentActive = step;
-		update();
-	};
-
 	function update() {
 		circles.forEach((circle, idx) => {
 			if (idx < currentActive) {
@@ -41,13 +36,24 @@
 	}
 </script>
 
-<div class="progress-container" bind:this={circles}>
-	<div class="progress" bind:this={progress} />
-	{#each steps as step, i}
-		<!-- svelte-ignore a11y-click-events-have-key-events -->
-		<div class="circle {i == 0 ? 'active' : ''}" data-title={step}>{i + 1}</div>
-	{/each}
-</div>
+<svelte:window bind:outerWidth={windowX} />
+
+{#if windowX >= 880}
+	<div class="progress-container" bind:this={circles}>
+		<div class="progress" bind:this={progress} />
+		{#each steps as step, i}
+			<!-- svelte-ignore a11y-click-events-have-key-events -->
+			<div class="circle {i == 0 ? 'active' : ''}" data-title={step}>{i + 1}</div>
+		{/each}
+	</div>
+{/if}
+
+{#if windowX < 880}
+	<div class="flex flex-col justify-center items-center mt-4">
+		<h1 class="text-xl">{steps[currentActive]}</h1>
+		<h1><b>{currentActive + 1}</b> of <b>{steps.length}</b></h1>
+	</div>
+{/if}
 
 <style>
 	.progress-container {
@@ -57,6 +63,7 @@
 		margin-bottom: 30px;
 		max-width: 100%;
 		width: 800px;
+		margin-top: 3rem;
 	}
 
 	.progress-container::before {

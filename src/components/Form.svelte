@@ -1,45 +1,61 @@
 <script>
+	import { cc_data, dropdownOptions } from '../store.js';
 	import InputField from './InputField.svelte';
 	import SelectionField from './SelectionField.svelte';
+	import RangeField from './RangeField.svelte';
 	export let active_step;
 
 	const handleSubmit = () => {
-		console.log('Your form data => ', formData);
+		// console.log('Your form data => ', formData);
 	};
 </script>
 
 <form class="form-container" on:submit={handleSubmit}>
-	{#if active_step == 'Student Info'}
+	{#if active_step == 'Student'}
 		<SelectionField
-			value="level"
 			label="Level"
-			name="level"
-			options={['Undergraduate', 'Graduate']}
+			options={$dropdownOptions.student_information.level}
+			bind:value={$cc_data.student_information.level}
 		/>
 		<SelectionField
-			value="tuition"
 			label="Tuition"
-			name="tuition"
-			options={['In-State', 'Out-Of-State / International']}
+			options={$dropdownOptions.student_information.tuition}
+			bind:value={$cc_data.student_information.tuition}
 		/>
 		<SelectionField
-			value="semester"
 			label="Semester"
-			name="semester"
-			options={['Fall', 'Spring', 'Summer A', 'Summer AB', 'Summer C']}
+			options={$dropdownOptions.student_information.semester}
+			bind:value={$cc_data.student_information.semester}
 		/>
-	{:else if active_step == 'Address'}
-		<!-- <InputField label={'Address'} bind:value={formData.address} />
-		<InputField label={'City'} bind:value={formData.city} />
-		<InputField label={'Country'} bind:value={formData.country} />
-		<InputField label={'Postcode'} bind:value={formData.postcode} /> -->
-	{:else if active_step == 'Payment'}
-		<!-- <InputField label={'Account Name'} bind:value={formData.account_name} />
-		<InputField label={'Card No'} bind:value={formData.card_no} /> -->
-	{:else if active_step == 'Confirmation'}
+	{:else if active_step == 'Tuition & Fees'}
+		<RangeField label="Credit Hours" bind:value={$cc_data.tuition_fees.credit_hours} />
+		<InputField label="Lab Fees" type="text" bind:value={$cc_data.tuition_fees.lab_fees} />
+		<InputField label="Other Fees" type="text" bind:value={$cc_data.tuition_fees.other_fees} />
+	{:else if active_step == 'Housing & Food'}
+		<SelectionField
+			label="Where do you plan on living?"
+			options={$dropdownOptions.student_information.level}
+			bind:value={$cc_data.student_information.level}
+		/>
+		<SelectionField
+			label="Housing"
+			options={$dropdownOptions.student_information.tuition}
+			bind:value={$cc_data.student_information.tuition}
+		/>
+		<SelectionField
+			label="Living Learning Community"
+			options={$dropdownOptions.student_information.semester}
+			bind:value={$cc_data.student_information.semester}
+		/>
+		<SelectionField
+			label="Food Plan"
+			options={$dropdownOptions.student_information.semester}
+			bind:value={$cc_data.student_information.semester}
+		/>
+	{:else if active_step == 'Review'}
 		<div class="message">
 			<h2>Thank you for choosing us</h2>
-			<button class="btn submit">Finish </button>
+			<button class="btn submit">Finish</button>
 		</div>
 	{/if}
 </form>

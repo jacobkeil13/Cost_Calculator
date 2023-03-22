@@ -1,31 +1,48 @@
 <script>
 	import Form from '../components/Form.svelte';
 	import ProgressBar from '../components/ProgressBar.svelte';
-	let steps = ['Student Info', 'Tuition & Fees', 'Housing & Food', 'Books & supplies', 'Transportation', "Personal", "Review"], currentActive = 1, progressBar;
-	
+	import { cc_data } from '../store.js';
+	let steps = [
+			'Student',
+			'Tuition & Fees',
+			'Housing & Food',
+			'Books & supplies',
+			'Transportation',
+			'Personal',
+			'Review'
+		],
+		currentActive = 1,
+		progressBar;
+
 	const handleProgress = (stepIncrement) => {
-		progressBar.handleProgress(stepIncrement)
-	}
-	
+		progressBar.handleProgress(stepIncrement);
+	};
+
+	$: console.log($cc_data);
 </script>
 
 <main>
-	<div class="mt-16">
-		<ProgressBar {steps} bind:currentActive bind:this={progressBar}/>
-        <div class="step-button">
-			<button class="btn" on:click={() => handleProgress(-1)} disabled={currentActive == 1}>Prev</button>
-			<button class="btn" on:click={() => handleProgress(+1)} disabled={currentActive == steps.length}>Next</button>
-		</div>		
+	<div>
+		<ProgressBar {steps} bind:currentActive bind:this={progressBar} />
+		<div class="step-button">
+			<button class="btn" on:click={() => handleProgress(-1)} disabled={currentActive == 1}
+				>Back</button
+			>
+			<button
+				class="btn"
+				on:click={() => handleProgress(+1)}
+				disabled={currentActive == steps.length}>Next</button
+			>
+		</div>
 		<div class="flex justify-center mx-auto px-6">
-            <Form active_step={steps[currentActive-1]}/>
-        </div>
-	</div>	  
+			<Form active_step={steps[currentActive - 1]} />
+		</div>
+	</div>
 </main>
 
 <style>
-
 	@import url('https://fonts.googleapis.com/css?family=Muli&display=swap');
-	
+
 	* {
 		box-sizing: border-box;
 	}
@@ -63,8 +80,8 @@
 		background-color: #e0e0e0;
 		cursor: not-allowed;
 	}
-	
-	.step-button{
+
+	.step-button {
 		margin-top: 1rem;
 		text-align: center;
 	}
