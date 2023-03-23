@@ -1,37 +1,45 @@
 import { writable } from 'svelte/store';
 
-export const dropdownOptions = writable(
-	{
-		student_information: {
-			level: [
-				{ value: "graduate", label: "Graduate" },
-				{ value: "undergraduate", label: "Undergraduate" },
-			],
-			tuition: [
-				{ value: "in-state", label: "In-State" },
-				{ value: "out-of-state", label: "Out-Of-State" },
-			],
-			semester: [
-				{ value: "spring", label: "Spring" },
-				{ value: "fall", label: "Fall" },
-				{ value: "summer-a", label: "Summer A" },
-				{ value: "summer-b", label: "Summer B" },
-				{ value: "summer-ab", label: "Summer AB" },
-				{ value: "summer-c", label: "Summer C" },
-			]
-		},
-		housing_food: {
-			living: [
-				{ value: "on-campus", label: "On-Campus" },
-				{ value: "off-campus-parents", label: "Off-Campus with parents/family" },
-				{ value: "off-campus-alone", label: "Off-Campus without parents/family" },
-			],
-			housing: [
+export const current_slide = writable(0);
 
-			]
-		}
+export const steps = writable([
+	'Student',
+	'Tuition & Fees',
+	'Housing & Food',
+	'Books & supplies',
+	'Transportation',
+	'Personal',
+	'Review'
+]);
+
+export const dropdownOptions = writable({
+	student_information: {
+		level: [
+			{ value: 'graduate', label: 'Graduate' },
+			{ value: 'undergraduate', label: 'Undergraduate' }
+		],
+		tuition: [
+			{ value: 'in-state', label: 'In-State' },
+			{ value: 'out-of-state', label: 'Out-Of-State' }
+		],
+		semester: [
+			{ value: 'spring', label: 'Spring' },
+			{ value: 'fall', label: 'Fall' },
+			{ value: 'summer-a', label: 'Summer A' },
+			{ value: 'summer-b', label: 'Summer B' },
+			{ value: 'summer-ab', label: 'Summer AB' },
+			{ value: 'summer-c', label: 'Summer C' }
+		]
+	},
+	housing_food: {
+		living: [
+			{ value: 'on-campus', label: 'On-Campus' },
+			{ value: 'off-campus-parents', label: 'Off-Campus with parents/family' },
+			{ value: 'off-campus-alone', label: 'Off-Campus without parents/family' }
+		],
+		housing: []
 	}
-);
+});
 
 export const cc_data = writable({
 	student_information: {
@@ -48,7 +56,7 @@ export const cc_data = writable({
 		living: {
 			on_campus: {
 				housing: '',
-				llc: '',
+				llc: ''
 			},
 			off_campus_parents: {
 				utility_fees: ''
@@ -60,7 +68,7 @@ export const cc_data = writable({
 				natural_gas: '',
 				internet: '',
 				cable: '',
-				phone: '',
+				phone: ''
 			}
 		},
 		food_plan: ''
@@ -75,7 +83,7 @@ export const cc_data = writable({
 			car_payment: '',
 			insurance: '',
 			gas: '',
-			maintenance: '',
+			maintenance: ''
 		},
 		other_transport: ''
 	},
