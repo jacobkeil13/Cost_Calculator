@@ -1,29 +1,27 @@
 <script>
-	import { onMount } from 'svelte';
-
 	export let label,
 		value,
 		options = [];
 </script>
 
-<p class="form-control">
+<div class="form-control">
 	{#if label}
-		<label class="label pr-4 font-semibold text-left" for>{label}:</label>
+		<label class="pr-4 font-semibold text-center" for>{label}:</label>
 	{/if}
 	<select bind:value>
 		<option value="nothing" selected disabled>Select one</option>
 		{#each options as option}
-			<option value={option.value}>{option.label}</option>
+			<option class="active:bg-white" value={option.value}>{option.label}</option>
 		{/each}
 	</select>
-</p>
+</div>
 
 <style>
 	.form-control {
 		width: 100%;
 		margin: 0.5rem 0;
 		display: grid;
-		grid-template-columns: max-content auto;
+		grid-template-columns: 100px auto;
 	}
 
 	select {

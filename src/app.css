@@ -10,3 +10,11 @@
 	box-sizing: border-box;
 	font-family: 'Barlow Condensed', sans-serif;
 }
+
+select:focus {
+	outline: none;
+}
+
+option:checked {
+	background-color: none;
+}
