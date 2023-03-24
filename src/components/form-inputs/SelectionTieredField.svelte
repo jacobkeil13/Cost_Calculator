@@ -1,7 +1,9 @@
 <script>
 	export let label,
 		value,
-		options = [];
+		options = {};
+
+	let styles = Object.keys(options);
 </script>
 
 <div class="form-control">
@@ -10,8 +12,12 @@
 	{/if}
 	<select bind:value>
 		<option value="nothing" selected disabled>Select one</option>
-		{#each options as option}
-			<option class="active:bg-white" value={option.value}>{option.label}</option>
+		{#each styles as style}
+			<optgroup label={style.charAt(0).toUpperCase() + style.slice(1)}>
+				{#each options[style] as option}
+					<option class="active:bg-white" value={option.value}>{option.label}</option>
+				{/each}
+			</optgroup>
 		{/each}
 	</select>
 </div>

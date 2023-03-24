@@ -1,9 +1,9 @@
 <script>
-	export let label, value, min, max, step;
+	export let label, value, min, max, step, concurrency;
 
 	function handleInput(e) {
-		if (parseInt(e.target.value) > parseInt(max)) {
-			value = max;
+		if (parseInt(e.target.value) === null || parseInt(e.target.value) < parseInt(min)) {
+			value = min;
 		}
 	}
 </script>
@@ -14,16 +14,22 @@
 	{/if}
 	<div class="flex space-x-2">
 		<input type="range" {min} {max} {step} bind:value class="slider" />
-		<input
-			on:input={handleInput}
-			type="number"
-			name="value"
-			{min}
-			{max}
-			{step}
-			bind:value
-			class="border-green-900 border-b-2 px-1 bg-transparent w-[80px] text-xl font-medium"
-		/>
+		<div class="flex flex-col w-[80px]">
+			<div class="flex">
+				<label for="value" class="text-xl">$</label>
+				<input
+					on:input={handleInput}
+					type="number"
+					name="value"
+					{min}
+					{max}
+					{step}
+					bind:value
+					class="border-green-900 border-b-2 px-1 bg-transparent text-xl font-medium"
+				/>
+			</div>
+			<p class="text-sm">{concurrency}</p>
+		</div>
 	</div>
 </div>
 
@@ -37,7 +43,7 @@
 		-webkit-appearance: none;
 		width: 100%;
 		height: 0.6rem;
-		border-radius: 2px;
+		border-radius: 10px;
 		background-color: #00674681;
 		-webkit-transition: 0.2s;
 		transition: opacity 0.2s;
@@ -65,5 +71,9 @@
 		background: #006747;
 		cursor: pointer;
 		border-radius: 3px;
+	}
+
+	input[type='number']:focus {
+		outline: none;
 	}
 </style>
