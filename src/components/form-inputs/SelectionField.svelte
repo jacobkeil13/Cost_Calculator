@@ -6,7 +6,7 @@
 
 <div class="form-control">
 	{#if label}
-		<label class="pr-4 font-semibold text-center" for>{label}:</label>
+		<label class="pr-4 font-semibold text-left" for>{label}:</label>
 	{/if}
 	<select bind:value>
 		<option value="nothing" selected disabled>Select one</option>

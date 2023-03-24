@@ -1,12 +1,16 @@
 <script>
-	// import { cc_data, dropdownOptions } from '../store.js';
-	// import InputField from './form-inputs/InputField.svelte';
-	// import SelectionField from './form-inputs/SelectionField.svelte';
-	// import RangeField from './form-inputs/RangeField.svelte';
+	import { steps, current_step } from '../store.js';
 	import StudentInfo from './form-sections/StudentInfo.svelte';
-	// export let active_step;
+	import FormControls from './FormControls.svelte';
+
+	let step_name = $steps[$current_step];
+	$: console.log();
 </script>
 
-<div class="w-full pt-8">
+<div class="w-full">
+	<div class="py-4 text-2xl">
+		<h1>{step_name}</h1>
+	</div>
 	<StudentInfo />
+	<FormControls />
 </div>

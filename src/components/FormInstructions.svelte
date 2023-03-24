@@ -6,7 +6,7 @@
 	};
 </script>
 
-<div class="grid grid-cols-[1fr_auto] text-md p-3 rounded-md text-white bg-[#006746d3]">
+<div class="grid grid-cols-[1fr_auto] text-md p-3 rounded-sm text-white bg-[#006746d3]">
 	{#if info_is_open}
 		<p>
 			Use our Cost Calculator to get an estimate of your college expenses. It will take about 10
