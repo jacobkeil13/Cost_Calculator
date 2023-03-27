@@ -60,10 +60,11 @@
 	}
 
 	.slider::-moz-range-thumb {
+		border: none;
 		width: 1.25rem;
 		height: 1.25rem;
 		background: #006747;
 		cursor: pointer;
-		border-radius: 3px;
+		border-radius: 50%;
 	}
 </style>

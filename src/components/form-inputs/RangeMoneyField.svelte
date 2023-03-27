@@ -14,7 +14,7 @@
 	{/if}
 	<div class="flex space-x-2">
 		<input type="range" {min} {max} {step} bind:value class="slider" />
-		<div class="flex flex-col w-[80px]">
+		<div class="flex flex-col">
 			<div class="flex">
 				<label for="value" class="text-xl">$</label>
 				<input
@@ -69,8 +69,9 @@
 		width: 1.25rem;
 		height: 1.25rem;
 		background: #006747;
+		border: none;
 		cursor: pointer;
-		border-radius: 3px;
+		border-radius: 50%;
 	}
 
 	input[type='number']:focus {

@@ -1,68 +1,59 @@
 <script>
 	import { cc_data, dropdownOptions } from '../../store.js';
-	import RangeMoneyField from '../form-inputs/RangeMoneyField.svelte';
+	import { fly } from 'svelte/transition';
 	import SelectionField from '../form-inputs/SelectionField.svelte';
+	import RangeMoneyField from '../form-inputs/RangeMoneyField.svelte';
 
 	let funding = $dropdownOptions.funding;
-	let calc_data = $cc_data.transportation;
+	let calc_data = $cc_data.funding;
+
+	$: plans =
+		calc_data.fl_prepaid.when_purchased === 'before_date'
+			? funding.prepaid_plan_before
+			: funding.prepaid_plan_after;
 </script>
 
-<SelectionField
-	label="Are you bringing a vehicle to campus?"
-	options={funding.fl_prepaid}
-	bind:value={calc_data.vehicle.has_vehicle}
-/>
+<div in:fly={{ x: -10, duration: 500 }}>
+	<SelectionField
+		label="Do you have a Florida prepaid plan?"
+		options={funding.fl_prepaid}
+		bind:value={calc_data.fl_prepaid.has_fl_prepaid}
+	/>
 
-{#if calc_data.vehicle.has_vehicle === 'vehicle-yes'}
+	{#if calc_data.fl_prepaid.has_fl_prepaid === 'prepaid_yes'}
+		<SelectionField
+			label="When did you purchase your Florida prepaid plan?"
+			options={funding.prepaid_purchase}
+			bind:value={calc_data.fl_prepaid.when_purchased}
+		/>
+		<SelectionField
+			label="Which plan did you purchase?"
+			options={plans}
+			bind:value={calc_data.fl_prepaid.prepaid_plan}
+		/>
+	{/if}
+
+	<SelectionField
+		label="Do you qualify for the Bright Futures Award??"
+		options={funding.bright_futures}
+		bind:value={calc_data.bright_futures}
+	/>
+
 	<RangeMoneyField
-		label="How much is your parking pass?"
-		bind:value={calc_data.vehicle.parking_pass}
+		label="Do you have any grants?"
+		bind:value={calc_data.grants}
 		min="0"
-		max="500"
+		max="750"
 		step="5"
 		concurrency="per semester"
 	/>
-	<RangeMoneyField
-		label="How much is your car payment?"
-		bind:value={calc_data.vehicle.car_payment}
-		min="0"
-		max="750"
-		step="5"
-		concurrency="per month"
-	/>
-	<RangeMoneyField
-		label="How much is your car insurance?"
-		bind:value={calc_data.vehicle.insurance}
-		min="0"
-		max="750"
-		step="5"
-		concurrency="per month"
-	/>
-	<RangeMoneyField
-		label="How much do you spend on gas?"
-		bind:value={calc_data.vehicle.gas}
-		min="0"
-		max="300"
-		step="5"
-		concurrency="per month"
-	/>
-	<RangeMoneyField
-		label="How much are you spending on car maintenance?"
-		bind:value={calc_data.vehicle.maintenance}
-		min="0"
-		max="750"
-		step="5"
-		concurrency="per month"
-	/>
-{/if}
 
-{#if calc_data.vehicle.has_vehicle === 'vehicle-no'}
 	<RangeMoneyField
-		label="What other transportation do you have?"
-		bind:value={calc_data.other_transport}
+		label="Do you have any loans?"
+		bind:value={calc_data.loans}
 		min="0"
-		max="750"
-		step="5"
-		concurrency="per month"
+		max="5000"
+		step="100"
+		concurrency="per semester"
 	/>
-{/if}
+</div>

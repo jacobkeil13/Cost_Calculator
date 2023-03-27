@@ -1,6 +1,5 @@
 <script>
-	import { goto } from '$app/navigation';
-	import { steps, current_step } from '../store.js';
+	import { steps, current_step, cc_data } from '../store.js';
 	import BooksSupplies from './form-sections/BooksSupplies.svelte';
 	import Funding from './form-sections/Funding.svelte';
 	import HousingFood from './form-sections/HousingFood.svelte';
@@ -12,16 +11,15 @@
 	import FormControls from './FormControls.svelte';
 
 	$: step_name = $steps[$current_step];
-
-	function reset() {
-		goto('/');
+	$: {
+		console.log($cc_data);
 	}
 </script>
 
-<div class="w-full">
+<div id="form" class="w-full">
 	<div class="flex justify-between py-4">
 		<h1 class="text-2xl">{step_name}</h1>
-		<button class="px-2 py-1 bg-[#a71b26] text-white rounded-sm"><a href="/">Reset</a></button>
+		<button class="px-2 py-1 bg-[#a71b26] text-white rounded-sm">Reset</button>
 	</div>
 	{#if $current_step === $steps.indexOf('Student Information')}
 		<StudentInfo />

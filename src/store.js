@@ -1,8 +1,10 @@
 import { derived, writable } from 'svelte/store';
 
-
-
 export const current_step = writable(0);
+
+export const static_vars = writable({
+	credit_hour: 211.19
+});
 
 export const steps = writable([
 	'Student Information',
@@ -22,8 +24,8 @@ export const dropdownOptions = writable({
 			{ value: 'st_pete', label: 'St. Pete' }
 		],
 		level: [
-			{ value: 'graduate', label: 'Graduate' },
-			{ value: 'undergraduate', label: 'Undergraduate' }
+			{ value: 'undergraduate', label: 'Undergraduate' },
+			{ value: 'graduate', label: 'Graduate' }
 		],
 		tuition: [
 			{ value: 'in_state', label: 'In-State' },
@@ -46,13 +48,13 @@ export const dropdownOptions = writable({
 		],
 		housing: {
 			tampa: {
-				"Traditional": [
+				Traditional: [
 					{ value: 'beta_castor_hall', label: 'Beta Hall & Castor Hall (Double)', cost: '3070' },
 					{ value: 'greek_village', label: 'Greek Village', cost: '3070' },
 					{ value: 'village_single', label: 'The Village (Single)', cost: '4088' },
 					{ value: 'village_double', label: 'The Village (Double)', cost: '5538' }
 				],
-				"Suite": [
+				Suite: [
 					{
 						value: 'cjmph_double',
 						label: 'Cypress/Juniper/Maple/Poplar Hall (Double)',
@@ -67,7 +69,7 @@ export const dropdownOptions = writable({
 					{ value: 'village_suite_double', label: 'The Village (Double)', cost: '4963' },
 					{ value: 'village_suite_des', label: 'The Village (Double End Suite)', cost: '6158' }
 				],
-				"Apartment": [
+				Apartment: [
 					{ value: 'km_apartment', label: 'Kosove/Magnolia Apartments (Double)', cost: '4148' },
 					{
 						value: 'chkm_apartment',
@@ -78,16 +80,16 @@ export const dropdownOptions = writable({
 				]
 			},
 			st_pete: {
-				"Ibis Hall": [
+				'Ibis Hall': [
 					{ value: 'two_shared', label: '2 Person Shared Room', cost: '4505' },
 					{ value: 'three_shared', label: '3 Person Shared Room', cost: '2922' }
 				],
-				"Pelican": [
+				Pelican: [
 					{ value: 'four_apartment', label: '4 Person Apartment Style', cost: '4671' },
 					{ value: 'two_studio', label: '2 Person Studio Apartment', cost: '4505' },
 					{ value: 'triple_pelican', label: 'Triple', cost: '2922' }
 				],
-				"Osprey": [
+				Osprey: [
 					{ value: 'three_ss', label: '3 Person Shared Room', cost: '4671' },
 					{ value: 'four_ss', label: '4 Person Single Suite', cost: '4671' },
 					{ value: 'four_ds', label: '4 Person Double Suite', cost: '4505' },
@@ -106,31 +108,31 @@ export const dropdownOptions = writable({
 		],
 		food_plan: {
 			tampa: {
-				"First Time": [
+				'First Time': [
 					{ value: 'open_access', label: 'Open Access', cost: '2275' },
 					{ value: 'any_15', label: 'Any 15', cost: '2150' },
 					{ value: 'bull_175', label: 'BULL Block 175', cost: '1900' },
 					{ value: 'bull_60', label: 'BULL Block 60', cost: '925' },
 					{ value: 'bull_32', label: 'BULL Block 32', cost: '620' }
 				],
-				"Dining Dollars": [
+				'Dining Dollars': [
 					{ value: 'dd_300', label: 'Dining Dollars 300', cost: '300' },
 					{ value: 'dd_500', label: 'Dining Dollars 500', cost: '500' },
 					{ value: 'dd_1000', label: 'Dining Dollars 1000', cost: '1000' }
 				],
-				"Graduate Students": [
+				'Graduate Students': [
 					{ value: 'gold_plan', label: 'Gold Plan ', cost: '248' },
 					{ value: 'green_plan', label: 'Green Plan', cost: '157' },
 					{ value: 'rocky_plan', label: 'Rocky Plan', cost: '94' }
 				],
-				"Graduate Dining Dollars": [
+				'Graduate Dining Dollars': [
 					{ value: 'gdd_100', label: 'DD 100', cost: '100' },
 					{ value: 'gdd_300', label: 'DD 300', cost: '300' },
 					{ value: 'gdd_500', label: 'DD 500', cost: '500' }
 				]
 			},
 			st_pete: {
-				"First Time": [
+				'First Time': [
 					{ value: 'sp_open-access', label: 'Open Access', cost: '2275' },
 					{ value: 'sp_any-15', label: 'Any 15', cost: '2150' },
 					{ value: 'sp_bull-175', label: 'BULL Block 175', cost: '1900' }
@@ -148,12 +150,30 @@ export const dropdownOptions = writable({
 			{ value: 'prepaid_yes', label: 'Yes' }
 		],
 		prepaid_purchase: [
-			{ value: 'before', label: 'Before January 1st, 2007' },
-			{ value: 'after', label: 'After January 1st, 2007' }
+			{ value: 'before_date', label: 'Before January 1st, 2007' },
+			{ value: 'after_date', label: 'After January 1st, 2007' }
 		],
-		prepaid_plan: [
-			{ value: 'tuition_plan', label: 'Tuition Plan ($117.08 per credit hour)' },
-			{ value: 'tuition_local', label: 'Tuition and Local Fee Plan ($153.56 per credit hour)' }
+		prepaid_plan_before: [
+			{ value: 'tuition_plan_before', label: 'Tuition Plan ($117.08 per credit hour)' },
+			{
+				value: 'tuition_local_before',
+				label: 'Tuition and Local Fee Plan ($153.56 per credit hour)'
+			}
+		],
+		prepaid_plan_after: [
+			{ value: 'tuition_plan_after', label: 'Tuition Plan ($117.08 per credit hour)' },
+			{
+				value: 'tuition_local_after',
+				label: 'Tuition and Local Fee Plan ($153.56 per credit hour)'
+			},
+			{
+				value: 'tuition_diff_after',
+				label: 'Tuition and Differential Fee Plan ($163.96 per credit hour)'
+			},
+			{
+				value: 'tuition_local_diff_after',
+				label: 'Tuition, Differential, Local Fee Plan ($200.44 per credit hour)'
+			}
 		],
 		bright_futures: [
 			{ value: 'bf_no', label: "I Don't Qualify" },
@@ -171,7 +191,7 @@ export const cc_data = writable({
 		semester: 'nothing'
 	},
 	tuition_fees: {
-		credit_hours: '12',
+		credit_hours: '0',
 		lab_fees: '0',
 		other_fees: '0'
 	},
@@ -235,11 +255,15 @@ export const cc_data = writable({
 			when_purchased: 'nothing',
 			prepaid_plan: 'nothing'
 		},
+		bright_futures: 'nothing',
 		grants: '0',
 		loans: '0',
-		other: '0',
 		scholarships: [],
 		jobs: [],
 		other_funding: '0'
 	}
+});
+
+export const total = derived([cc_data], ($cc_data) => {
+	return parseInt($cc_data.books_supplies.books) + parseInt($cc_data.books_supplies.supplies);
 });
