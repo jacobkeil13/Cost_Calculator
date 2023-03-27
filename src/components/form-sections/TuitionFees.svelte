@@ -1,10 +1,14 @@
 <script>
-	import { cc_data } from '../../store.js';
+	import { tuition_fees } from '../../store.js';
 	import { fly } from 'svelte/transition';
 	import RangeField from '../form-inputs/RangeField.svelte';
 	import RangeMoneyField from '../form-inputs/RangeMoneyField.svelte';
 
-	let calc_data = $cc_data.tuition_fees;
+	let calc_data = $tuition_fees;
+
+	$: {
+		tuition_fees.set(calc_data);
+	}
 </script>
 
 <div in:fly={{ x: -10, duration: 200 }}>

@@ -1,5 +1,5 @@
 <script>
-	import { steps, current_step, cc_data } from '../store.js';
+	import { steps, current_step } from '../store.js';
 	import BooksSupplies from './form-sections/BooksSupplies.svelte';
 	import Funding from './form-sections/Funding.svelte';
 	import HousingFood from './form-sections/HousingFood.svelte';
@@ -11,9 +11,6 @@
 	import FormControls from './FormControls.svelte';
 
 	$: step_name = $steps[$current_step];
-	$: {
-		console.log($cc_data);
-	}
 </script>
 
 <div id="form" class="w-full">

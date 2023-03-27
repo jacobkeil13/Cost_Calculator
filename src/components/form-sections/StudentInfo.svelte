@@ -1,10 +1,10 @@
 <script>
-	import { cc_data, dropdownOptions } from '../../store.js';
+	import { student_information, dropdownOptions } from '../../store.js';
 	import { fly } from 'svelte/transition';
 	import SelectionField from '../form-inputs/SelectionField.svelte';
 
 	let studentInfo = $dropdownOptions.student_information;
-	let calc_data = $cc_data.student_information;
+	let calc_data = $student_information;
 </script>
 
 <div in:fly={{ x: -10, duration: 200 }}>

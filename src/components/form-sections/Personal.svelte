@@ -1,9 +1,9 @@
 <script>
-	import { cc_data } from '../../store.js';
+	import { personal, total } from '../../store.js';
 	import { fly } from 'svelte/transition';
 	import RangeMoneyField from '../form-inputs/RangeMoneyField.svelte';
 
-	let calc_data = $cc_data.personal_expenses;
+	let calc_data = $personal;
 	let expense_list = Object.keys(calc_data);
 	let expenses = [
 		'Takeout & Coffee?',
@@ -22,6 +22,10 @@
 		'Holidays & Gifts?',
 		'Laundry?'
 	];
+
+	$: {
+		total.set($total + (calc_data.takeout_coffee + calc_data.groceries));
+	}
 </script>
 
 <div in:fly={{ x: -10, duration: 500 }}>

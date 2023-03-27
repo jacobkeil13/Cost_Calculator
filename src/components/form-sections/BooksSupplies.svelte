@@ -1,9 +1,13 @@
 <script>
-	import { cc_data } from '../../store.js';
+	import { books_supplies, total } from '../../store.js';
 	import { fly } from 'svelte/transition';
 	import RangeMoneyField from '../form-inputs/RangeMoneyField.svelte';
 
-	let calc_data = $cc_data.books_supplies;
+	let calc_data = $books_supplies;
+
+	$: {
+		books_supplies.set(calc_data);
+	}
 </script>
 
 <div in:fly={{ x: -10, duration: 500 }}>

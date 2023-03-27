@@ -1,10 +1,28 @@
-import { derived, writable } from 'svelte/store';
+import { derived, readable, writable } from 'svelte/store';
 
 export const current_step = writable(0);
 
-export const static_vars = writable({
-	credit_hour: 211.19
+export const static_vars = readable({
+	graduate: {
+		in_state: 438.83,
+		out_state: 880.25
+	},
+	undergraduate: {
+		in_state: 211.19,
+		out_state: 578.09
+	},
+	tampa_flat: 37,
+	sarasota_manatee_flat: 17
 });
+
+export const semester_months = readable({
+	"spring": 4.5,
+	"fall": 4.5,
+	"summer_a": 1,
+	"summer_b": 1,
+	"summer_ab": 2,
+	"summer_c": 2.5
+})
 
 export const steps = writable([
 	'Student Information',
@@ -17,7 +35,7 @@ export const steps = writable([
 	'Review'
 ]);
 
-export const dropdownOptions = writable({
+export const dropdownOptions = readable({
 	student_information: {
 		campus: [
 			{ value: 'tampa', label: 'Tampa' },
@@ -183,87 +201,123 @@ export const dropdownOptions = writable({
 	}
 });
 
-export const cc_data = writable({
-	student_information: {
-		campus: 'nothing',
-		level: 'nothing',
-		tuition: 'nothing',
-		semester: 'nothing'
+export const student_information = writable({
+	campus: 'nothing',
+	level: 'nothing',
+	tuition: 'nothing',
+	semester: 'nothing'
+});
+
+export const tuition_fees = writable({
+	credit_hours: 0,
+	lab_fees: 0,
+	other_fees: 0
+});
+
+export const housing_food = writable({
+	living_plan: 'nothing',
+	food_plan: 'nothing',
+	on_campus: {
+		housing: 'nothing',
+		llc: 'nothing'
 	},
-	tuition_fees: {
-		credit_hours: '0',
-		lab_fees: '0',
-		other_fees: '0'
+	off_campus_parents: {
+		utility_fees: 0
 	},
-	housing_food: {
-		living: {
-			living_plan: 'nothing',
-			on_campus: {
-				housing: 'nothing',
-				llc: 'nothing'
-			},
-			off_campus_parents: {
-				utility_fees: '0'
-			},
-			off_campus_alone: {
-				rent: '0',
-				electric: '0',
-				water: '0',
-				natural_gas: '0',
-				internet: '0',
-				cable: '0',
-				phone: '0'
-			}
-		},
-		food_plan: 'nothing'
-	},
-	books_supplies: {
-		books: '0',
-		supplies: '0'
-	},
-	transportation: {
-		vehicle: {
-			has_vehicle: 'nothing',
-			parking_pass: '0',
-			car_payment: '0',
-			insurance: '0',
-			gas: '0',
-			maintenance: '0'
-		},
-		other_transport: '0'
-	},
-	personal_expenses: {
-		takeout_coffee: '0',
-		groceries: '0',
-		health_care: '0',
-		personal_care: '0',
-		phone_bill: '0',
-		entertainment_social: '0',
-		travel_trips: '0',
-		subscriptions_memberships: '0',
-		clothing: '0',
-		family_expenses: '0',
-		org_dues: '0',
-		hobbies: '0',
-		pets: '0',
-		holidays_gifts: '0',
-		laundry: '0'
-	},
-	funding: {
-		fl_prepaid: {
-			has_fl_prepaid: 'nothing',
-			when_purchased: 'nothing',
-			prepaid_plan: 'nothing'
-		},
-		bright_futures: 'nothing',
-		grants: '0',
-		loans: '0',
-		scholarships: [],
-		jobs: [],
-		other_funding: '0'
+	off_campus_alone: {
+		rent: 0,
+		electric: 0,
+		water: 0,
+		natural_gas: 0,
+		internet: 0,
+		cable: 0,
+		phone: 0
 	}
 });
 
-export const total = derived([cc_data], ($cc_data) => {
-	return parseInt($cc_data.books_supplies.books) + parseInt($cc_data.books_supplies.supplies);
+export const books_supplies = writable({
+	books: 0,
+	supplies: 0
 });
+
+export const transportation = writable({
+	has_vehicle: 'nothing',
+	parking_pass: 0,
+	car_payment: 0,
+	insurance: 0,
+	gas: 0,
+	maintenance: 0,
+	other_transport: 0
+});
+
+export const personal = writable({
+	takeout_coffee: 0,
+	groceries: 0,
+	health_care: 0,
+	personal_care: 0,
+	phone_bill: 0,
+	entertainment_social: 0,
+	travel_trips: 0,
+	subscriptions_memberships: 0,
+	clothing: 0,
+	family_expenses: 0,
+	org_dues: 0,
+	hobbies: 0,
+	pets: 0,
+	holidays_gifts: 0,
+	laundry: 0
+});
+
+export const funding = writable({
+	has_fl_prepaid: 'nothing',
+	when_purchased: 'nothing',
+	prepaid_plan: 'nothing',
+	bright_futures: 'nothing',
+	grants: 0,
+	loans: 0,
+	scholarships: [],
+	jobs: [],
+	other_funding: 0
+});
+
+export const total = derived(
+	[student_information, tuition_fees, housing_food, books_supplies, transportation, personal, funding, static_vars, semester_months],
+	([$student_information, $tuition_fees, $housing_food, $books_supplies, $transportation, $personal, $funding, $static_vars, $semester_months]) => {
+
+		let credit_cost;
+		let flat_fees;
+
+		if ($student_information.tuition === "in-state") {
+			if ($student_information.level === "graduate") {
+				credit_cost = $static_vars.graduate.in_state;
+			} else if ($student_information.level === "undergraduate") {
+				credit_cost = $static_vars.undergraduate.in_state;
+			}
+		} else if ($student_information.tuition === "out-state") {
+			if ($student_information.level === "graduate") {
+				credit_cost = $static_vars.graduate.out_state;
+			} else if ($student_information.level === "undergraduate") {
+				credit_cost = $static_vars.undergraduate.out_state;
+			}
+		} else {
+			credit_cost = 0;
+		}
+
+		if ($student_information.campus === "tampa") {
+			flat_fees = $static_vars.tampa_flat;
+		} else if ($student_information.campus === "st_pete") {
+			flat_fees = $static_vars.sarasota_manatee_flat;
+		} else {
+			flat_fees = 0;
+		}
+
+		// Tuition Fees
+		return ($tuition_fees.credit_hours * credit_cost * $semester_months[$student_information]) +
+			$tuition_fees.lab_fees +
+			$tuition_fees.other_fees +
+			flat_fees +
+			// Books & Supplies
+			$books_supplies.books +
+			$books_supplies.supplies
+		//
+	});
