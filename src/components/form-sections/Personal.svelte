@@ -1,5 +1,5 @@
 <script>
-	import { personal, total } from '../../store.js';
+	import { personal } from '../../store.js';
 	import { fly } from 'svelte/transition';
 	import RangeMoneyField from '../form-inputs/RangeMoneyField.svelte';
 
@@ -24,7 +24,7 @@
 	];
 
 	$: {
-		total.set($total + (calc_data.takeout_coffee + calc_data.groceries));
+		personal.set(calc_data);
 	}
 </script>
 

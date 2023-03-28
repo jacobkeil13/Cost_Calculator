@@ -5,24 +5,24 @@ export const current_step = writable(0);
 export const static_vars = readable({
 	graduate: {
 		in_state: 438.83,
-		out_state: 880.25
+		out_of_state: 880.25
 	},
 	undergraduate: {
 		in_state: 211.19,
-		out_state: 578.09
+		out_of_state: 578.09
 	},
 	tampa_flat: 37,
 	sarasota_manatee_flat: 17
 });
 
 export const semester_months = readable({
-	"spring": 4.5,
-	"fall": 4.5,
-	"summer_a": 1,
-	"summer_b": 1,
-	"summer_ab": 2,
-	"summer_c": 2.5
-})
+	spring: 4.5,
+	fall: 4.5,
+	summer_a: 1,
+	summer_b: 1,
+	summer_ab: 2,
+	summer_c: 2.5
+});
 
 export const steps = writable([
 	'Student Information',
@@ -281,43 +281,101 @@ export const funding = writable({
 });
 
 export const total = derived(
-	[student_information, tuition_fees, housing_food, books_supplies, transportation, personal, funding, static_vars, semester_months],
-	([$student_information, $tuition_fees, $housing_food, $books_supplies, $transportation, $personal, $funding, $static_vars, $semester_months]) => {
+	[
+		student_information,
+		tuition_fees,
+		housing_food,
+		books_supplies,
+		transportation,
+		personal,
+		funding,
+		static_vars,
+		semester_months
+	],
+	([
+		$student_information,
+		$tuition_fees,
+		$housing_food,
+		$books_supplies,
+		$transportation,
+		$personal,
+		$funding,
+		$static_vars,
+		$semester_months
+	]) => {
+		let credit_cost = 0;
+		let flat_fees = 0;
+		let transportation_cost = 0;
+		let personal = 0;
 
-		let credit_cost;
-		let flat_fees;
-
-		if ($student_information.tuition === "in-state") {
-			if ($student_information.level === "graduate") {
+		// Determines the credit hour cost
+		if ($student_information.tuition === 'in_state') {
+			if ($student_information.level === 'graduate') {
 				credit_cost = $static_vars.graduate.in_state;
-			} else if ($student_information.level === "undergraduate") {
+			} else if ($student_information.level === 'undergraduate') {
 				credit_cost = $static_vars.undergraduate.in_state;
 			}
-		} else if ($student_information.tuition === "out-state") {
-			if ($student_information.level === "graduate") {
-				credit_cost = $static_vars.graduate.out_state;
-			} else if ($student_information.level === "undergraduate") {
-				credit_cost = $static_vars.undergraduate.out_state;
+		} else if ($student_information.tuition === 'out_of_state') {
+			if ($student_information.level === 'graduate') {
+				credit_cost = $static_vars.graduate.out_of_state;
+			} else if ($student_information.level === 'undergraduate') {
+				credit_cost = $static_vars.undergraduate.out_of_state;
 			}
 		} else {
 			credit_cost = 0;
 		}
 
-		if ($student_information.campus === "tampa") {
+		// Determines the flat flee based on campus
+		if ($student_information.campus === 'tampa') {
 			flat_fees = $static_vars.tampa_flat;
-		} else if ($student_information.campus === "st_pete") {
+		} else if ($student_information.campus === 'st_pete') {
 			flat_fees = $static_vars.sarasota_manatee_flat;
 		} else {
 			flat_fees = 0;
 		}
 
-		// Tuition Fees
-		return ($tuition_fees.credit_hours * credit_cost * $semester_months[$student_information]) +
+		// Determines whether to use values based on if the student is bringing a vehicle
+		if ($transportation.has_vehicle === 'vehicle_yes') {
+			let tp = $transportation;
+			transportation_cost =
+				tp.parking_pass +
+				(tp.car_payment + tp.insurance + tp.gas + tp.maintenance) * $semester_months['fall'];
+		} else if ($transportation.has_vehicle === 'vehicle_no') {
+			transportation_cost = $transportation.other_transport;
+		}
+
+		personal =
+			($personal.takeout_coffee +
+				$personal.groceries +
+				$personal.health_care +
+				$personal.personal_care +
+				$personal.phone_bill +
+				$personal.entertainment_social +
+				$personal.travel_trips +
+				$personal.subscriptions_memberships +
+				$personal.clothing +
+				$personal.family_expenses +
+				$personal.org_dues +
+				$personal.hobbies +
+				$personal.pets +
+				$personal.holidays_gifts +
+				$personal.laundry) *
+			$semester_months['fall'];
+
+		return (
+			// Tuition Fees
+			$tuition_fees.credit_hours * credit_cost +
 			$tuition_fees.lab_fees +
 			$tuition_fees.other_fees +
 			flat_fees +
 			// Books & Supplies
 			$books_supplies.books +
-			$books_supplies.supplies
+			$books_supplies.supplies +
+			// Transportation
+			transportation_cost +
+			// Personal
+			personal
+		);
 		//
-	});
+	}
+);

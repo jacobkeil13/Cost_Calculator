@@ -5,6 +5,10 @@
 
 	let studentInfo = $dropdownOptions.student_information;
 	let calc_data = $student_information;
+
+	$: {
+		student_information.set(calc_data);
+	}
 </script>
 
 <div in:fly={{ x: -10, duration: 200 }}>
