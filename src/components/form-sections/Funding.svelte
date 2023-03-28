@@ -11,6 +11,10 @@
 		calc_data.when_purchased === 'before_date'
 			? funding_options.prepaid_plan_before
 			: funding_options.prepaid_plan_after;
+
+	$: {
+		funding.set(calc_data);
+	}
 </script>
 
 <div in:fly={{ x: -10, duration: 500 }}>

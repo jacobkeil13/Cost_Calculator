@@ -1,5 +1,6 @@
 <script>
-	import { steps, current_step } from '../store.js';
+	import { current_step } from '../store.js';
+	import { steps } from '../constants.js';
 	import BooksSupplies from './form-sections/BooksSupplies.svelte';
 	import Funding from './form-sections/Funding.svelte';
 	import HousingFood from './form-sections/HousingFood.svelte';

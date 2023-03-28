@@ -6,6 +6,10 @@
 
 	let housingFood = $dropdownOptions.housing_food;
 	let calc_data = $housing_food;
+
+	$: {
+		housing_food.set(calc_data);
+	}
 </script>
 
 <div in:fly={{ x: -10, duration: 500 }}>

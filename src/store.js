@@ -1,39 +1,7 @@
 import { derived, readable, writable } from 'svelte/store';
+import { static_vars, semester_months, florida_prepaid } from './constants';
 
 export const current_step = writable(0);
-
-export const static_vars = readable({
-	graduate: {
-		in_state: 438.83,
-		out_of_state: 880.25
-	},
-	undergraduate: {
-		in_state: 211.19,
-		out_of_state: 578.09
-	},
-	tampa_flat: 37,
-	sarasota_manatee_flat: 17
-});
-
-export const semester_months = readable({
-	spring: 4.5,
-	fall: 4.5,
-	summer_a: 1,
-	summer_b: 1,
-	summer_ab: 2,
-	summer_c: 2.5
-});
-
-export const steps = writable([
-	'Student Information',
-	'Tuition & Fees',
-	'Housing & Food',
-	'Books & Supplies',
-	'Transportation',
-	'Personal',
-	'Funding',
-	'Review'
-]);
 
 export const dropdownOptions = readable({
 	student_information: {
@@ -205,11 +173,11 @@ export const student_information = writable({
 	campus: 'nothing',
 	level: 'nothing',
 	tuition: 'nothing',
-	semester: 'nothing'
+	semester: 'spring'
 });
 
 export const tuition_fees = writable({
-	credit_hours: 0,
+	credit_hours: 1,
 	lab_fees: 0,
 	other_fees: 0
 });
@@ -290,7 +258,8 @@ export const total = derived(
 		personal,
 		funding,
 		static_vars,
-		semester_months
+		semester_months,
+		florida_prepaid
 	],
 	([
 		$student_information,
@@ -301,12 +270,14 @@ export const total = derived(
 		$personal,
 		$funding,
 		$static_vars,
-		$semester_months
+		$semester_months,
+		$florida_prepaid
 	]) => {
 		let credit_cost = 0;
 		let flat_fees = 0;
-		let transportation_cost = 0;
+		let transportation = 0;
 		let personal = 0;
+		let funding = 0;
 
 		// Determines the credit hour cost
 		if ($student_information.tuition === 'in_state') {
@@ -337,13 +308,14 @@ export const total = derived(
 		// Determines whether to use values based on if the student is bringing a vehicle
 		if ($transportation.has_vehicle === 'vehicle_yes') {
 			let tp = $transportation;
-			transportation_cost =
+			transportation =
 				tp.parking_pass +
 				(tp.car_payment + tp.insurance + tp.gas + tp.maintenance) * $semester_months['fall'];
 		} else if ($transportation.has_vehicle === 'vehicle_no') {
-			transportation_cost = $transportation.other_transport;
+			transportation = $transportation.other_transport;
 		}
 
+		// Determines the personal expenses by multiplying by the semester length in months
 		personal =
 			($personal.takeout_coffee +
 				$personal.groceries +
@@ -360,7 +332,14 @@ export const total = derived(
 				$personal.pets +
 				$personal.holidays_gifts +
 				$personal.laundry) *
-			$semester_months['fall'];
+			$semester_months[$student_information.semester];
+
+		// Funding
+
+		funding = $funding.grants + $funding.loans;
+		if ($funding.has_fl_prepaid === 'prepaid_yes') {
+			funding += $florida_prepaid[$funding.prepaid_plan] * $tuition_fees.credit_hours;
+		}
 
 		return (
 			// Tuition Fees
@@ -372,9 +351,11 @@ export const total = derived(
 			$books_supplies.books +
 			$books_supplies.supplies +
 			// Transportation
-			transportation_cost +
+			transportation +
 			// Personal
-			personal
+			personal -
+			// Funding
+			funding
 		);
 		//
 	}
