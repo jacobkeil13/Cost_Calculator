@@ -1,5 +1,6 @@
 <script>
-	import { steps, current_step } from '../store.js';
+	import { current_step } from '../store.js';
+	import { steps } from '../constants.js';
 
 	function incStep() {
 		if ($current_step !== $steps.length - 1) {

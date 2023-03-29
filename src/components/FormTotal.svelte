@@ -28,7 +28,10 @@
 	<div class="my-10 space-y-3">
 		{#each sections as section}
 			<!-- svelte-ignore a11y-click-events-have-key-events -->
-			<div class="flex justify-between items-center" on:click={() => switchStep(section.id)}>
+			<div
+				class="flex justify-between items-center cursor-pointer"
+				on:click={() => switchStep(section.id)}
+			>
 				<h1 class="text-xl font-semibold {$current_step === section.id ? bg_color : ''}">
 					{section.name}:
 				</h1>
