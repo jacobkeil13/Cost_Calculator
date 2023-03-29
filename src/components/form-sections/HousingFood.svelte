@@ -3,9 +3,12 @@
 	import { fly } from 'svelte/transition';
 	import SelectionField from '../form-inputs/SelectionField.svelte';
 	import SelectionTieredField from '../form-inputs/SelectionTieredField.svelte';
+	import RangeMoneyField from '../form-inputs/RangeMoneyField.svelte';
 
 	let housingFood = $dropdownOptions.housing_food;
 	let calc_data = $housing_food;
+
+	let housing_alone = Object.keys(calc_data.off_campus_alone);
 
 	$: {
 		housing_food.set(calc_data);
@@ -32,8 +35,34 @@
 		/>
 	{/if}
 
+	{#if calc_data.living_plan === 'off_campus_parents'}
+		<RangeMoneyField
+			label="How much are you paying for rent & utilities?"
+			bind:value={calc_data.off_campus_parents.utility_fees}
+			min="0"
+			max="1000"
+			step="25"
+			concurrency="per month"
+		/>
+	{/if}
+
+	{#if calc_data.living_plan === 'off_campus_alone'}
+		<h2 class="text-xl underline">What do you plan to spend from these areas?</h2>
+		{#each housing_alone as option}
+			<RangeMoneyField
+				label="{option.charAt(0).toUpperCase() + option.slice(1).replace('_', ' ')}?"
+				bind:value={calc_data.off_campus_alone[option]}
+				min="0"
+				max="500"
+				step="5"
+				concurrency="per month"
+			/>
+		{/each}
+	{/if}
+
 	<SelectionTieredField
 		label="What food plan are you going to have?"
+		extra_option={{ label: 'No Food Plan', value: 'no_food_plan', style: 'text-red-600' }}
 		options={housingFood.food_plan[$student_information.campus]}
 		bind:value={calc_data.food_plan}
 	/>

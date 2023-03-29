@@ -1,5 +1,8 @@
 import { derived, readable, writable } from 'svelte/store';
-import { static_vars, semester_months, florida_prepaid } from './constants';
+import {
+	static_vars, semester_months, florida_prepaid_cost,
+	housing_cost, llc_cost, food_plan_cost, bright_futures_cost
+} from './constants';
 
 export const current_step = writable(0);
 
@@ -89,8 +92,7 @@ export const dropdownOptions = readable({
 			{ value: 'engineering', label: 'Engineering', cost: '125' },
 			{ value: 'education', label: 'Education', cost: '125' },
 			{ value: 'bull_business', label: 'Bulls Business Community (BBC)', cost: '225' },
-			{ value: 'pre_nursing', label: 'Pre-Nursing', cost: '225' },
-			{ value: 'other', label: 'Other', cost: '0' }
+			{ value: 'pre_nursing', label: 'Pre-Nursing', cost: '225' }
 		],
 		food_plan: {
 			tampa: {
@@ -119,9 +121,9 @@ export const dropdownOptions = readable({
 			},
 			st_pete: {
 				'First Time': [
-					{ value: 'sp_open-access', label: 'Open Access', cost: '2275' },
-					{ value: 'sp_any-15', label: 'Any 15', cost: '2150' },
-					{ value: 'sp_bull-175', label: 'BULL Block 175', cost: '1900' }
+					{ value: 'sp_open_access', label: 'Open Access', cost: '2275' },
+					{ value: 'sp_any_15', label: 'Any 15', cost: '2150' },
+					{ value: 'sp_bull_175', label: 'BULL Block 175', cost: '1900' }
 				]
 			}
 		}
@@ -170,9 +172,9 @@ export const dropdownOptions = readable({
 });
 
 export const student_information = writable({
-	campus: 'nothing',
-	level: 'nothing',
-	tuition: 'nothing',
+	campus: 'tampa',
+	level: 'undergraduate',
+	tuition: 'in_state',
 	semester: 'spring'
 });
 
@@ -238,8 +240,8 @@ export const personal = writable({
 
 export const funding = writable({
 	has_fl_prepaid: 'nothing',
-	when_purchased: 'nothing',
-	prepaid_plan: 'nothing',
+	when_purchased: 'before_date',
+	prepaid_plan: 'tuition_plan_before',
 	bright_futures: 'nothing',
 	grants: 0,
 	loans: 0,
@@ -259,7 +261,11 @@ export const total = derived(
 		funding,
 		static_vars,
 		semester_months,
-		florida_prepaid
+		florida_prepaid_cost,
+		housing_cost,
+		llc_cost,
+		food_plan_cost,
+		bright_futures_cost
 	],
 	([
 		$student_information,
@@ -271,10 +277,15 @@ export const total = derived(
 		$funding,
 		$static_vars,
 		$semester_months,
-		$florida_prepaid
+		$florida_prepaid_cost,
+		$housing_cost,
+		$llc_cost,
+		$food_plan_cost,
+		$bright_futures_cost
 	]) => {
 		let credit_cost = 0;
 		let flat_fees = 0;
+		let housing_food = 0;
 		let transportation = 0;
 		let personal = 0;
 		let funding = 0;
@@ -303,6 +314,23 @@ export const total = derived(
 			flat_fees = $static_vars.sarasota_manatee_flat;
 		} else {
 			flat_fees = 0;
+		}
+
+		// Determines your housing and food plan cost
+		housing_food = $food_plan_cost[$housing_food.food_plan];
+		if ($housing_food.living_plan === 'on_campus') {
+			housing_food += $housing_cost[$housing_food.on_campus.housing] +
+				$llc_cost[$housing_food.on_campus.llc];
+		} else if ($housing_food.living_plan === 'off_campus_parents') {
+			housing_food += $housing_food.off_campus_parents.utility_fees;
+		} else if ($housing_food.living_plan === 'off_campus_alone') {
+			housing_food += $housing_food.off_campus_alone.cable +
+				$housing_food.off_campus_alone.electric +
+				$housing_food.off_campus_alone.internet +
+				$housing_food.off_campus_alone.natural_gas +
+				$housing_food.off_campus_alone.phone +
+				$housing_food.off_campus_alone.rent +
+				$housing_food.off_campus_alone.water
 		}
 
 		// Determines whether to use values based on if the student is bringing a vehicle
@@ -335,10 +363,9 @@ export const total = derived(
 			$semester_months[$student_information.semester];
 
 		// Funding
-
-		funding = $funding.grants + $funding.loans;
+		funding = $funding.grants + $funding.loans + $bright_futures_cost[$funding.bright_futures];
 		if ($funding.has_fl_prepaid === 'prepaid_yes') {
-			funding += $florida_prepaid[$funding.prepaid_plan] * $tuition_fees.credit_hours;
+			funding += $florida_prepaid_cost[$funding.prepaid_plan] * $tuition_fees.credit_hours;
 		}
 
 		return (
@@ -347,6 +374,8 @@ export const total = derived(
 			$tuition_fees.lab_fees +
 			$tuition_fees.other_fees +
 			flat_fees +
+			// Housing & Food
+			housing_food +
 			// Books & Supplies
 			$books_supplies.books +
 			$books_supplies.supplies +

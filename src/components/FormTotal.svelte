@@ -1,5 +1,5 @@
 <script>
-	import { total, current_step } from '../store.js';
+	import { total, funding, current_step } from '../store.js';
 	export let clientX;
 
 	// $: console.log($semester_months[$student_information.semester]);
@@ -16,6 +16,8 @@
 	function switchStep(step_num) {
 		current_step.set(step_num);
 	}
+
+	$: console.log($funding);
 </script>
 
 <div class="{clientX < 960 ? 'py-6 mt-6 bg-gray-200' : 'border-l-2'} px-6">
@@ -36,7 +38,7 @@
 					{section.name}:
 				</h1>
 				<h1 class="text-xl {section.id === 6 ? 'text-[#2a990e]' : 'text-[#000000]'} font-semibold">
-					$1256
+					$0
 				</h1>
 			</div>
 		{/each}

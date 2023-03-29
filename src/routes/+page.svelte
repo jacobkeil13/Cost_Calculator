@@ -11,7 +11,7 @@
 <main>
 	{#if clientX >= 960}
 		<div class="grid grid-cols-[2fr_1fr] gap-4 py-6">
-			<section class="pr-12">
+			<section class="pr-3">
 				<FormInstructions />
 				<Form />
 			</section>

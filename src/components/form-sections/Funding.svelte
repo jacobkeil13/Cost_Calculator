@@ -3,6 +3,7 @@
 	import { fly } from 'svelte/transition';
 	import SelectionField from '../form-inputs/SelectionField.svelte';
 	import RangeMoneyField from '../form-inputs/RangeMoneyField.svelte';
+	import AddButtonGroup from '../form-inputs/AddButtonGroup.svelte';
 
 	let funding_options = $dropdownOptions.funding;
 	let calc_data = $funding;
@@ -13,6 +14,25 @@
 			: funding_options.prepaid_plan_after;
 
 	$: {
+		funding.set(calc_data);
+	}
+
+	function handleAdd(data) {
+		console.log('Add Scholarship Pressed', data.detail);
+		if (data.detail.type === 'scholarship') {
+			calc_data.scholarships.push({
+				name: data.detail.name,
+				amount: data.detail.amount,
+				concurrency: data.detail.concurrency
+			});
+		}
+		if (data.detail.type === 'job') {
+			calc_data.jobs.push({
+				name: data.detail.name,
+				amount: data.detail.amount,
+				hours: data.detail.hours
+			});
+		}
 		funding.set(calc_data);
 	}
 </script>
@@ -60,4 +80,28 @@
 		step="100"
 		concurrency="per semester"
 	/>
+
+	<div class="space-y-6">
+		<AddButtonGroup
+			label="List scholarships:"
+			button="Add Scholarship"
+			type="scholarship"
+			on:add={handleAdd}
+		/>
+
+		{#if calc_data.scholarships.length != 0}
+			{#each calc_data.scholarships as scholarship, index}
+				<RangeMoneyField
+					label={scholarship.name}
+					bind:value={calc_data.scholarships[index].amount}
+					min="0"
+					max="5000"
+					step="100"
+					concurrency="per {scholarship.concurrency === 'monthly' ? 'month' : 'semester'}"
+				/>
+			{/each}
+		{/if}
+
+		<AddButtonGroup label="List jobs:" button="Add Job" type="job" on:add={handleAdd} />
+	</div>
 </div>
