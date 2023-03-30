@@ -1,9 +1,11 @@
 <script>
-	import { funding, dropdownOptions } from '../../store.js';
+	import { funding, student_information } from '../../store.js';
+	import { dropdownOptions } from '../../constants.js';
 	import { fly } from 'svelte/transition';
 	import SelectionField from '../form-inputs/SelectionField.svelte';
 	import RangeMoneyField from '../form-inputs/RangeMoneyField.svelte';
 	import AddButtonGroup from '../form-inputs/AddButtonGroup.svelte';
+	import DoubleNumberField from '../form-inputs/DoubleNumberField.svelte';
 
 	let funding_options = $dropdownOptions.funding;
 	let calc_data = $funding;
@@ -18,22 +20,40 @@
 	}
 
 	function handleAdd(data) {
-		console.log('Add Scholarship Pressed', data.detail);
 		if (data.detail.type === 'scholarship') {
-			calc_data.scholarships.push({
-				name: data.detail.name,
-				amount: data.detail.amount,
-				concurrency: data.detail.concurrency
-			});
+			calc_data.scholarships = [
+				...calc_data.scholarships,
+				{
+					name: data.detail.name === '' ? 'Scholarship' : data.detail.name,
+					amount: data.detail.amount,
+					concurrency:
+						data.detail.concurrency === 'nothing' ? 'semesterly' : data.detail.concurrency
+				}
+			];
 		}
 		if (data.detail.type === 'job') {
-			calc_data.jobs.push({
-				name: data.detail.name,
-				amount: data.detail.amount,
-				hours: data.detail.hours
-			});
+			calc_data.jobs = [
+				...calc_data.jobs,
+				{
+					name: data.detail.name === '' ? 'Job' : data.detail.name,
+					amount: data.detail.amount,
+					hours: data.detail.hours
+				}
+			];
 		}
 		funding.set(calc_data);
+		calc_data = calc_data;
+	}
+
+	function handleDelete(index, type) {
+		if (type === 'scholarship') {
+			calc_data.scholarships.splice(index, 1);
+		}
+		if (type === 'job') {
+			calc_data.jobs.splice(index, 1);
+		}
+		funding.set(calc_data);
+		calc_data = calc_data;
 	}
 </script>
 
@@ -43,6 +63,21 @@
 		options={funding_options.fl_prepaid}
 		bind:value={calc_data.has_fl_prepaid}
 	/>
+
+	{#if calc_data.has_fl_prepaid === 'prepaid_no' && $student_information.tuition === 'out_of_state'}
+		<SelectionField
+			label="Are you receiving a USF Green and Gold Scholarship?"
+			options={funding_options.gg_scholarship.has_scholarship}
+			bind:value={calc_data.has_green_gold}
+		/>
+		{#if calc_data.has_green_gold === 'gg_yes'}
+			<SelectionField
+				label="Which USF Green and Gold Scholarship are you receiving?"
+				options={funding_options.gg_scholarship.gg_options}
+				bind:value={calc_data.green_gold_award}
+			/>
+		{/if}
+	{/if}
 
 	{#if calc_data.has_fl_prepaid === 'prepaid_yes'}
 		<SelectionField
@@ -91,17 +126,39 @@
 
 		{#if calc_data.scholarships.length != 0}
 			{#each calc_data.scholarships as scholarship, index}
-				<RangeMoneyField
-					label={scholarship.name}
-					bind:value={calc_data.scholarships[index].amount}
-					min="0"
-					max="5000"
-					step="100"
-					concurrency="per {scholarship.concurrency === 'monthly' ? 'month' : 'semester'}"
-				/>
+				<div class="flex items-center">
+					<RangeMoneyField
+						label={scholarship.name}
+						bind:value={calc_data.scholarships[index].amount}
+						min="0"
+						max="5000"
+						step="100"
+						concurrency="per {scholarship.concurrency === 'monthly' ? 'month' : 'semester'}"
+					/>
+					<!-- svelte-ignore a11y-click-events-have-key-events -->
+					<box-icon
+						on:click={() => handleDelete(index, 'scholarship')}
+						name="x"
+						class="fill-black hover:fill-red-700 ml-4 mt-2 cursor-pointer"
+					/>
+				</div>
 			{/each}
 		{/if}
 
 		<AddButtonGroup label="List jobs:" button="Add Job" type="job" on:add={handleAdd} />
+
+		{#if calc_data.jobs.length != 0}
+			{#each calc_data.jobs as job, index}
+				<div class="flex items-center">
+					<DoubleNumberField bind:value={calc_data.jobs[index]} />
+					<!-- svelte-ignore a11y-click-events-have-key-events -->
+					<box-icon
+						on:click={() => handleDelete(index, 'job')}
+						name="x"
+						class="fill-black hover:fill-red-700 ml-4 mt-2 cursor-pointer"
+					/>
+				</div>
+			{/each}
+		{/if}
 	</div>
 </div>

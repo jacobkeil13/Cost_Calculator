@@ -1,16 +1,28 @@
 <script>
-	import { total, funding, current_step } from '../store.js';
+	import {
+		total,
+		funding,
+		current_step,
+		tuition_fees_total,
+		housing_food_total,
+		books_supplies_total,
+		transportation_total,
+		personal_total,
+		funding_total
+	} from '../store.js';
 	export let clientX;
 
 	// $: console.log($semester_months[$student_information.semester]);
-	let bg_color = 'bg-[#006747] text-white py-1 px-3 rounded-sm';
-	let sections = [
-		{ name: 'Tuition & Fees', id: 1 },
-		{ name: 'Housing & Food', id: 2 },
-		{ name: 'Books & Supplies', id: 3 },
-		{ name: 'Transportation', id: 4 },
-		{ name: 'Personal', id: 5 },
-		{ name: 'Funding', id: 6 }
+	let bg_color = 'bg-[#006747] text-white py-1 px-3 rounded-sm font-medium';
+	$: sections = [
+		{ name: 'Student Information', id: 0, amount: 0 },
+		{ name: 'Tuition & Fees', id: 1, amount: $tuition_fees_total },
+		{ name: 'Housing & Food', id: 2, amount: $housing_food_total },
+		{ name: 'Books & Supplies', id: 3, amount: $books_supplies_total },
+		{ name: 'Transportation', id: 4, amount: $transportation_total },
+		{ name: 'Personal', id: 5, amount: $personal_total },
+		{ name: 'Funding', id: 6, amount: $funding_total },
+		{ name: 'Review', id: 7, amount: 0 }
 	];
 
 	function switchStep(step_num) {
@@ -20,27 +32,51 @@
 	$: console.log($funding);
 </script>
 
-<div class="{clientX < 960 ? 'py-6 mt-6 bg-gray-200' : 'border-l-2'} px-6">
-	<h2 class="text-center text-lg font-bold">
+<div
+	class="{clientX < 960 ? 'p-6 w-screen' : 'border-l-2 pl-6'} {clientX < 960
+		? Math.round($total) < 0
+			? 'bg-[#006747]'
+			: 'bg-red-700'
+		: ''}"
+>
+	<h2
+		class="text-center text-lg {clientX < 960 ? 'text-white font-medium' : 'text-black font-bold'}"
+	>
 		Total Semester {$total < 0 ? 'Surplus' : 'Shortfall'}
 	</h2>
-	<h1 class="text-center text-5xl {$total < 0 ? 'text-[#2a990e]' : 'text-red-700'}">
+	<h1
+		class="text-center text-5xl rounded-md {$total < 1
+			? clientX < 960
+				? 'text-white'
+				: 'text-[#2a990e]'
+			: clientX < 960
+			? 'text-white'
+			: 'text-red-700'}"
+	>
 		${Math.round($total < 0 ? $total * -1 : $total)}
 	</h1>
-	<div class="my-10 space-y-3">
-		{#each sections as section}
-			<!-- svelte-ignore a11y-click-events-have-key-events -->
-			<div
-				class="flex justify-between items-center cursor-pointer"
-				on:click={() => switchStep(section.id)}
-			>
-				<h1 class="text-xl font-semibold {$current_step === section.id ? bg_color : ''}">
-					{section.name}:
-				</h1>
-				<h1 class="text-xl {section.id === 6 ? 'text-[#2a990e]' : 'text-[#000000]'} font-semibold">
-					$0
-				</h1>
-			</div>
-		{/each}
-	</div>
+	{#if clientX > 960}
+		<div class="my-10 space-y-3">
+			{#each sections as section}
+				<!-- svelte-ignore a11y-click-events-have-key-events -->
+				<div
+					class="flex justify-between items-center cursor-pointer"
+					on:click={() => switchStep(section.id)}
+				>
+					<h1 class="text-xl {$current_step === section.id ? bg_color : 'font-semibold'}">
+						{section.name}{section.name != 'Student Information' && section.name != 'Review'
+							? ':'
+							: ''}
+					</h1>
+					<h1
+						class="text-xl {section.id === 6 ? 'text-[#2a990e]' : 'text-[#000000]'} font-semibold"
+					>
+						{#if section.name != 'Student Information' && section.name != 'Review'}
+							${Math.round(section.amount)}
+						{/if}
+					</h1>
+				</div>
+			{/each}
+		</div>
+	{/if}
 </div>

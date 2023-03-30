@@ -8,21 +8,26 @@
 
 <svelte:window bind:outerWidth={clientX} />
 
-<main>
+<main class="relative h-screen">
 	{#if clientX >= 960}
-		<div class="grid grid-cols-[2fr_1fr] gap-4 py-6">
+		<div class="grid grid-cols-[2fr_1fr] gap-4 p-6">
 			<section class="pr-3">
 				<FormInstructions />
 				<Form />
 			</section>
-			<FormTotal {clientX} />
+			<div class="sticky top-6 self-start">
+				<FormTotal {clientX} />
+			</div>
 		</div>
 	{/if}
 	{#if clientX < 960}
-		<div class="py-6">
-			<FormInstructions />
-			<FormTotal {clientX} />
+		<div class="p-6">
+			<!-- <FormInstructions /> -->
 			<Form />
+		</div>
+		<div class="h-32" />
+		<div class="fixed bottom-0">
+			<FormTotal {clientX} />
 		</div>
 	{/if}
 </main>

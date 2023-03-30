@@ -1,5 +1,6 @@
 <script>
-	import { transportation, dropdownOptions } from '../../store.js';
+	import { transportation } from '../../store.js';
+	import { dropdownOptions } from '../../constants.js';
 	import { fly } from 'svelte/transition';
 	import RangeMoneyField from '../form-inputs/RangeMoneyField.svelte';
 	import SelectionField from '../form-inputs/SelectionField.svelte';

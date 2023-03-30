@@ -1,5 +1,6 @@
 <script>
-	import { housing_food, student_information, dropdownOptions } from '../../store.js';
+	import { housing_food, student_information } from '../../store.js';
+	import { dropdownOptions } from '../../constants.js';
 	import { fly } from 'svelte/transition';
 	import SelectionField from '../form-inputs/SelectionField.svelte';
 	import SelectionTieredField from '../form-inputs/SelectionTieredField.svelte';

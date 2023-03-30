@@ -1,5 +1,5 @@
 <script>
-	import { books_supplies, total } from '../../store.js';
+	import { books_supplies } from '../../store.js';
 	import { fly } from 'svelte/transition';
 	import RangeMoneyField from '../form-inputs/RangeMoneyField.svelte';
 
