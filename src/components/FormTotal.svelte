@@ -28,8 +28,6 @@
 	function switchStep(step_num) {
 		current_step.set(step_num);
 	}
-
-	$: console.log($funding);
 </script>
 
 <div

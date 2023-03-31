@@ -194,7 +194,7 @@ export const dropdownOptions = readable({
 			}
 		},
 		llc: [
-			{ value: 'llc_no', label: "I don't live as an LLC", cost: '0' },
+			{ value: 'llc_no', label: "I don't live in an LLC", cost: '0' },
 			{ value: 'honors', label: 'Honors', cost: '125' },
 			{ value: 'engineering', label: 'Engineering', cost: '125' },
 			{ value: 'education', label: 'Education', cost: '125' },
