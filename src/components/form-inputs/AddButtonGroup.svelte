@@ -6,17 +6,17 @@
 	function addEvent() {
 		dispatch('add', data);
 		data.name = '';
-		data.amount = 0;
-		data.concurrency = '';
-		data.hours = 0;
+		data.amount = undefined;
+		data.concurrency = 'semesterly';
+		data.hours = undefined;
 	}
 
 	$: data = {
 		type,
 		name: '',
-		amount: 0,
-		concurrency: 'nothing',
-		hours: 0
+		amount: undefined,
+		concurrency: 'semesterly',
+		hours: undefined
 	};
 </script>
 
@@ -32,10 +32,11 @@
 			bind:value={data.name}
 		/>
 		<input
-			placeholder="Amount..."
+			placeholder={data.type === 'job' ? 'Hours per week...' : 'Amount...'}
 			type="number"
 			name="amount"
 			id="amount"
+			min="0"
 			class="w-full border-2 border-gray-400 rounded-sm py-1 px-2"
 			bind:value={data.amount}
 		/>
@@ -45,18 +46,18 @@
 				name="type"
 				class="w-full border-2 border-gray-400 rounded-sm py-1 px-2"
 			>
-				<option selected value="nothing">Select one</option>
 				<option value="monthly">Monthly</option>
-				<option value="semesterly">Semesterly</option>
+				<option selected value="semesterly">Semesterly</option>
 			</select>
 		{/if}
 		{#if type === 'job'}
 			<input
 				bind:value={data.hours}
-				placeholder="Hours per week..."
+				placeholder="Amount per hour..."
 				type="number"
 				name="hours"
 				id="hours"
+				min="0"
 				class="w-full border-2 border-gray-400 rounded-sm py-1 px-2"
 			/>
 		{/if}

@@ -1,7 +1,12 @@
 import { derived, writable } from 'svelte/store';
 import {
-	static_vars, semester_months, florida_prepaid_cost,
-	housing_cost, llc_cost, food_plan_cost, bright_futures_cost,
+	static_vars,
+	semester_months,
+	florida_prepaid_cost,
+	housing_cost,
+	llc_cost,
+	food_plan_cost,
+	bright_futures_cost,
 	green_gold_cost
 } from './constants';
 
@@ -88,7 +93,8 @@ export const funding = writable({
 	other_funding: 0
 });
 
-export let tuition_fees_total = derived([tuition_fees, student_information, static_vars],
+export let tuition_fees_total = derived(
+	[tuition_fees, student_information, static_vars],
 	([$tuition_fees, $student_information, $static_vars]) => {
 		let credit_cost = 0;
 		let flat_fees = 0;
@@ -122,13 +128,17 @@ export let tuition_fees_total = derived([tuition_fees, student_information, stat
 
 		// Return the credit hours multiplied by the credit cost with the other tuition fees
 		// and flat fee added on.
-		return $tuition_fees.credit_hours * credit_cost +
+		return (
+			$tuition_fees.credit_hours * credit_cost +
 			$tuition_fees.lab_fees +
 			$tuition_fees.other_fees +
-			flat_fees;
-	});
+			flat_fees
+		);
+	}
+);
 
-export let housing_food_total = derived([housing_food, housing_cost, food_plan_cost, llc_cost],
+export let housing_food_total = derived(
+	[housing_food, housing_cost, food_plan_cost, llc_cost],
 	([$housing_food, $housing_cost, $food_plan_cost, $llc_cost]) => {
 		let housing_food = 0;
 
@@ -138,8 +148,8 @@ export let housing_food_total = derived([housing_food, housing_cost, food_plan_c
 		// If the student is living on campus add the housing cost and llc
 		// cost to the total.
 		if ($housing_food.living_plan === 'on_campus') {
-			housing_food += $housing_cost[$housing_food.on_campus.housing] +
-				$llc_cost[$housing_food.on_campus.llc];
+			housing_food +=
+				$housing_cost[$housing_food.on_campus.housing] + $llc_cost[$housing_food.on_campus.llc];
 		}
 		// If the student is living off campus with parents/family we add
 		// any utility fees they might pay.
@@ -149,24 +159,27 @@ export let housing_food_total = derived([housing_food, housing_cost, food_plan_c
 		// If the student is living off campus alone add any related utility
 		// and rent that they might pay.
 		else if ($housing_food.living_plan === 'off_campus_alone') {
-			housing_food += $housing_food.off_campus_alone.cable +
+			housing_food +=
+				$housing_food.off_campus_alone.cable +
 				$housing_food.off_campus_alone.electric +
 				$housing_food.off_campus_alone.internet +
 				$housing_food.off_campus_alone.natural_gas +
 				$housing_food.off_campus_alone.phone +
 				$housing_food.off_campus_alone.rent +
-				$housing_food.off_campus_alone.water
+				$housing_food.off_campus_alone.water;
 		}
 
 		return housing_food;
-	});
+	}
+);
 
 export let books_supplies_total = derived([books_supplies], ([$books_supplies]) => {
 	// Adding the books and supplies field to the total.
 	return $books_supplies.books + $books_supplies.supplies;
 });
 
-export let transportation_total = derived([transportation, student_information, semester_months],
+export let transportation_total = derived(
+	[transportation, student_information, semester_months],
 	([$transportation, $student_information, $semester_months]) => {
 		let transportation = 0;
 
@@ -175,7 +188,8 @@ export let transportation_total = derived([transportation, student_information, 
 			let tp = $transportation;
 			transportation =
 				tp.parking_pass +
-				(tp.car_payment + tp.insurance + tp.gas + tp.maintenance) * $semester_months[$student_information.semester];
+				(tp.car_payment + tp.insurance + tp.gas + tp.maintenance) *
+					$semester_months[$student_information.semester];
 		}
 		// If the student is not bringing a vehicle we only add the other trnasport field
 		// to the total.
@@ -184,9 +198,11 @@ export let transportation_total = derived([transportation, student_information, 
 		}
 
 		return transportation;
-	});
+	}
+);
 
-export let personal_total = derived([personal, student_information, semester_months],
+export let personal_total = derived(
+	[personal, student_information, semester_months],
 	([$personal, $student_information, $semester_months]) => {
 		let personal = 0;
 
@@ -210,14 +226,32 @@ export let personal_total = derived([personal, student_information, semester_mon
 			$semester_months[$student_information.semester];
 
 		return personal;
-	});
+	}
+);
 
-export let funding_total = derived([funding, tuition_fees, student_information, bright_futures_cost, florida_prepaid_cost, green_gold_cost, semester_months],
-	([$funding, $tuition_fees, $student_information, $bright_futures_cost, $florida_prepaid_cost, $green_gold_cost, $semester_months]) => {
+export let funding_total = derived(
+	[
+		funding,
+		tuition_fees,
+		student_information,
+		bright_futures_cost,
+		florida_prepaid_cost,
+		green_gold_cost,
+		semester_months
+	],
+	([
+		$funding,
+		$tuition_fees,
+		$student_information,
+		$bright_futures_cost,
+		$florida_prepaid_cost,
+		$green_gold_cost,
+		$semester_months
+	]) => {
 		let funding = 0;
 
 		// Initial funding values that dont rely on other fields.
-		funding = $funding.grants + $funding.loans + $bright_futures_cost[$funding.bright_futures];
+		funding = $funding.grants + $funding.loans;
 
 		// If Florida prepaid is yes, then we multiply the plan value by the chosen credit hours.
 		if ($funding.has_fl_prepaid === 'prepaid_yes') {
@@ -226,16 +260,24 @@ export let funding_total = derived([funding, tuition_fees, student_information, 
 
 		// If the student is out of state and doesn't have florida prepaid we ask if they are receiving
 		// a green and gold scholarship. If yes, then we add the cost of their pick.
-		if ($student_information.tuition === 'out_of_state' && $funding.has_fl_prepaid === 'prepaid_no') {
+		if (
+			$student_information.tuition === 'out_of_state' &&
+			$funding.has_fl_prepaid === 'prepaid_no'
+		) {
 			if ($funding.has_green_gold === 'gg_yes') {
 				funding += $green_gold_cost[$funding.green_gold_award];
 			}
 		}
 
+		// If the student has out of state tuition, we exclude the option for bright futures
+		if ($student_information.tuition === 'in_state') {
+			funding += $bright_futures_cost[$funding.bright_futures];
+		}
+
 		// Adding the correct funding for each added scholarship by checking if it is monthly or
 		// semesterly and adding the amount to the total.
 		if ($funding.scholarships.length != 0) {
-			$funding.scholarships.forEach(scholarship => {
+			$funding.scholarships.forEach((scholarship) => {
 				if (scholarship.concurrency === 'semesterly') {
 					funding += scholarship.amount;
 				} else if (scholarship.concurrency === 'monthly') {
@@ -247,16 +289,40 @@ export let funding_total = derived([funding, tuition_fees, student_information, 
 		// Adding the correct funding for each job added by multiplying the monthly earnings by
 		// the chosen semester length.
 		if ($funding.jobs.length != 0) {
-			$funding.jobs.forEach(job => {
+			$funding.jobs.forEach((job) => {
 				funding += job.hours * job.amount * 4 * $semester_months[$student_information.semester];
 			});
 		}
 
 		return funding;
-	});
+	}
+);
 
-export const total = derived([tuition_fees_total, housing_food_total, books_supplies_total, transportation_total, personal_total, funding_total],
-	([$tuition_fees_total, $housing_food_total, $books_supplies_total, $transportation_total, $personal_total, $funding_total]) => {
+export const total = derived(
+	[
+		tuition_fees_total,
+		housing_food_total,
+		books_supplies_total,
+		transportation_total,
+		personal_total,
+		funding_total
+	],
+	([
+		$tuition_fees_total,
+		$housing_food_total,
+		$books_supplies_total,
+		$transportation_total,
+		$personal_total,
+		$funding_total
+	]) => {
 		// Returning the sum of all sections with a subtraction of the funding since its positive income.
-		return $tuition_fees_total + $housing_food_total + $books_supplies_total + $transportation_total + $personal_total - $funding_total;
-	});
+		return (
+			$tuition_fees_total +
+			$housing_food_total +
+			$books_supplies_total +
+			$transportation_total +
+			$personal_total -
+			$funding_total
+		);
+	}
+);

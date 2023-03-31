@@ -21,28 +21,21 @@
 
 	function handleAdd(data) {
 		if (data.detail.type === 'scholarship') {
-			calc_data.scholarships = [
-				...calc_data.scholarships,
-				{
-					name: data.detail.name === '' ? 'Scholarship' : data.detail.name,
-					amount: data.detail.amount,
-					concurrency:
-						data.detail.concurrency === 'nothing' ? 'semesterly' : data.detail.concurrency
-				}
-			];
+			calc_data.scholarships.push({
+				name: data.detail.name === '' ? 'Scholarship' : data.detail.name,
+				amount: data.detail.amount || 0,
+				concurrency: data.detail.concurrency === 'nothing' ? 'semesterly' : data.detail.concurrency
+			});
 		}
 		if (data.detail.type === 'job') {
-			calc_data.jobs = [
-				...calc_data.jobs,
-				{
-					name: data.detail.name === '' ? 'Job' : data.detail.name,
-					amount: data.detail.amount,
-					hours: data.detail.hours
-				}
-			];
+			calc_data.jobs.push({
+				name: data.detail.name === '' ? 'Job' : data.detail.name,
+				amount: data.detail.amount || 0,
+				hours: data.detail.hours || 0
+			});
 		}
-		funding.set(calc_data);
 		calc_data = calc_data;
+		funding.set(calc_data);
 	}
 
 	function handleDelete(index, type) {
@@ -52,8 +45,8 @@
 		if (type === 'job') {
 			calc_data.jobs.splice(index, 1);
 		}
-		funding.set(calc_data);
 		calc_data = calc_data;
+		funding.set(calc_data);
 	}
 </script>
 
@@ -92,11 +85,13 @@
 		/>
 	{/if}
 
-	<SelectionField
-		label="Do you qualify for the Bright Futures Award??"
-		options={funding_options.bright_futures}
-		bind:value={calc_data.bright_futures}
-	/>
+	{#if $student_information.tuition === 'in_state'}
+		<SelectionField
+			label="Do you qualify for the Bright Futures Award??"
+			options={funding_options.bright_futures}
+			bind:value={calc_data.bright_futures}
+		/>
+	{/if}
 
 	<RangeMoneyField
 		label="Do you have any grants?"
@@ -129,7 +124,7 @@
 				<div class="flex items-center">
 					<RangeMoneyField
 						label={scholarship.name}
-						bind:value={calc_data.scholarships[index].amount}
+						bind:value={scholarship.amount}
 						min="0"
 						max="5000"
 						step="100"
