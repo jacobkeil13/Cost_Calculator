@@ -16,7 +16,7 @@
 
 <div id="form" class="w-full">
 	<div class="flex justify-between py-4">
-		<h1 class="text-2xl font-medium text-[#006747] rounded-sm">{step_name}</h1>
+		<h1 class="text-3xl font-medium text-[#006747] rounded-sm">{step_name}</h1>
 		<button class="px-2 py-1 bg-[#a71b26] text-white rounded-sm">Reset</button>
 	</div>
 	{#if $current_step === $steps.indexOf('Student Information')}

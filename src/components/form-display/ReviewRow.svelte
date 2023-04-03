@@ -1,5 +1,7 @@
 <script>
-	export let question, value, style;
+	export let question,
+		value,
+		style = '';
 </script>
 
 <div class="flex justify-between py-2">

@@ -52,7 +52,7 @@ export const books_supplies = writable({
 });
 
 export const transportation = writable({
-	has_vehicle: 'nothing',
+	has_vehicle: 'vehicle_no',
 	parking_pass: 0,
 	car_payment: 0,
 	insurance: 0,
@@ -80,12 +80,12 @@ export const personal = writable({
 });
 
 export const funding = writable({
-	has_fl_prepaid: 'nothing',
+	has_fl_prepaid: 'prepaid_no',
 	has_green_gold: 'nothing',
-	when_purchased: 'before_date',
+	when_purchased: 'prepaid_plan_before',
 	prepaid_plan: 'tuition_plan_before',
-	bright_futures: 'nothing',
-	green_gold_award: 'nothing',
+	bright_futures: 'bf_no',
+	green_gold_award: 'gg_no',
 	grants: 0,
 	loans: 0,
 	scholarships: [],

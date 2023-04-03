@@ -60,14 +60,14 @@ export const bright_futures_cost = readable({
 	nothing: 0,
 	bf_no: 0,
 	fms: 1890.99,
-	fas: 2521.28,
+	fas: 2521.28
 });
 
 export const green_gold_cost = readable({
 	nothing: 0,
 	presidential: 4365.84,
 	directors: 4365.84,
-	scholars: 3000,
+	scholars: 3000
 });
 
 export const food_plan_cost = readable({
@@ -245,8 +245,8 @@ export const dropdownOptions = readable({
 			{ value: 'prepaid_yes', label: 'Yes' }
 		],
 		prepaid_purchase: [
-			{ value: 'before_date', label: 'Before January 1st, 2007' },
-			{ value: 'after_date', label: 'After January 1st, 2007' }
+			{ value: 'prepaid_plan_before', label: 'Before January 1st, 2007' },
+			{ value: 'prepaid_plan_after', label: 'After January 1st, 2007' }
 		],
 		prepaid_plan_before: [
 			{ value: 'tuition_plan_before', label: 'Tuition Plan ($117.08 per credit hour)' },
@@ -277,13 +277,13 @@ export const dropdownOptions = readable({
 		],
 		gg_scholarship: {
 			has_scholarship: [
-				{ value: 'gg_no', label: "No" },
-				{ value: 'gg_yes', label: "Yes" }
+				{ value: 'gg_no', label: 'No' },
+				{ value: 'gg_yes', label: 'Yes' }
 			],
 			gg_options: [
-				{ value: 'presidential', label: "Presidential Award" },
-				{ value: 'directors', label: "Directors Award" },
-				{ value: 'scholars', label: "Scholars Award" }
+				{ value: 'presidential', label: 'Presidential Award' },
+				{ value: 'directors', label: 'Directors Award' },
+				{ value: 'scholars', label: 'Scholars Award' }
 			]
 		}
 	}
