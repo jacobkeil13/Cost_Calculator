@@ -11,7 +11,7 @@
 	let calc_data = $funding;
 
 	$: plans =
-		calc_data.when_purchased === 'before_date'
+		calc_data.when_purchased === 'prepaid_plan_before'
 			? funding_options.prepaid_plan_before
 			: funding_options.prepaid_plan_after;
 

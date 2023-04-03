@@ -22,7 +22,7 @@
 		{ name: 'Transportation', id: 4, amount: $transportation_total },
 		{ name: 'Personal', id: 5, amount: $personal_total },
 		{ name: 'Funding', id: 6, amount: $funding_total },
-		{ name: 'Review', id: 7, amount: 0 }
+		{ name: 'Summary', id: 7, amount: 0 }
 	];
 
 	function switchStep(step_num) {
@@ -51,7 +51,7 @@
 			? 'text-white'
 			: 'text-red-700'}"
 	>
-		${Math.round($total < 0 ? $total * -1 : $total)}
+		${Math.round($total < 0 ? $total * -1 : $total).toLocaleString()}
 	</h1>
 	{#if clientX > 960}
 		<div class="my-10 space-y-3">
@@ -62,15 +62,15 @@
 					on:click={() => switchStep(section.id)}
 				>
 					<h1 class="text-xl {$current_step === section.id ? bg_color : 'font-semibold'}">
-						{section.name}{section.name != 'Student Information' && section.name != 'Review'
+						{section.name}{section.name != 'Student Information' && section.name != 'Summary'
 							? ':'
 							: ''}
 					</h1>
 					<h1
 						class="text-xl {section.id === 6 ? 'text-[#2a990e]' : 'text-[#000000]'} font-semibold"
 					>
-						{#if section.name != 'Student Information' && section.name != 'Review'}
-							${Math.round(section.amount)}
+						{#if section.name != 'Student Information' && section.name != 'Summary'}
+							${Math.round(section.amount).toLocaleString()}
 						{/if}
 					</h1>
 				</div>

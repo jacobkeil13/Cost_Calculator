@@ -1,6 +1,7 @@
 import { derived, writable } from 'svelte/store';
 import {
 	static_vars,
+	enums,
 	semester_months,
 	florida_prepaid_cost,
 	housing_cost,
@@ -9,18 +10,17 @@ import {
 	bright_futures_cost,
 	green_gold_cost
 } from './constants';
-
 export const current_step = writable(0);
 
 export const student_information = writable({
 	campus: 'tampa',
 	level: 'undergraduate',
 	tuition: 'in_state',
-	semester: 'spring'
+	semester: 'fall'
 });
 
 export const tuition_fees = writable({
-	credit_hours: 1,
+	credit_hours: 0,
 	lab_fees: 0,
 	other_fees: 0
 });
@@ -119,9 +119,13 @@ export let tuition_fees_total = derived(
 
 		// Set the flat fee for the student based on the campus they pick.
 		if ($student_information.campus === 'tampa') {
-			flat_fees = $static_vars.tampa_flat;
+			if ($tuition_fees.credit_hours != 0) {
+				flat_fees = $static_vars.tampa_flat;
+			}
 		} else if ($student_information.campus === 'st_pete') {
-			flat_fees = $static_vars.sarasota_manatee_flat;
+			if ($tuition_fees.credit_hours != 0) {
+				flat_fees = $static_vars.sarasota_manatee_flat;
+			}
 		} else {
 			flat_fees = 0;
 		}
@@ -138,8 +142,8 @@ export let tuition_fees_total = derived(
 );
 
 export let housing_food_total = derived(
-	[housing_food, housing_cost, food_plan_cost, llc_cost],
-	([$housing_food, $housing_cost, $food_plan_cost, $llc_cost]) => {
+	[housing_food, housing_cost, food_plan_cost, llc_cost, semester_months, student_information],
+	([$housing_food, $housing_cost, $food_plan_cost, $llc_cost, $semester_months, $student_information]) => {
 		let housing_food = 0;
 
 		// Initial housing and food values that don't rely on other fields.
@@ -154,19 +158,19 @@ export let housing_food_total = derived(
 		// If the student is living off campus with parents/family we add
 		// any utility fees they might pay.
 		else if ($housing_food.living_plan === 'off_campus_parents') {
-			housing_food += $housing_food.off_campus_parents.utility_fees;
+			housing_food += $housing_food.off_campus_parents.utility_fees * $semester_months[$student_information.semester];
 		}
 		// If the student is living off campus alone add any related utility
 		// and rent that they might pay.
 		else if ($housing_food.living_plan === 'off_campus_alone') {
 			housing_food +=
-				$housing_food.off_campus_alone.cable +
-				$housing_food.off_campus_alone.electric +
-				$housing_food.off_campus_alone.internet +
-				$housing_food.off_campus_alone.natural_gas +
-				$housing_food.off_campus_alone.phone +
-				$housing_food.off_campus_alone.rent +
-				$housing_food.off_campus_alone.water;
+				($housing_food.off_campus_alone.cable +
+					$housing_food.off_campus_alone.electric +
+					$housing_food.off_campus_alone.internet +
+					$housing_food.off_campus_alone.natural_gas +
+					$housing_food.off_campus_alone.phone +
+					$housing_food.off_campus_alone.rent +
+					$housing_food.off_campus_alone.water) * $semester_months[$student_information.semester];
 		}
 
 		return housing_food;
@@ -189,12 +193,12 @@ export let transportation_total = derived(
 			transportation =
 				tp.parking_pass +
 				(tp.car_payment + tp.insurance + tp.gas + tp.maintenance) *
-					$semester_months[$student_information.semester];
+				$semester_months[$student_information.semester];
 		}
 		// If the student is not bringing a vehicle we only add the other trnasport field
 		// to the total.
 		else if ($transportation.has_vehicle === 'vehicle_no') {
-			transportation = $transportation.other_transport;
+			transportation = $transportation.other_transport * $semester_months[$student_information.semester];
 		}
 
 		return transportation;
@@ -290,7 +294,7 @@ export let funding_total = derived(
 		// the chosen semester length.
 		if ($funding.jobs.length != 0) {
 			$funding.jobs.forEach((job) => {
-				funding += job.hours * job.amount * 4 * $semester_months[$student_information.semester];
+				funding += job.hours * job.amount * enums.WEEKS_IN_MONTH * $semester_months[$student_information.semester];
 			});
 		}
 
@@ -326,3 +330,88 @@ export const total = derived(
 		);
 	}
 );
+
+export function resetCalculator() {
+	current_step.set(0);
+
+	student_information.set({
+		campus: 'tampa',
+		level: 'undergraduate',
+		tuition: 'in_state',
+		semester: 'fall'
+	});
+
+	tuition_fees.set({
+		credit_hours: 0,
+		lab_fees: 0,
+		other_fees: 0
+	});
+
+	housing_food.set({
+		living_plan: 'nothing',
+		food_plan: 'nothing',
+		on_campus: {
+			housing: 'nothing',
+			llc: 'nothing'
+		},
+		off_campus_parents: {
+			utility_fees: 0
+		},
+		off_campus_alone: {
+			rent: 0,
+			electric: 0,
+			water: 0,
+			natural_gas: 0,
+			internet: 0,
+			cable: 0,
+			phone: 0
+		}
+	});
+
+	books_supplies.set({
+		books: 0,
+		supplies: 0
+	});
+
+	transportation.set({
+		has_vehicle: 'vehicle_no',
+		parking_pass: 0,
+		car_payment: 0,
+		insurance: 0,
+		gas: 0,
+		maintenance: 0,
+		other_transport: 0
+	});
+
+	personal.set({
+		takeout_coffee: 0,
+		groceries: 0,
+		health_care: 0,
+		personal_care: 0,
+		phone_bill: 0,
+		entertainment_social: 0,
+		travel_trips: 0,
+		subscriptions_memberships: 0,
+		clothing: 0,
+		family_expenses: 0,
+		org_dues: 0,
+		hobbies: 0,
+		pets: 0,
+		holidays_gifts: 0,
+		laundry: 0
+	});
+
+	funding.set({
+		has_fl_prepaid: 'prepaid_no',
+		has_green_gold: 'nothing',
+		when_purchased: 'prepaid_plan_before',
+		prepaid_plan: 'tuition_plan_before',
+		bright_futures: 'bf_no',
+		green_gold_award: 'gg_no',
+		grants: 0,
+		loans: 0,
+		scholarships: [],
+		jobs: [],
+		other_funding: 0
+	})
+}

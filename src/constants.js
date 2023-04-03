@@ -1,4 +1,8 @@
-import { readable, writable } from 'svelte/store';
+import { readable } from 'svelte/store';
+
+export const enums = {
+	WEEKS_IN_MONTH: 4
+};
 
 export const static_vars = readable({
 	graduate: {
@@ -18,8 +22,10 @@ export const semester_months = readable({
 	fall: 4.5,
 	summer_a: 1,
 	summer_b: 1,
-	summer_ab: 2,
-	summer_c: 2.5
+	summer_c: 2.5,
+	summer_ab: 3,
+	summer_ac: 2.5,
+	summer_abc: 3
 });
 
 export const florida_prepaid_cost = readable({
@@ -110,14 +116,15 @@ export const steps = readable([
 	'Transportation',
 	'Personal',
 	'Funding',
-	'Review'
+	'Summary'
 ]);
 
 export const dropdownOptions = readable({
 	student_information: {
 		campus: [
 			{ value: 'tampa', label: 'Tampa' },
-			{ value: 'st_pete', label: 'St. Pete' }
+			{ value: 'st_pete', label: 'St. Pete' },
+			{ value: 'sarasota', label: 'Sarasota Manatee' }
 		],
 		level: [
 			{ value: 'undergraduate', label: 'Undergraduate' },
@@ -128,12 +135,14 @@ export const dropdownOptions = readable({
 			{ value: 'out_of_state', label: 'Out-Of-State' }
 		],
 		semester: [
-			{ value: 'spring', label: 'Spring' },
 			{ value: 'fall', label: 'Fall' },
+			{ value: 'spring', label: 'Spring' },
 			{ value: 'summer_a', label: 'Summer A' },
 			{ value: 'summer_b', label: 'Summer B' },
+			{ value: 'summer_c', label: 'Summer C' },
 			{ value: 'summer_ab', label: 'Summer AB' },
-			{ value: 'summer_c', label: 'Summer C' }
+			{ value: 'summer_ac', label: 'Summer AC' },
+			{ value: 'summer_abc', label: 'Summer ABC' },
 		]
 	},
 	housing_food: {
@@ -190,6 +199,11 @@ export const dropdownOptions = readable({
 					{ value: 'four_ss', label: '4 Person Single Suite', cost: '4671' },
 					{ value: 'four_ds', label: '4 Person Double Suite', cost: '4505' },
 					{ value: 'triple_osprey', label: 'Triple', cost: '2922' }
+				]
+			},
+			sarasota: {
+				None: [
+					{ value: 'nothing', label: 'Sarasota Manatee has no housing', cost: '0' }
 				]
 			}
 		},
@@ -249,25 +263,25 @@ export const dropdownOptions = readable({
 			{ value: 'prepaid_plan_after', label: 'After January 1st, 2007' }
 		],
 		prepaid_plan_before: [
-			{ value: 'tuition_plan_before', label: 'Tuition Plan ($117.08 per credit hour)' },
+			{ value: 'tuition_plan_before', label: 'Tuition Plan ($117.08)' },
 			{
 				value: 'tuition_local_before',
-				label: 'Tuition and Local Fee Plan ($153.56 per credit hour)'
+				label: 'Tuition and Local Fee Plan ($153.56)'
 			}
 		],
 		prepaid_plan_after: [
-			{ value: 'tuition_plan_after', label: 'Tuition Plan ($117.08 per credit hour)' },
+			{ value: 'tuition_plan_after', label: 'Tuition Plan ($117.08)' },
 			{
 				value: 'tuition_local_after',
-				label: 'Tuition and Local Fee Plan ($153.56 per credit hour)'
+				label: 'Tuition and Local Fee Plan ($153.56)'
 			},
 			{
 				value: 'tuition_diff_after',
-				label: 'Tuition and Differential Fee Plan ($163.96 per credit hour)'
+				label: 'Tuition and Differential Fee Plan ($163.96)'
 			},
 			{
 				value: 'tuition_local_diff_after',
-				label: 'Tuition, Differential, Local Fee Plan ($200.44 per credit hour)'
+				label: 'Tuition, Differential, Local Fee Plan ($200.44)'
 			}
 		],
 		bright_futures: [
