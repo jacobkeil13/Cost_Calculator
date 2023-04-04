@@ -6,26 +6,29 @@ export const enums = {
 
 export const static_vars = readable({
 	graduate: {
-		in_state: 438.83,
-		out_of_state: 880.25
+		in_state: 431.43,
+		out_of_state: 877.17
 	},
 	undergraduate: {
 		in_state: 211.19,
-		out_of_state: 578.09
+		out_of_state: 575.01
 	},
-	tampa_flat: 37,
-	sarasota_manatee_flat: 17
+	flat_fees: {
+		tampa: 37,
+		st_pete: 17,
+		sarasota: 17
+	},
+	tuition_diff: 46.88,
+	prepaid_fee: 17
 });
 
 export const semester_months = readable({
-	spring: 4.5,
 	fall: 4.5,
-	summer_a: 1,
-	summer_b: 1,
-	summer_c: 2.5,
-	summer_ab: 3,
-	summer_ac: 2.5,
-	summer_abc: 3
+	spring: 4.5,
+	summer_a: 1.5,
+	summer_b: 1.5,
+	summer_c_ac: 2.5,
+	summer_ab_abc: 3
 });
 
 export const florida_prepaid_cost = readable({
@@ -39,6 +42,7 @@ export const florida_prepaid_cost = readable({
 
 export const housing_cost = readable({
 	nothing: 0,
+	no_housing: 0,
 	beta_castor_hall: 3070,
 	greek_village: 3070,
 	village_single: 4088,
@@ -65,19 +69,46 @@ export const housing_cost = readable({
 export const bright_futures_cost = readable({
 	nothing: 0,
 	bf_no: 0,
-	fms: 1890.99,
-	fas: 2521.28
+	fms: 156.51,
+	fas: 208.69,
+	fms_fee: 12.75,
+	fas_fee: 17
 });
 
 export const green_gold_cost = readable({
 	nothing: 0,
-	presidential: 4365.84,
-	directors: 4365.84,
-	scholars: 3000
+	presidential: {
+		"12": 4365.84,
+		"13": 4729.66,
+		"14": 5093.48,
+		"15": 5457.30,
+		"16": 5821.12,
+		"17": 6000.00,
+		"18": 6000.00,
+	},
+	directors: {
+		"12": 4365.84,
+		"13": 4500.00,
+		"14": 4500.00,
+		"15": 4500.00,
+		"16": 4500.00,
+		"17": 4500.00,
+		"18": 4500.00,
+	},
+	scholars: {
+		"12": 3000.00,
+		"13": 3000.00,
+		"14": 3000.00,
+		"15": 3000.00,
+		"16": 3000.00,
+		"17": 3000.00,
+		"18": 3000.00,
+	}
 });
 
 export const food_plan_cost = readable({
 	nothing: 0,
+	ss_none: 0,
 	no_food_plan: 0,
 	open_access: 2275,
 	any_15: 2150,
@@ -139,10 +170,8 @@ export const dropdownOptions = readable({
 			{ value: 'spring', label: 'Spring' },
 			{ value: 'summer_a', label: 'Summer A' },
 			{ value: 'summer_b', label: 'Summer B' },
-			{ value: 'summer_c', label: 'Summer C' },
-			{ value: 'summer_ab', label: 'Summer AB' },
-			{ value: 'summer_ac', label: 'Summer AC' },
-			{ value: 'summer_abc', label: 'Summer ABC' },
+			{ value: 'summer_c_ac', label: 'Summer C or AC' },
+			{ value: 'summer_ab_abc', label: 'Summer AB or ABC' },
 		]
 	},
 	housing_food: {
@@ -201,11 +230,7 @@ export const dropdownOptions = readable({
 					{ value: 'triple_osprey', label: 'Triple', cost: '2922' }
 				]
 			},
-			sarasota: {
-				None: [
-					{ value: 'nothing', label: 'Sarasota Manatee has no housing', cost: '0' }
-				]
-			}
+			sarasota: {}
 		},
 		llc: [
 			{ value: 'llc_no', label: "I don't live in an LLC", cost: '0' },
@@ -246,7 +271,8 @@ export const dropdownOptions = readable({
 					{ value: 'sp_any_15', label: 'Any 15', cost: '2150' },
 					{ value: 'sp_bull_175', label: 'BULL Block 175', cost: '1900' }
 				]
-			}
+			},
+			sarasota: {}
 		}
 	},
 	transportation: [

@@ -28,6 +28,8 @@
 	function switchStep(step_num) {
 		current_step.set(step_num);
 	}
+
+	// $: console.log($funding, $funding_total);
 </script>
 
 <div
@@ -51,7 +53,10 @@
 			? 'text-white'
 			: 'text-red-700'}"
 	>
-		${Math.round($total < 0 ? $total * -1 : $total).toLocaleString()}
+		${($total < 0 ? $total * -1 : $total).toLocaleString(undefined, {
+			minimumFractionDigits: 2,
+			maximumFractionDigits: 2
+		})}
 	</h1>
 	{#if clientX > 960}
 		<div class="my-10 space-y-3">
@@ -70,7 +75,10 @@
 						class="text-xl {section.id === 6 ? 'text-[#2a990e]' : 'text-[#000000]'} font-semibold"
 					>
 						{#if section.name != 'Student Information' && section.name != 'Summary'}
-							${Math.round(section.amount).toLocaleString()}
+							${section.amount.toLocaleString(undefined, {
+								minimumFractionDigits: 2,
+								maximumFractionDigits: 2
+							})}
 						{/if}
 					</h1>
 				</div>

@@ -20,7 +20,7 @@ export const student_information = writable({
 });
 
 export const tuition_fees = writable({
-	credit_hours: 0,
+	credit_hours: 1,
 	lab_fees: 0,
 	other_fees: 0
 });
@@ -94,41 +94,17 @@ export const funding = writable({
 });
 
 export let tuition_fees_total = derived(
-	[tuition_fees, student_information, static_vars],
-	([$tuition_fees, $student_information, $static_vars]) => {
+	[tuition_fees, student_information, static_vars, funding, bright_futures_cost, florida_prepaid_cost],
+	([$tuition_fees, $student_information, $static_vars, $funding, $bright_futures_cost, $florida_prepaid_cost]) => {
 		let credit_cost = 0;
 		let flat_fees = 0;
 
 		// If the student is in state or out of state check if they are a graduate or undergraduate
-		// student and set the correct credit cost. Else set the cost to 0.
-		if ($student_information.tuition === 'in_state') {
-			if ($student_information.level === 'graduate') {
-				credit_cost = $static_vars.graduate.in_state;
-			} else if ($student_information.level === 'undergraduate') {
-				credit_cost = $static_vars.undergraduate.in_state;
-			}
-		} else if ($student_information.tuition === 'out_of_state') {
-			if ($student_information.level === 'graduate') {
-				credit_cost = $static_vars.graduate.out_of_state;
-			} else if ($student_information.level === 'undergraduate') {
-				credit_cost = $static_vars.undergraduate.out_of_state;
-			}
-		} else {
-			credit_cost = 0;
-		}
+		// student and set the correct credit cost.
+		credit_cost = $static_vars[$student_information.level][$student_information.tuition];
 
 		// Set the flat fee for the student based on the campus they pick.
-		if ($student_information.campus === 'tampa') {
-			if ($tuition_fees.credit_hours != 0) {
-				flat_fees = $static_vars.tampa_flat;
-			}
-		} else if ($student_information.campus === 'st_pete') {
-			if ($tuition_fees.credit_hours != 0) {
-				flat_fees = $static_vars.sarasota_manatee_flat;
-			}
-		} else {
-			flat_fees = 0;
-		}
+		flat_fees = $static_vars.flat_fees[$student_information.campus];
 
 		// Return the credit hours multiplied by the credit cost with the other tuition fees
 		// and flat fee added on.
@@ -147,13 +123,29 @@ export let housing_food_total = derived(
 		let housing_food = 0;
 
 		// Initial housing and food values that don't rely on other fields.
-		housing_food = $food_plan_cost[$housing_food.food_plan];
+		if ($student_information.campus != 'sarasota') {
+			if ($student_information.campus === 'tampa' || $student_information.campus === 'st_pete') {
+				if ($housing_food.food_plan === 'no_food_plan') {
+					$housing_food.food_plan = 'no_food_plan';
+				}
+				if ($housing_food.on_campus.housing === 'nothing') {
+					$housing_food.on_campus.housing = 'no_housing';
+				}
+			}
+			housing_food += $food_plan_cost[$housing_food.food_plan];
+		} else {
+			$housing_food.on_campus.housing = 'nothing';
+			$housing_food.food_plan = 'nothing';
+		}
 
 		// If the student is living on campus add the housing cost and llc
 		// cost to the total.
 		if ($housing_food.living_plan === 'on_campus') {
-			housing_food +=
-				$housing_cost[$housing_food.on_campus.housing] + $llc_cost[$housing_food.on_campus.llc];
+			if ($student_information.campus != 'sarasota') {
+				housing_food +=
+					$housing_cost[$housing_food.on_campus.housing];
+			}
+			housing_food += $llc_cost[$housing_food.on_campus.llc];
 		}
 		// If the student is living off campus with parents/family we add
 		// any utility fees they might pay.
@@ -241,7 +233,8 @@ export let funding_total = derived(
 		bright_futures_cost,
 		florida_prepaid_cost,
 		green_gold_cost,
-		semester_months
+		semester_months,
+		static_vars
 	],
 	([
 		$funding,
@@ -250,7 +243,8 @@ export let funding_total = derived(
 		$bright_futures_cost,
 		$florida_prepaid_cost,
 		$green_gold_cost,
-		$semester_months
+		$semester_months,
+		$static_vars
 	]) => {
 		let funding = 0;
 
@@ -259,7 +253,15 @@ export let funding_total = derived(
 
 		// If Florida prepaid is yes, then we multiply the plan value by the chosen credit hours.
 		if ($funding.has_fl_prepaid === 'prepaid_yes') {
-			funding += $florida_prepaid_cost[$funding.prepaid_plan] * $tuition_fees.credit_hours;
+			funding += $florida_prepaid_cost[$funding.prepaid_plan] * $tuition_fees.credit_hours + $static_vars.prepaid_fee;
+			if ($funding.when_purchased === 'prepaid_plan_before') {
+				funding += $static_vars.tuition_diff * $tuition_fees.credit_hours;
+			}
+			if ($funding.bright_futures === 'fms') {
+				funding += $bright_futures_cost.fms_fee;
+			} else if ($funding.bright_futures === 'fas') {
+				funding += $bright_futures_cost.fas_fee;
+			}
 		}
 
 		// If the student is out of state and doesn't have florida prepaid we ask if they are receiving
@@ -274,8 +276,9 @@ export let funding_total = derived(
 		}
 
 		// If the student has out of state tuition, we exclude the option for bright futures
-		if ($student_information.tuition === 'in_state') {
-			funding += $bright_futures_cost[$funding.bright_futures];
+		if ($student_information.tuition === 'in_state' &&
+			$student_information.level === 'undergraduate') {
+			funding += $bright_futures_cost[$funding.bright_futures] * $tuition_fees.credit_hours;
 		}
 
 		// Adding the correct funding for each added scholarship by checking if it is monthly or
@@ -342,7 +345,7 @@ export function resetCalculator() {
 	});
 
 	tuition_fees.set({
-		credit_hours: 0,
+		credit_hours: 1,
 		lab_fees: 0,
 		other_fees: 0
 	});

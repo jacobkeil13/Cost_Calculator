@@ -149,6 +149,62 @@ export const review_data = derived(
 				},
 				{
 					question: {
+						mobile: 'Rent and utilities::',
+						desktop: 'How much are you paying for rent and utilities?'
+					},
+					value: "$" + $housing_food.off_campus_parents.utility_fees + "/mo"
+				},
+				{
+					question: {
+						mobile: 'Rent:',
+						desktop: 'How much are you paying for rent?'
+					},
+					value: "$" + $housing_food.off_campus_alone.rent + "/mo"
+				},
+				{
+					question: {
+						mobile: 'Electric:',
+						desktop: 'How much are you paying for electric?'
+					},
+					value: "$" + $housing_food.off_campus_alone.electric + "/mo"
+				},
+				{
+					question: {
+						mobile: 'Water:',
+						desktop: 'How much are you paying for water?'
+					},
+					value: "$" + $housing_food.off_campus_alone.water + "/mo"
+				},
+				{
+					question: {
+						mobile: 'Natural gas:',
+						desktop: 'How much are you paying for natural gas?'
+					},
+					value: "$" + $housing_food.off_campus_alone.natural_gas + "/mo"
+				},
+				{
+					question: {
+						mobile: 'Internet:',
+						desktop: 'How much are you paying for internet?'
+					},
+					value: "$" + $housing_food.off_campus_alone.internet + "/mo"
+				},
+				{
+					question: {
+						mobile: 'Cable:',
+						desktop: 'How much are you paying for cable?'
+					},
+					value: "$" + $housing_food.off_campus_alone.cable + "/mo"
+				},
+				{
+					question: {
+						mobile: 'Phone:',
+						desktop: 'How much are you paying for phone?'
+					},
+					value: "$" + $housing_food.off_campus_alone.phone + "/mo"
+				},
+				{
+					question: {
 						mobile: 'Food plan:',
 						desktop: 'What food plan are you going to have?'
 					},
@@ -391,7 +447,35 @@ export const review_data = derived(
 					style: function () {
 						return this.value === 'None picked' ? 'text-red-700' : '';
 					}
-				}
+				},
+				{
+					question: {
+						mobile: 'Grants:',
+						desktop: 'Do you have any grants?'
+					},
+					value: '$' + $funding.grants + '/sem'
+				},
+				{
+					question: {
+						mobile: 'Loans:',
+						desktop: 'Do you have any loans?'
+					},
+					value: '$' + $funding.loans + '/sem'
+				},
+				{
+					question: {
+						mobile: 'Scholarships:',
+						desktop: 'Do you have any scholarships?'
+					},
+					value: $funding.scholarships
+				},
+				{
+					question: {
+						mobile: 'Jobs:',
+						desktop: 'Do you have any jobs?'
+					},
+					value: $funding.jobs
+				},
 			]
 		};
 	}

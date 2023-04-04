@@ -8,13 +8,14 @@
 		housing_food,
 		housing_food_total,
 		personal_total,
-		total,
+		student_information,
 		transportation,
 		transportation_total,
 		tuition_fees_total
 	} from '../../store';
 	import ReviewRow from '../form-display/ReviewRow.svelte';
 	import ReviewSection from '../form-display/ReviewSection.svelte';
+	import { enums, semester_months, static_vars } from '../../constants.js';
 
 	let clientX;
 
@@ -49,7 +50,11 @@
 		{#if $tuition_fees_total != 0}
 			<ReviewRow
 				question="Total:"
-				value={'$' + Math.round($tuition_fees_total).toLocaleString()}
+				value={'$' +
+					$tuition_fees_total.toLocaleString(undefined, {
+						minimumFractionDigits: 2,
+						maximumFractionDigits: 2
+					})}
 				style="font-semibold text-green-700"
 			/>
 		{/if}
@@ -72,15 +77,71 @@
 				style={$review_data.housing_food[2].style()}
 			/>
 		{/if}
+		{#if $housing_food.living_plan === 'off_campus_parents'}
+			{#if parseInt($review_data.housing_food[3].value.replace('$', '').replace('/mo', '')) != 0}
+				<ReviewRow
+					question={$review_data.housing_food[3].question[flexWidth]}
+					value={$review_data.housing_food[3].value}
+				/>
+			{/if}
+		{/if}
+		{#if $housing_food.living_plan === 'off_campus_alone'}
+			{#if parseInt($review_data.housing_food[4].value.replace('$', '').replace('/mo', '')) != 0}
+				<ReviewRow
+					question={$review_data.housing_food[4].question[flexWidth]}
+					value={$review_data.housing_food[4].value}
+				/>
+			{/if}
+			{#if parseInt($review_data.housing_food[5].value.replace('$', '').replace('/mo', '')) != 0}
+				<ReviewRow
+					question={$review_data.housing_food[5].question[flexWidth]}
+					value={$review_data.housing_food[5].value}
+				/>
+			{/if}
+			{#if parseInt($review_data.housing_food[6].value.replace('$', '').replace('/mo', '')) != 0}
+				<ReviewRow
+					question={$review_data.housing_food[6].question[flexWidth]}
+					value={$review_data.housing_food[6].value}
+				/>
+			{/if}
+			{#if parseInt($review_data.housing_food[7].value.replace('$', '').replace('/mo', '')) != 0}
+				<ReviewRow
+					question={$review_data.housing_food[7].question[flexWidth]}
+					value={$review_data.housing_food[7].value}
+				/>
+			{/if}
+			{#if parseInt($review_data.housing_food[8].value.replace('$', '').replace('/mo', '')) != 0}
+				<ReviewRow
+					question={$review_data.housing_food[8].question[flexWidth]}
+					value={$review_data.housing_food[8].value}
+				/>
+			{/if}
+			{#if parseInt($review_data.housing_food[9].value.replace('$', '').replace('/mo', '')) != 0}
+				<ReviewRow
+					question={$review_data.housing_food[9].question[flexWidth]}
+					value={$review_data.housing_food[9].value}
+				/>
+			{/if}
+			{#if parseInt($review_data.housing_food[10].value.replace('$', '').replace('/mo', '')) != 0}
+				<ReviewRow
+					question={$review_data.housing_food[10].question[flexWidth]}
+					value={$review_data.housing_food[10].value}
+				/>
+			{/if}
+		{/if}
 		<ReviewRow
-			question={$review_data.housing_food[3].question[flexWidth]}
-			value={$review_data.housing_food[3].value}
-			style={$review_data.housing_food[3].style()}
+			question={$review_data.housing_food[11].question[flexWidth]}
+			value={$review_data.housing_food[11].value}
+			style={$review_data.housing_food[11].style()}
 		/>
 		{#if $housing_food_total != 0}
 			<ReviewRow
 				question="Total:"
-				value={'$' + Math.round($housing_food_total).toLocaleString()}
+				value={'$' +
+					$housing_food_total.toLocaleString(undefined, {
+						minimumFractionDigits: 2,
+						maximumFractionDigits: 2
+					})}
 				style="font-semibold text-green-700"
 			/>
 		{/if}
@@ -94,7 +155,11 @@
 			{/each}
 			<ReviewRow
 				question="Total:"
-				value={'$' + Math.round($books_supplies_total).toLocaleString()}
+				value={'$' +
+					$books_supplies_total.toLocaleString(undefined, {
+						minimumFractionDigits: 2,
+						maximumFractionDigits: 2
+					})}
 				style="font-semibold text-green-700"
 			/>
 		{:else}
@@ -152,7 +217,11 @@
 		{#if $transportation_total != 0}
 			<ReviewRow
 				question="Total:"
-				value={'$' + Math.round($transportation_total).toLocaleString()}
+				value={'$' +
+					$transportation_total.toLocaleString(undefined, {
+						minimumFractionDigits: 2,
+						maximumFractionDigits: 2
+					})}
 				style="font-semibold text-green-700"
 			/>
 		{/if}
@@ -166,7 +235,11 @@
 			{/each}
 			<ReviewRow
 				question="Total:"
-				value={'$' + Math.round($personal_total).toLocaleString()}
+				value={'$' +
+					$personal_total.toLocaleString(undefined, {
+						minimumFractionDigits: 2,
+						maximumFractionDigits: 2
+					})}
 				style="font-semibold text-green-700"
 			/>
 		{:else}
@@ -193,10 +266,49 @@
 				style={$review_data.funding[2].style()}
 			/>
 		{/if}
+		{#if parseInt($review_data.funding[4].value.replace('$', '').replace('/sem', '')) != 0}
+			<ReviewRow
+				question={$review_data.funding[4].question[flexWidth]}
+				value={$review_data.funding[4].value}
+			/>
+		{/if}
+		{#if parseInt($review_data.funding[5].value.replace('$', '').replace('/sem', '')) != 0}
+			<ReviewRow
+				question={$review_data.funding[5].question[flexWidth]}
+				value={$review_data.funding[5].value}
+			/>
+		{/if}
+		{#if $review_data.funding[6].value.length > 0}
+			{#each $review_data.funding[6].value as scholarship}
+				<ReviewRow
+					question={scholarship.name}
+					value={'$' +
+						scholarship.amount +
+						`${scholarship.concurrency === 'monthly' ? '/mo' : '/sem'}`}
+				/>
+			{/each}
+		{/if}
+		{#if $review_data.funding[7].value.length > 0}
+			{#each $review_data.funding[7].value as job}
+				<ReviewRow
+					question={job.name}
+					value={'$' +
+						job.amount *
+							job.hours *
+							enums.WEEKS_IN_MONTH *
+							$semester_months[$student_information.semester] +
+						'/sem'}
+				/>
+			{/each}
+		{/if}
 		{#if $funding_total != 0}
 			<ReviewRow
 				question="Total:"
-				value={'$' + Math.round($funding_total).toLocaleString()}
+				value={'$' +
+					$funding_total.toLocaleString(undefined, {
+						minimumFractionDigits: 2,
+						maximumFractionDigits: 2
+					})}
 				style="font-semibold text-green-700"
 			/>
 		{/if}

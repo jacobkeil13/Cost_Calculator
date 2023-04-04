@@ -51,11 +51,13 @@
 </script>
 
 <div in:fly={{ x: -10, duration: 500 }}>
-	<SelectionField
-		label="Do you have a Florida prepaid plan?"
-		options={funding_options.fl_prepaid}
-		bind:value={calc_data.has_fl_prepaid}
-	/>
+	{#if $student_information.tuition === 'in_state'}
+		<SelectionField
+			label="Do you have a Florida prepaid plan?"
+			options={funding_options.fl_prepaid}
+			bind:value={calc_data.has_fl_prepaid}
+		/>
+	{/if}
 
 	{#if calc_data.has_fl_prepaid === 'prepaid_no' && $student_information.tuition === 'out_of_state'}
 		<SelectionField

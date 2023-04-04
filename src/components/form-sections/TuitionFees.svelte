@@ -15,7 +15,7 @@
 	<RangeField
 		label="How many credit hours are you taking?"
 		bind:value={calc_data.credit_hours}
-		min="0"
+		min="1"
 		max="18"
 		step="1"
 	/>

@@ -9,8 +9,6 @@
 	let housingFood = $dropdownOptions.housing_food;
 	let calc_data = $housing_food;
 
-	let housing_alone = Object.keys(calc_data.off_campus_alone);
-
 	$: {
 		housing_food.set(calc_data);
 	}
@@ -25,8 +23,10 @@
 
 	{#if calc_data.living_plan === 'on_campus'}
 		<SelectionTieredField
+			disabled={$student_information.campus === 'sarasota'}
 			label="What housing are you staying in?"
-			options={housingFood.housing[$student_information.campus]}
+			extra_option={{ label: 'No Housing', value: 'no_housing', style: 'text-red-700' }}
+			options={housingFood?.housing[$student_information.campus]}
 			bind:value={calc_data.on_campus.housing}
 		/>
 		<SelectionField
@@ -49,7 +49,7 @@
 
 	{#if calc_data.living_plan === 'off_campus_alone'}
 		<h2 class="text-xl underline">What do you plan to spend from these areas?</h2>
-		{#each housing_alone as option}
+		{#each Object.keys(calc_data.off_campus_alone) as option}
 			<RangeMoneyField
 				label="{option.charAt(0).toUpperCase() + option.slice(1).replace('_', ' ')}?"
 				bind:value={calc_data.off_campus_alone[option]}
@@ -62,9 +62,10 @@
 	{/if}
 
 	<SelectionTieredField
+		disabled={$student_information.campus === 'sarasota'}
 		label="What food plan are you going to have?"
 		extra_option={{ label: 'No Food Plan', value: 'no_food_plan', style: 'text-red-600' }}
-		options={housingFood.food_plan[$student_information.campus]}
+		options={housingFood?.food_plan[$student_information.campus]}
 		bind:value={calc_data.food_plan}
 	/>
 </div>
