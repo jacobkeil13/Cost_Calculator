@@ -443,11 +443,11 @@ export function resetCalculator() {
 
 	funding.set({
 		has_fl_prepaid: 'prepaid_no',
-		has_green_gold: 'nothing',
+		has_green_gold: 'gg_no',
 		when_purchased: 'prepaid_plan_before',
 		prepaid_plan: 'tuition_plan_before',
 		bright_futures: 'bf_no',
-		green_gold_award: 'gg_no',
+		green_gold_award: 'scholars',
 		grants: 0,
 		loans: 0,
 		scholarships: [],
