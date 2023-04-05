@@ -81,11 +81,11 @@ export const personal = writable({
 
 export const funding = writable({
 	has_fl_prepaid: 'prepaid_no',
-	has_green_gold: 'nothing',
+	has_green_gold: 'gg_no',
 	when_purchased: 'prepaid_plan_before',
 	prepaid_plan: 'tuition_plan_before',
 	bright_futures: 'bf_no',
-	green_gold_award: 'gg_no',
+	green_gold_award: 'scholars',
 	grants: 0,
 	loans: 0,
 	scholarships: [],
@@ -94,8 +94,22 @@ export const funding = writable({
 });
 
 export let tuition_fees_total = derived(
-	[tuition_fees, student_information, static_vars, funding, bright_futures_cost, florida_prepaid_cost],
-	([$tuition_fees, $student_information, $static_vars, $funding, $bright_futures_cost, $florida_prepaid_cost]) => {
+	[
+		tuition_fees,
+		student_information,
+		static_vars,
+		funding,
+		bright_futures_cost,
+		florida_prepaid_cost
+	],
+	([
+		$tuition_fees,
+		$student_information,
+		$static_vars,
+		$funding,
+		$bright_futures_cost,
+		$florida_prepaid_cost
+	]) => {
 		let credit_cost = 0;
 		let flat_fees = 0;
 
@@ -119,7 +133,14 @@ export let tuition_fees_total = derived(
 
 export let housing_food_total = derived(
 	[housing_food, housing_cost, food_plan_cost, llc_cost, semester_months, student_information],
-	([$housing_food, $housing_cost, $food_plan_cost, $llc_cost, $semester_months, $student_information]) => {
+	([
+		$housing_food,
+		$housing_cost,
+		$food_plan_cost,
+		$llc_cost,
+		$semester_months,
+		$student_information
+	]) => {
 		let housing_food = 0;
 
 		// Initial housing and food values that don't rely on other fields.
@@ -142,15 +163,16 @@ export let housing_food_total = derived(
 		// cost to the total.
 		if ($housing_food.living_plan === 'on_campus') {
 			if ($student_information.campus != 'sarasota') {
-				housing_food +=
-					$housing_cost[$housing_food.on_campus.housing];
+				housing_food += $housing_cost[$housing_food.on_campus.housing];
 			}
 			housing_food += $llc_cost[$housing_food.on_campus.llc];
 		}
 		// If the student is living off campus with parents/family we add
 		// any utility fees they might pay.
 		else if ($housing_food.living_plan === 'off_campus_parents') {
-			housing_food += $housing_food.off_campus_parents.utility_fees * $semester_months[$student_information.semester];
+			housing_food +=
+				$housing_food.off_campus_parents.utility_fees *
+				$semester_months[$student_information.semester];
 		}
 		// If the student is living off campus alone add any related utility
 		// and rent that they might pay.
@@ -162,7 +184,8 @@ export let housing_food_total = derived(
 					$housing_food.off_campus_alone.natural_gas +
 					$housing_food.off_campus_alone.phone +
 					$housing_food.off_campus_alone.rent +
-					$housing_food.off_campus_alone.water) * $semester_months[$student_information.semester];
+					$housing_food.off_campus_alone.water) *
+				$semester_months[$student_information.semester];
 		}
 
 		return housing_food;
@@ -185,12 +208,13 @@ export let transportation_total = derived(
 			transportation =
 				tp.parking_pass +
 				(tp.car_payment + tp.insurance + tp.gas + tp.maintenance) *
-				$semester_months[$student_information.semester];
+					$semester_months[$student_information.semester];
 		}
 		// If the student is not bringing a vehicle we only add the other trnasport field
 		// to the total.
 		else if ($transportation.has_vehicle === 'vehicle_no') {
-			transportation = $transportation.other_transport * $semester_months[$student_information.semester];
+			transportation =
+				$transportation.other_transport * $semester_months[$student_information.semester];
 		}
 
 		return transportation;
@@ -253,7 +277,9 @@ export let funding_total = derived(
 
 		// If Florida prepaid is yes, then we multiply the plan value by the chosen credit hours.
 		if ($funding.has_fl_prepaid === 'prepaid_yes') {
-			funding += $florida_prepaid_cost[$funding.prepaid_plan] * $tuition_fees.credit_hours + $static_vars.prepaid_fee;
+			funding +=
+				$florida_prepaid_cost[$funding.prepaid_plan] * $tuition_fees.credit_hours +
+				$static_vars.prepaid_fee;
 			if ($funding.when_purchased === 'prepaid_plan_before') {
 				funding += $static_vars.tuition_diff * $tuition_fees.credit_hours;
 			}
@@ -268,16 +294,23 @@ export let funding_total = derived(
 		// a green and gold scholarship. If yes, then we add the cost of their pick.
 		if (
 			$student_information.tuition === 'out_of_state' &&
+			$student_information.level === 'undergraduate' &&
 			$funding.has_fl_prepaid === 'prepaid_no'
 		) {
 			if ($funding.has_green_gold === 'gg_yes') {
-				funding += $green_gold_cost[$funding.green_gold_award];
+				if ($tuition_fees.credit_hours > 11) {
+					if ($funding.green_gold_award != 'nothing') {
+						funding += $green_gold_cost[$funding.green_gold_award][$tuition_fees.credit_hours];
+					}
+				}
 			}
 		}
 
 		// If the student has out of state tuition, we exclude the option for bright futures
-		if ($student_information.tuition === 'in_state' &&
-			$student_information.level === 'undergraduate') {
+		if (
+			$student_information.tuition === 'in_state' &&
+			$student_information.level === 'undergraduate'
+		) {
 			funding += $bright_futures_cost[$funding.bright_futures] * $tuition_fees.credit_hours;
 		}
 
@@ -297,7 +330,11 @@ export let funding_total = derived(
 		// the chosen semester length.
 		if ($funding.jobs.length != 0) {
 			$funding.jobs.forEach((job) => {
-				funding += job.hours * job.amount * enums.WEEKS_IN_MONTH * $semester_months[$student_information.semester];
+				funding +=
+					job.hours *
+					job.amount *
+					enums.WEEKS_IN_MONTH *
+					$semester_months[$student_information.semester];
 			});
 		}
 
@@ -416,5 +453,5 @@ export function resetCalculator() {
 		scholarships: [],
 		jobs: [],
 		other_funding: 0
-	})
+	});
 }

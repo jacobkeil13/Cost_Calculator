@@ -152,56 +152,56 @@ export const review_data = derived(
 						mobile: 'Rent and utilities::',
 						desktop: 'How much are you paying for rent and utilities?'
 					},
-					value: "$" + $housing_food.off_campus_parents.utility_fees + "/mo"
+					value: '$' + $housing_food.off_campus_parents.utility_fees + '/mo'
 				},
 				{
 					question: {
 						mobile: 'Rent:',
 						desktop: 'How much are you paying for rent?'
 					},
-					value: "$" + $housing_food.off_campus_alone.rent + "/mo"
+					value: '$' + $housing_food.off_campus_alone.rent + '/mo'
 				},
 				{
 					question: {
 						mobile: 'Electric:',
 						desktop: 'How much are you paying for electric?'
 					},
-					value: "$" + $housing_food.off_campus_alone.electric + "/mo"
+					value: '$' + $housing_food.off_campus_alone.electric + '/mo'
 				},
 				{
 					question: {
 						mobile: 'Water:',
 						desktop: 'How much are you paying for water?'
 					},
-					value: "$" + $housing_food.off_campus_alone.water + "/mo"
+					value: '$' + $housing_food.off_campus_alone.water + '/mo'
 				},
 				{
 					question: {
 						mobile: 'Natural gas:',
 						desktop: 'How much are you paying for natural gas?'
 					},
-					value: "$" + $housing_food.off_campus_alone.natural_gas + "/mo"
+					value: '$' + $housing_food.off_campus_alone.natural_gas + '/mo'
 				},
 				{
 					question: {
 						mobile: 'Internet:',
 						desktop: 'How much are you paying for internet?'
 					},
-					value: "$" + $housing_food.off_campus_alone.internet + "/mo"
+					value: '$' + $housing_food.off_campus_alone.internet + '/mo'
 				},
 				{
 					question: {
 						mobile: 'Cable:',
 						desktop: 'How much are you paying for cable?'
 					},
-					value: "$" + $housing_food.off_campus_alone.cable + "/mo"
+					value: '$' + $housing_food.off_campus_alone.cable + '/mo'
 				},
 				{
 					question: {
 						mobile: 'Phone:',
 						desktop: 'How much are you paying for phone?'
 					},
-					value: "$" + $housing_food.off_campus_alone.phone + "/mo"
+					value: '$' + $housing_food.off_campus_alone.phone + '/mo'
 				},
 				{
 					question: {
@@ -450,6 +450,19 @@ export const review_data = derived(
 				},
 				{
 					question: {
+						mobile: 'Green and gold:',
+						desktop: 'Do you qualify for the Green and Gold scholarship?'
+					},
+					value:
+						$dropdownOptions.funding.gg_scholarship.gg_options.find(
+							(i) => i.value === $funding.green_gold_award
+						).label || 'None picked',
+					style: function () {
+						return this.value === 'None picked' ? 'text-red-700' : '';
+					}
+				},
+				{
+					question: {
 						mobile: 'Grants:',
 						desktop: 'Do you have any grants?'
 					},
@@ -475,7 +488,7 @@ export const review_data = derived(
 						desktop: 'Do you have any jobs?'
 					},
 					value: $funding.jobs
-				},
+				}
 			]
 		};
 	}

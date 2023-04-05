@@ -266,10 +266,16 @@
 				style={$review_data.funding[2].style()}
 			/>
 		{/if}
-		{#if parseInt($review_data.funding[4].value.replace('$', '').replace('/sem', '')) != 0}
+		<ReviewRow
+			question={$review_data.funding[3].question[flexWidth]}
+			value={$review_data.funding[3].value}
+			style={$review_data.funding[3].style()}
+		/>
+		{#if $funding.has_fl_prepaid === 'prepaid_no' && $student_information.tuition === 'out_of_state' && $student_information.level === 'undergraduate'}
 			<ReviewRow
 				question={$review_data.funding[4].question[flexWidth]}
 				value={$review_data.funding[4].value}
+				style={$review_data.funding[4].style()}
 			/>
 		{/if}
 		{#if parseInt($review_data.funding[5].value.replace('$', '').replace('/sem', '')) != 0}
@@ -278,8 +284,14 @@
 				value={$review_data.funding[5].value}
 			/>
 		{/if}
-		{#if $review_data.funding[6].value.length > 0}
-			{#each $review_data.funding[6].value as scholarship}
+		{#if parseInt($review_data.funding[6].value.replace('$', '').replace('/sem', '')) != 0}
+			<ReviewRow
+				question={$review_data.funding[6].question[flexWidth]}
+				value={$review_data.funding[6].value}
+			/>
+		{/if}
+		{#if $review_data.funding[7].value.length > 0}
+			{#each $review_data.funding[7].value as scholarship}
 				<ReviewRow
 					question={scholarship.name}
 					value={'$' +
@@ -288,8 +300,8 @@
 				/>
 			{/each}
 		{/if}
-		{#if $review_data.funding[7].value.length > 0}
-			{#each $review_data.funding[7].value as job}
+		{#if $review_data.funding[8].value.length > 0}
+			{#each $review_data.funding[8].value as job}
 				<ReviewRow
 					question={job.name}
 					value={'$' +
