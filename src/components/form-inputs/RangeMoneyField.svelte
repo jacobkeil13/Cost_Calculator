@@ -1,5 +1,11 @@
 <script>
-	export let label, value, min, max, step, concurrency;
+	export let label,
+		value,
+		min,
+		max,
+		step,
+		concurrency,
+		disabled = false;
 
 	function handleInput(e) {
 		if (parseInt(e.target.value) === null || parseInt(e.target.value) < parseInt(min)) {
@@ -13,11 +19,21 @@
 		<h1 class="font-semibold">{label}</h1>
 	{/if}
 	<div class="flex space-x-2">
-		<input type="range" {min} {max} {step} bind:value class="slider" />
+		<input
+			{disabled}
+			type="range"
+			{min}
+			{max}
+			{step}
+			bind:value
+			class="slider"
+			class:faded={disabled}
+		/>
 		<div class="flex flex-col">
 			<div class="flex">
 				<label for="value" class="text-xl">$</label>
 				<input
+					{disabled}
 					on:input={handleInput}
 					type="number"
 					name="value"
@@ -26,6 +42,7 @@
 					{step}
 					bind:value
 					class="border-green-900 border-b-2 px-1 bg-transparent text-xl font-medium"
+					class:faded={disabled}
 				/>
 			</div>
 			<p class="text-sm">{concurrency}</p>
@@ -76,5 +93,9 @@
 
 	input[type='number']:focus {
 		outline: none;
+	}
+
+	.faded {
+		opacity: 50%;
 	}
 </style>

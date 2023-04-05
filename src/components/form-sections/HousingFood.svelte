@@ -26,7 +26,7 @@
 			disabled={$student_information.campus === 'sarasota'}
 			label="What housing are you staying in?"
 			extra_option={{ label: 'No Housing', value: 'no_housing', style: 'text-red-700' }}
-			options={housingFood?.housing[$student_information.campus]}
+			options={housingFood?.housing[$student_information.campus][$student_information.semester]}
 			bind:value={calc_data.on_campus.housing}
 		/>
 		<SelectionField
@@ -65,7 +65,7 @@
 		disabled={$student_information.campus === 'sarasota'}
 		label="What food plan are you going to have?"
 		extra_option={{ label: 'No Food Plan', value: 'no_food_plan', style: 'text-red-600' }}
-		options={housingFood?.food_plan[$student_information.campus]}
+		options={housingFood?.food_plan[$student_information.campus][$student_information.semester]}
 		bind:value={calc_data.food_plan}
 	/>
 </div>

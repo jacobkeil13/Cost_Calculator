@@ -1,5 +1,6 @@
 <script>
-	import { tuition_fees } from '../../store.js';
+	import { tuition_fees, student_information } from '../../store.js';
+	import { static_vars } from '../../constants.js';
 	import { fly } from 'svelte/transition';
 	import RangeField from '../form-inputs/RangeField.svelte';
 	import RangeMoneyField from '../form-inputs/RangeMoneyField.svelte';
@@ -32,6 +33,15 @@
 		bind:value={calc_data.other_fees}
 		min="0"
 		max="750"
+		step="5"
+		concurrency="per semester"
+	/>
+	<RangeMoneyField
+		disabled
+		label="Campus flat fees:"
+		value={$static_vars.flat_fees[$student_information.campus]}
+		min="0"
+		max="100"
 		step="5"
 		concurrency="per semester"
 	/>

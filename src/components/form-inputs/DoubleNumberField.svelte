@@ -1,5 +1,5 @@
 <script>
-	import { semester_months } from '../../constants';
+	import { semester_months, enums } from '../../constants';
 	import { student_information } from '../../store';
 
 	export let value;
@@ -40,7 +40,10 @@
 					disabled
 					type="number"
 					name="per_semester"
-					value={value.hours * value.amount * 4 * $semester_months[$student_information.semester]}
+					value={value.hours *
+						value.amount *
+						enums.WEEKS_IN_MONTH *
+						$semester_months[$student_information.semester]}
 					class="border-green-900 border-b-2 px-1 bg-transparent w-[80px] text-xl font-medium"
 				/>
 			</div>

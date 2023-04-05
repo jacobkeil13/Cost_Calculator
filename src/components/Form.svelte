@@ -1,5 +1,5 @@
 <script>
-	import { current_step, resetCalculator } from '../store.js';
+	import { current_step } from '../store.js';
 	import { steps } from '../constants.js';
 	import BooksSupplies from './form-sections/BooksSupplies.svelte';
 	import Funding from './form-sections/Funding.svelte';
@@ -16,9 +16,20 @@
 
 <div id="form" class="w-full">
 	<div class="flex justify-between py-4">
-		<h1 class="text-3xl font-medium text-[#006747] rounded-sm">{step_name}</h1>
+		<div class="flex space-x-3">
+			<h1 class="text-3xl font-medium text-[#006747] rounded-sm">{step_name}</h1>
+			{#if $current_step === $steps.indexOf('Summary')}
+				<!-- svelte-ignore a11y-click-events-have-key-events -->
+				<box-icon
+					on:click={() => window.print()}
+					type="solid"
+					name="printer"
+					class="fill-black cursor-pointer mt-2"
+				/>
+			{/if}
+		</div>
 		<button
-			on:click={resetCalculator}
+			on:click={() => location.reload()}
 			class="px-2 py-1 bg-[#a71b26] hover:bg-[#cf2836] text-white rounded-sm">Reset</button
 		>
 	</div>

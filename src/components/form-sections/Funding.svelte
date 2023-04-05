@@ -57,7 +57,7 @@
 		bind:value={calc_data.has_fl_prepaid}
 	/>
 
-	{#if calc_data.has_fl_prepaid === 'prepaid_no' && $student_information.tuition === 'out_of_state'}
+	{#if calc_data.has_fl_prepaid === 'prepaid_no' && $student_information.tuition === 'out_of_state' && $student_information.level === 'undergraduate'}
 		<SelectionField
 			label="Are you receiving a USF Green and Gold Scholarship?"
 			options={funding_options.gg_scholarship.has_scholarship}

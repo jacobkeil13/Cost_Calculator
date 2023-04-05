@@ -1,4 +1,6 @@
 <script>
+	import { current_step } from '../store.js';
+	import { steps } from '../constants.js';
 	import Form from '../components/Form.svelte';
 	import FormInstructions from '../components/FormInstructions.svelte';
 	import FormTotal from '../components/FormTotal.svelte';
@@ -12,7 +14,9 @@
 	{#if clientX >= 960}
 		<div class="grid grid-cols-[2fr_1fr] gap-4 p-6">
 			<section class="pr-3">
-				<FormInstructions />
+				{#if $current_step === $steps.indexOf('Student Information')}
+					<FormInstructions />
+				{/if}
 				<Form />
 			</section>
 			<div class="sticky top-6 self-start">
@@ -22,7 +26,6 @@
 	{/if}
 	{#if clientX < 960}
 		<div class="p-6">
-			<!-- <FormInstructions /> -->
 			<Form />
 		</div>
 		<div class="h-32" />

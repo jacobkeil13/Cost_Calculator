@@ -13,14 +13,14 @@ import {
 export const current_step = writable(0);
 
 export const student_information = writable({
-	campus: 'tampa',
-	level: 'undergraduate',
-	tuition: 'in_state',
-	semester: 'fall'
+	campus: 'nothing',
+	level: 'nothing',
+	tuition: 'nothing',
+	semester: 'nothing'
 });
 
 export const tuition_fees = writable({
-	credit_hours: 1,
+	credit_hours: 0,
 	lab_fees: 0,
 	other_fees: 0
 });
@@ -97,18 +97,12 @@ export let tuition_fees_total = derived(
 	[
 		tuition_fees,
 		student_information,
-		static_vars,
-		funding,
-		bright_futures_cost,
-		florida_prepaid_cost
+		static_vars
 	],
 	([
 		$tuition_fees,
 		$student_information,
-		$static_vars,
-		$funding,
-		$bright_futures_cost,
-		$florida_prepaid_cost
+		$static_vars
 	]) => {
 		let credit_cost = 0;
 		let flat_fees = 0;
@@ -150,7 +144,7 @@ export let housing_food_total = derived(
 					$housing_food.food_plan = 'no_food_plan';
 				}
 				if ($housing_food.on_campus.housing === 'nothing') {
-					$housing_food.on_campus.housing = 'no_housing';
+					$housing_food.on_campus.housing = 'nothing';
 				}
 			}
 			housing_food += $food_plan_cost[$housing_food.food_plan];
@@ -208,7 +202,7 @@ export let transportation_total = derived(
 			transportation =
 				tp.parking_pass +
 				(tp.car_payment + tp.insurance + tp.gas + tp.maintenance) *
-					$semester_months[$student_information.semester];
+				$semester_months[$student_information.semester];
 		}
 		// If the student is not bringing a vehicle we only add the other trnasport field
 		// to the total.
@@ -370,88 +364,3 @@ export const total = derived(
 		);
 	}
 );
-
-export function resetCalculator() {
-	current_step.set(0);
-
-	student_information.set({
-		campus: 'tampa',
-		level: 'undergraduate',
-		tuition: 'in_state',
-		semester: 'fall'
-	});
-
-	tuition_fees.set({
-		credit_hours: 1,
-		lab_fees: 0,
-		other_fees: 0
-	});
-
-	housing_food.set({
-		living_plan: 'nothing',
-		food_plan: 'nothing',
-		on_campus: {
-			housing: 'nothing',
-			llc: 'nothing'
-		},
-		off_campus_parents: {
-			utility_fees: 0
-		},
-		off_campus_alone: {
-			rent: 0,
-			electric: 0,
-			water: 0,
-			natural_gas: 0,
-			internet: 0,
-			cable: 0,
-			phone: 0
-		}
-	});
-
-	books_supplies.set({
-		books: 0,
-		supplies: 0
-	});
-
-	transportation.set({
-		has_vehicle: 'vehicle_no',
-		parking_pass: 0,
-		car_payment: 0,
-		insurance: 0,
-		gas: 0,
-		maintenance: 0,
-		other_transport: 0
-	});
-
-	personal.set({
-		takeout_coffee: 0,
-		groceries: 0,
-		health_care: 0,
-		personal_care: 0,
-		phone_bill: 0,
-		entertainment_social: 0,
-		travel_trips: 0,
-		subscriptions_memberships: 0,
-		clothing: 0,
-		family_expenses: 0,
-		org_dues: 0,
-		hobbies: 0,
-		pets: 0,
-		holidays_gifts: 0,
-		laundry: 0
-	});
-
-	funding.set({
-		has_fl_prepaid: 'prepaid_no',
-		has_green_gold: 'gg_no',
-		when_purchased: 'prepaid_plan_before',
-		prepaid_plan: 'tuition_plan_before',
-		bright_futures: 'bf_no',
-		green_gold_award: 'scholars',
-		grants: 0,
-		loans: 0,
-		scholarships: [],
-		jobs: [],
-		other_funding: 0
-	});
-}

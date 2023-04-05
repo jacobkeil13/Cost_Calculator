@@ -47,6 +47,12 @@
 				value={$review_data.tuition_fees[2].value}
 			/>
 		{/if}
+		{#if parseInt($review_data.tuition_fees[3].value.replace('$', '').replace('/sem', '')) != 0}
+			<ReviewRow
+				question={$review_data.tuition_fees[3].question[flexWidth]}
+				value={$review_data.tuition_fees[3].value}
+			/>
+		{/if}
 		{#if $tuition_fees_total != 0}
 			<ReviewRow
 				question="Total:"

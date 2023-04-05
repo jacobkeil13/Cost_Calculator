@@ -1,8 +1,8 @@
 <script>
 	import {
 		total,
-		funding,
 		current_step,
+		student_information,
 		tuition_fees_total,
 		housing_food_total,
 		books_supplies_total,
@@ -12,7 +12,6 @@
 	} from '../store.js';
 	export let clientX;
 
-	// $: console.log($semester_months[$student_information.semester]);
 	let bg_color = 'bg-[#006747] text-white py-1 px-3 rounded-sm font-medium';
 	$: sections = [
 		{ name: 'Student Information', id: 0, amount: 0 },
@@ -26,10 +25,16 @@
 	];
 
 	function switchStep(step_num) {
+		if (
+			$student_information.campus === 'nothing' ||
+			$student_information.level === 'nothing' ||
+			$student_information.tuition === 'nothing' ||
+			$student_information.semester === 'nothing'
+		) {
+			return;
+		}
 		current_step.set(step_num);
 	}
-
-	// $: console.log($funding, $funding_total);
 </script>
 
 <div

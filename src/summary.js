@@ -8,21 +8,25 @@ import {
 	personal,
 	funding
 } from './store';
-import { dropdownOptions } from './constants';
+import { dropdownOptions, static_vars } from './constants';
 
 function searchObj(obj, value) {
-	let keys = Object.keys(obj);
-	let label = '';
+	if (obj === undefined || value === 'nothing') {
+		return undefined;
+	} else {
+		let keys = Object.keys(obj);
+		let label = '';
 
-	keys.forEach((key, i) => {
-		obj[key].forEach((item, k) => {
-			if (item.value === value) {
-				label = item.label;
-			}
+		keys.forEach((key, i) => {
+			obj[key].forEach((item, k) => {
+				if (item.value === value) {
+					label = item.label;
+				}
+			});
 		});
-	});
 
-	return label;
+		return label;
+	}
 }
 
 export const review_data = derived(
@@ -34,7 +38,8 @@ export const review_data = derived(
 		books_supplies,
 		transportation,
 		personal,
-		funding
+		funding,
+		static_vars
 	],
 	([
 		$dropdownOptions,
@@ -44,7 +49,8 @@ export const review_data = derived(
 		$books_supplies,
 		$transportation,
 		$personal,
-		$funding
+		$funding,
+		$static_vars
 	]) => {
 		return {
 			student_information: [
@@ -55,7 +61,7 @@ export const review_data = derived(
 					},
 					value: $dropdownOptions.student_information.campus.find(
 						(i) => i.value === $student_information.campus
-					).label
+					)?.label || "None Picked"
 				},
 				{
 					question: {
@@ -64,7 +70,7 @@ export const review_data = derived(
 					},
 					value: $dropdownOptions.student_information.level.find(
 						(i) => i.value === $student_information.level
-					).label
+					)?.label || "None Picked"
 				},
 				{
 					question: {
@@ -73,7 +79,7 @@ export const review_data = derived(
 					},
 					value: $dropdownOptions.student_information.tuition.find(
 						(i) => i.value === $student_information.tuition
-					).label
+					)?.label || "None Picked"
 				},
 				{
 					question: {
@@ -82,7 +88,7 @@ export const review_data = derived(
 					},
 					value: $dropdownOptions.student_information.semester.find(
 						(i) => i.value === $student_information.semester
-					).label
+					)?.label || "None Picked"
 				}
 			],
 			tuition_fees: [
@@ -102,10 +108,17 @@ export const review_data = derived(
 				},
 				{
 					question: {
-						mobile: 'Additional fees',
+						mobile: 'Additional fees:',
 						desktop: 'Do you have any additional fees?'
 					},
 					value: '$' + $tuition_fees.other_fees + '/sem'
+				},
+				{
+					question: {
+						mobile: 'Campus fees:',
+						desktop: 'Campus fees:'
+					},
+					value: '$' + $static_vars.flat_fees[$student_information.campus] + '/sem'
 				}
 			],
 			housing_food: [
@@ -128,7 +141,7 @@ export const review_data = derived(
 					},
 					value:
 						searchObj(
-							$dropdownOptions.housing_food.housing[$student_information.campus],
+							$dropdownOptions.housing_food.housing[$student_information.campus][$student_information.semester],
 							$housing_food.on_campus.housing
 						) || 'None picked',
 					style: function () {
@@ -210,7 +223,7 @@ export const review_data = derived(
 					},
 					value:
 						searchObj(
-							$dropdownOptions.housing_food.food_plan[$student_information.campus],
+							$dropdownOptions.housing_food.food_plan[$student_information.campus][$student_information.semester],
 							$housing_food.food_plan
 						) || 'None picked',
 					style: function () {
