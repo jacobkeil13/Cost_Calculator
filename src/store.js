@@ -1,4 +1,4 @@
-import { derived, writable } from 'svelte/store';
+import { derived, readable, writable } from 'svelte/store';
 import {
 	static_vars,
 	enums,
@@ -6,9 +6,9 @@ import {
 	florida_prepaid_cost,
 	housing_cost,
 	llc_cost,
-	food_plan_cost,
 	bright_futures_cost,
-	green_gold_cost
+	green_gold_cost,
+	food_plan_cost
 } from './constants';
 export const current_step = writable(0);
 
@@ -83,7 +83,7 @@ export const funding = writable({
 	has_fl_prepaid: 'prepaid_no',
 	has_green_gold: 'gg_no',
 	when_purchased: 'prepaid_plan_before',
-	prepaid_plan: 'tuition_plan_before',
+	prepaid_plan: 'tuition_plan',
 	bright_futures: 'bf_no',
 	green_gold_award: 'scholars',
 	grants: 0,
@@ -104,7 +104,13 @@ export let tuition_fees_total = derived(
 		credit_cost = $static_vars[$student_information.level][$student_information.tuition];
 
 		// Set the flat fee for the student based on the campus they pick.
-		flat_fees = $static_vars.flat_fees[$student_information.campus];
+		if ($tuition_fees.credit_hours !== 0) {
+			if ($student_information.campus === 'nothing') {
+				flat_fees += $static_vars.flat_fees.nothing;
+			} else {
+				flat_fees += $static_vars.flat_fees.value;
+			}
+		}
 
 		// Return the credit hours multiplied by the credit cost with the other tuition fees
 		// and flat fee added on.
@@ -118,32 +124,20 @@ export let tuition_fees_total = derived(
 );
 
 export let housing_food_total = derived(
-	[housing_food, housing_cost, food_plan_cost, llc_cost, semester_months, student_information],
+	[housing_food, housing_cost, llc_cost, semester_months, student_information, food_plan_cost],
 	([
 		$housing_food,
 		$housing_cost,
-		$food_plan_cost,
 		$llc_cost,
 		$semester_months,
-		$student_information
+		$student_information,
+		$food_plan_cost
 	]) => {
 		let housing_food = 0;
 
-		// Initial housing and food values that don't rely on other fields.
-		if ($student_information.campus != 'sarasota') {
-			if ($student_information.campus === 'tampa' || $student_information.campus === 'st_pete') {
-				if ($housing_food.food_plan === 'no_food_plan') {
-					$housing_food.food_plan = 'nothing';
-				}
-				if ($housing_food.on_campus.housing === 'nothing') {
-					$housing_food.on_campus.housing = 'nothing';
-				}
-			}
-			housing_food += $food_plan_cost[$housing_food.food_plan];
-		} else {
-			$housing_food.on_campus.housing = 'nothing';
-			$housing_food.food_plan = 'nothing';
-		}
+		// Add the food plan to the initial cost since it can be picked no matter if you're on
+		// campus or not
+		housing_food += $food_plan_cost[$housing_food.food_plan];
 
 		// If the student is living on campus add the housing cost and llc
 		// cost to the total.
@@ -194,7 +188,7 @@ export let transportation_total = derived(
 			transportation =
 				tp.parking_pass +
 				(tp.car_payment + tp.insurance + tp.gas + tp.maintenance) *
-					$semester_months[$student_information.semester];
+				$semester_months[$student_information.semester];
 		}
 		// If the student is not bringing a vehicle we only add the other trnasport field
 		// to the total.
@@ -356,3 +350,17 @@ export const total = derived(
 		);
 	}
 );
+
+export const validated = derived([student_information], ($student_information) => {
+	let error = {};
+
+	let si_keys = Object.keys($student_information[0]);
+
+	si_keys.forEach((key) => {
+		if ($student_information[0][key] === 'nothing') {
+			error[key] = 'invalid';
+		}
+	})
+
+	return error;
+});

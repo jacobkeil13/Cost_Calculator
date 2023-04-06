@@ -8,7 +8,8 @@
 		books_supplies_total,
 		transportation_total,
 		personal_total,
-		funding_total
+		funding_total,
+		validated
 	} from '../store.js';
 	export let clientX;
 
@@ -25,12 +26,7 @@
 	];
 
 	function switchStep(step_num) {
-		if (
-			$student_information.campus === 'nothing' ||
-			$student_information.level === 'nothing' ||
-			$student_information.tuition === 'nothing' ||
-			$student_information.semester === 'nothing'
-		) {
+		if (Object.keys($validated).length != 0) {
 			return;
 		}
 		current_step.set(step_num);

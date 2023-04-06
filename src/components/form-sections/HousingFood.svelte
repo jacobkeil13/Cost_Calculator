@@ -8,16 +8,24 @@
 
 	let housingFood = $dropdownOptions.housing_food;
 	let calc_data = $housing_food;
+	let temp_options = housingFood.living;
 
 	$: {
 		housing_food.set(calc_data);
 	}
+
+	if ($student_information.campus === 'sarasota') {
+		temp_options = [
+			{ value: 'off_campus_parents', label: 'Off-Campus with parents/family' },
+			{ value: 'off_campus_alone', label: 'Off-Campus without parents/family' }
+		];
+	}
 </script>
 
-<div in:fly={{ x: -10, duration: 500 }}>
+<div in:fly={{ y: -10, duration: 200 }}>
 	<SelectionField
 		label="Where are you living during the semester?"
-		options={housingFood.living}
+		options={temp_options}
 		bind:value={calc_data.living_plan}
 	/>
 
@@ -25,13 +33,12 @@
 		<SelectionTieredField
 			disabled={$student_information.campus === 'sarasota'}
 			label="What housing are you staying in?"
-			extra_option={{ label: 'No Housing', value: 'no_housing', style: 'text-red-700' }}
 			options={housingFood?.housing[$student_information.campus][$student_information.semester]}
 			bind:value={calc_data.on_campus.housing}
 		/>
 		<SelectionField
 			label="What Living Learning Community are you a part of?"
-			options={housingFood.llc}
+			options={housingFood.llc[$student_information.campus]}
 			bind:value={calc_data.on_campus.llc}
 		/>
 	{/if}

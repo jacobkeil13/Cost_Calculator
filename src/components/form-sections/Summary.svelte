@@ -24,7 +24,7 @@
 
 <svelte:window bind:outerWidth={clientX} />
 
-<div in:fly={{ x: -10, duration: 500 }}>
+<div in:fly={{ y: -10, duration: 200 }}>
 	<ReviewSection title="Student Information" edit="Student Information">
 		{#each $review_data.student_information as data}
 			<ReviewRow question={data.question[flexWidth]} value={data.value} />

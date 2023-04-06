@@ -22,9 +22,7 @@ export const static_vars = readable({
 	},
 	flat_fees: {
 		nothing: 0,
-		tampa: 37,
-		st_pete: 17,
-		sarasota: 17
+		value: 37
 	},
 	tuition_diff: 46.88,
 	prepaid_fee: 17
@@ -41,17 +39,14 @@ export const semester_months = readable({
 });
 
 export const florida_prepaid_cost = readable({
-	tuition_plan_before: 117.08,
-	tuition_local_before: 153.56,
-	tuition_plan_after: 117.08,
-	tuition_local_after: 153.56,
-	tuition_diff_after: 163.96,
-	tuition_local_diff_after: 200.44
+	tuition_plan: 117.08,
+	tuition_local: 153.56,
+	tuition_diff: 163.96,
+	tuition_local_diff: 200.44
 });
 
 export const housing_cost = readable({
 	nothing: 0,
-	no_housing: 0,
 	beta_castor_hall: 3070,
 	greek_village: 3070,
 	village_single: 4088,
@@ -173,8 +168,8 @@ export const llc_cost = readable({
 	honors: 125,
 	engineering: 125,
 	education: 125,
-	bull_business: 125,
-	pre_nursing: 125
+	bull_business: 225,
+	pre_nursing: 225
 });
 
 export const steps = readable([
@@ -187,6 +182,13 @@ export const steps = readable([
 	'Funding',
 	'Summary'
 ]);
+
+export let errors = {
+	campus: "Campus is a required field.",
+	level: "Level is a required field.",
+	tuition: "Tuition is a required field.",
+	semester: "Semester is a required field."
+}
 
 export const dropdownOptions = readable({
 	student_information: {
@@ -386,14 +388,22 @@ export const dropdownOptions = readable({
 			},
 			sarasota: {}
 		},
-		llc: [
-			{ value: 'llc_no', label: "I don't live in an LLC", cost: '0' },
-			{ value: 'honors', label: 'Honors', cost: '125' },
-			{ value: 'engineering', label: 'Engineering', cost: '125' },
-			{ value: 'education', label: 'Education', cost: '125' },
-			{ value: 'bull_business', label: 'Bulls Business Community (BBC)', cost: '225' },
-			{ value: 'pre_nursing', label: 'Pre-Nursing', cost: '225' }
-		],
+		llc: {
+			tampa: [
+				{ value: 'llc_no', label: "I don't live in an LLC", cost: '0' },
+				{ value: 'honors', label: 'Honors', cost: '125' },
+				{ value: 'engineering', label: 'Engineering', cost: '125' },
+				{ value: 'education', label: 'Education', cost: '125' },
+				{ value: 'bull_business', label: 'Bulls Business Community (BBC)', cost: '225' },
+				{ value: 'pre_nursing', label: 'Pre-Nursing', cost: '225' }
+			],
+			st_pete: [
+				{ value: 'llc_no', label: "I don't live in an LLC", cost: '0' },
+				{ value: 'honors', label: 'Honors', cost: '125' },
+				{ value: 'bull_business', label: 'Bulls Business Community (BBC)', cost: '225' }
+			],
+			sarasota: []
+		},
 		food_plan: {
 			tampa: {
 				fall: {
@@ -445,7 +455,7 @@ export const dropdownOptions = readable({
 					]
 				},
 				summer_a: {
-					'Summer A': [
+					'First Time': [
 						{ value: 'open_access_a_b', label: 'Open Access', cost: '1075' },
 						{ value: 'bull_block_75', label: 'BULL Block 75', cost: '919' },
 						{ value: 'ace_b2b_open', label: 'ACE & B2B Open Access', cost: '949' },
@@ -453,7 +463,7 @@ export const dropdownOptions = readable({
 					]
 				},
 				summer_b: {
-					'Summer B': [
+					'First Time': [
 						{ value: 'open_access_a_b', label: 'Open Access', cost: '1075' },
 						{ value: 'bull_block_75', label: 'BULL Block 75', cost: '919' },
 						{ value: 'ace_b2b_open', label: 'ACE & B2B Open Access', cost: '949' },
@@ -461,7 +471,7 @@ export const dropdownOptions = readable({
 					]
 				},
 				summer_ab_abc: {
-					'Summer AB or ABC': [
+					'First Time': [
 						{ value: 'open_access_ab_abc', label: 'Open Access', cost: '2150' },
 						{ value: 'bull_block_75', label: 'BULL Block 75', cost: '919' },
 						{ value: 'ace_b2b_open', label: 'ACE & B2B Open Access', cost: '949' },
@@ -469,7 +479,7 @@ export const dropdownOptions = readable({
 					]
 				},
 				summer_c_ac: {
-					'Summer C or AC': [
+					'First Time': [
 						{ value: 'open_access_c_ac', label: 'Open Access', cost: '1655' },
 						{ value: 'bull_block_75', label: 'BULL Block 75', cost: '919' },
 						{ value: 'ace_b2b_open', label: 'ACE & B2B Open Access', cost: '949' },
@@ -538,24 +548,24 @@ export const dropdownOptions = readable({
 			{ value: 'prepaid_plan_after', label: 'After January 1st, 2007' }
 		],
 		prepaid_plan_before: [
-			{ value: 'tuition_plan_before', label: 'Tuition Plan ($117.08)' },
+			{ value: 'tuition_plan', label: 'Tuition Plan ($117.08)' },
 			{
-				value: 'tuition_local_before',
+				value: 'tuition_local',
 				label: 'Tuition and Local Fee Plan ($153.56)'
 			}
 		],
 		prepaid_plan_after: [
-			{ value: 'tuition_plan_after', label: 'Tuition Plan ($117.08)' },
+			{ value: 'tuition_plan', label: 'Tuition Plan ($117.08)' },
 			{
-				value: 'tuition_local_after',
+				value: 'tuition_local',
 				label: 'Tuition and Local Fee Plan ($153.56)'
 			},
 			{
-				value: 'tuition_diff_after',
+				value: 'tuition_diff',
 				label: 'Tuition and Differential Fee Plan ($163.96)'
 			},
 			{
-				value: 'tuition_local_diff_after',
+				value: 'tuition_local_diff',
 				label: 'Tuition, Differential, Local Fee Plan ($200.44)'
 			}
 		],

@@ -12,9 +12,8 @@
 			Use our Cost Calculator to get an estimate of your college expenses. It will take about 10
 			minutes to crunch the numbers, but you will be able to understand how much your USF education
 			will cost and what options are available if you need more funding. Pre-arrival deposits
-			(admissions, housing, etc.) are not included in the calculator results. Note: Tuition
-			calculations include $37 in flat fees charged to Tampa campus students per semester. St.
-			Petersburg and Sarasota-Manatee campus students pay $17 in flat fees per semester.
+			(admissions, housing, etc.) are not included in the calculator results. You can click the
+			reset button to start over.
 		</p>
 		<!-- svelte-ignore a11y-click-events-have-key-events -->
 		<box-icon on:click={toggleMessage} class="fill-white cursor-pointer" name="chevron-up" />

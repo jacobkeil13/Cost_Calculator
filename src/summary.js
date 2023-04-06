@@ -154,7 +154,7 @@ export const review_data = derived(
 						desktop: 'What Living Learning Community are you a part of?'
 					},
 					value:
-						$dropdownOptions.housing_food.llc.find((i) => i.value === $housing_food.on_campus.llc)
+						$dropdownOptions.housing_food.llc[$student_information.campus].find((i) => i.value === $housing_food.on_campus.llc)
 							?.label || 'None picked',
 					style: function () {
 						return this.value === 'None picked' ? 'text-red-700' : '';

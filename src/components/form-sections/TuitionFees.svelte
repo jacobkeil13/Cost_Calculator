@@ -12,7 +12,7 @@
 	}
 </script>
 
-<div in:fly={{ x: -10, duration: 200 }}>
+<div in:fly={{ y: -10, duration: 200 }}>
 	<RangeField
 		label="How many credit hours are you taking?"
 		bind:value={calc_data.credit_hours}

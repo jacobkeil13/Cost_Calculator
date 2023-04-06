@@ -50,7 +50,7 @@
 	}
 </script>
 
-<div in:fly={{ x: -10, duration: 500 }}>
+<div in:fly={{ y: -10, duration: 200 }}>
 	<SelectionField
 		label="Do you have a Florida prepaid plan?"
 		options={funding_options.fl_prepaid}

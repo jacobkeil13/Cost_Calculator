@@ -28,7 +28,7 @@
 	}
 </script>
 
-<div in:fly={{ x: -10, duration: 500 }}>
+<div in:fly={{ y: -10, duration: 200 }}>
 	<h2 class="text-xl underline">What do you plan to spend from these areas?</h2>
 
 	{#each expenses as expense, index}

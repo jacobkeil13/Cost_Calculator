@@ -10,7 +10,7 @@
 	}
 </script>
 
-<div in:fly={{ x: -10, duration: 500 }}>
+<div in:fly={{ y: -10, duration: 200 }}>
 	<RangeMoneyField
 		label="How much are you planning to spend on books?"
 		bind:value={calc_data.books}

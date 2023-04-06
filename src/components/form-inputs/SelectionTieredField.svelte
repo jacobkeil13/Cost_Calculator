@@ -2,7 +2,7 @@
 	export let label,
 		value,
 		options = {},
-		extra_option,
+		extra_option = null,
 		disabled = false;
 
 	let styles = Object.keys(options);
@@ -26,7 +26,7 @@
 		{/each}
 	</select>
 	{#if disabled}
-		{#if extra_option.value.includes('food')}
+		{#if extra_option?.value?.includes('food')}
 			<p class="text-red-700">Sarasota Manatee does not offer a food plan</p>
 		{:else}
 			<p class="text-red-700">Sarasota Manatee does not offer housing</p>
