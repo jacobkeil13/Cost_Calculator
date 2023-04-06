@@ -76,15 +76,15 @@ export const housing_cost = readable({
 	endeavor_dt: 1555.74,
 	endeavor_ds: 1888.56,
 	endeavor_st: 2107.43,
-	endeavor_ss: 2343.50,
-	endeavor_dt_ab_abc: 3075.30,
-	endeavor_ds_ab_abc: 3733.20,
+	endeavor_ss: 2343.5,
+	endeavor_dt_ab_abc: 3075.3,
+	endeavor_ds_ab_abc: 3733.2,
 	endeavor_st_ab_abc: 4165.85,
-	endeavor_ss_ab_abc: 4632.50,
+	endeavor_ss_ab_abc: 4632.5,
 	endeavor_dt_c_ac: 2568.78,
 	endeavor_ds_c_ac: 3118.32,
 	endeavor_st_c_ac: 3479.71,
-	endeavor_ss_c_ac: 3869.50,
+	endeavor_ss_c_ac: 3869.5,
 	cypress_ds_b: 1483.93,
 	hsa_b: 1768.59,
 	hrsa_b: 1959.08,
@@ -110,31 +110,31 @@ export const bright_futures_cost = readable({
 export const green_gold_cost = readable({
 	nothing: 0,
 	presidential: {
-		"12": 4365.84,
-		"13": 4729.66,
-		"14": 5093.48,
-		"15": 5457.30,
-		"16": 5500.00,
-		"17": 5500.00,
-		"18": 5500.00,
+		12: 4365.84,
+		13: 4729.66,
+		14: 5093.48,
+		15: 5457.3,
+		16: 5500.0,
+		17: 5500.0,
+		18: 5500.0
 	},
 	directors: {
-		"12": 4000.00,
-		"13": 4000.00,
-		"14": 4000.00,
-		"15": 4000.00,
-		"16": 4000.00,
-		"17": 4000.00,
-		"18": 4000.00,
+		12: 4000.0,
+		13: 4000.0,
+		14: 4000.0,
+		15: 4000.0,
+		16: 4000.0,
+		17: 4000.0,
+		18: 4000.0
 	},
 	scholars: {
-		"12": 2500.00,
-		"13": 2500.00,
-		"14": 2500.00,
-		"15": 2500.00,
-		"16": 2500.00,
-		"17": 2500.00,
-		"18": 2500.00,
+		12: 2500.0,
+		13: 2500.0,
+		14: 2500.0,
+		15: 2500.0,
+		16: 2500.0,
+		17: 2500.0,
+		18: 2500.0
 	}
 });
 
@@ -209,7 +209,7 @@ export const dropdownOptions = readable({
 			{ value: 'summer_a', label: 'Summer A' },
 			{ value: 'summer_b', label: 'Summer B' },
 			{ value: 'summer_c_ac', label: 'Summer C or AC' },
-			{ value: 'summer_ab_abc', label: 'Summer AB or ABC' },
+			{ value: 'summer_ab_abc', label: 'Summer AB or ABC' }
 		]
 	},
 	housing_food: {
@@ -285,44 +285,44 @@ export const dropdownOptions = readable({
 					]
 				},
 				summer_a: {
-					"Summer A": [
+					'Returning Students': [
 						{ value: 'endeavor_dt', label: 'Endeavor Double Traditional', cost: '1555.74' },
 						{ value: 'endeavor_ds', label: 'Endeavor Double Suite', cost: '1888.56' },
 						{ value: 'endeavor_st', label: 'Endeavor Single Traditional', cost: '2107.43' },
-						{ value: 'endeavor_ss', label: 'Endeavor Single Suite', cost: '2343.50' },
+						{ value: 'endeavor_ss', label: 'Endeavor Single Suite', cost: '2343.50' }
 					]
 				},
 				summer_b: {
-					"Summer B": [
+					'Returning Students': [
 						{ value: 'endeavor_dt', label: 'Endeavor Double Traditional', cost: '1555.74' },
 						{ value: 'endeavor_ds', label: 'Endeavor Double Suite', cost: '1888.56' },
 						{ value: 'endeavor_st', label: 'Endeavor Single Traditional', cost: '2107.43' },
-						{ value: 'endeavor_ss', label: 'Endeavor Single Suite', cost: '2343.50' },
+						{ value: 'endeavor_ss', label: 'Endeavor Single Suite', cost: '2343.50' }
 					],
-					"Freshman": [
+					Freshman: [
 						{ value: 'cypress_ds_b', label: 'Cypress Double Suite', cost: '1483.93' },
 						{ value: 'hsa_b', label: 'Holly Single Apartment', cost: '1768.59' },
 						{ value: 'hrsa_b', label: 'Holly 2 Room Single Apartment', cost: '1959.08' },
 						{ value: 'bcdt_b', label: 'Beta/Castor Double Traditional', cost: '1168.31' },
-						{ value: 'btt_b', label: 'Beta Triple Traditional', cost: '1168.31' },
+						{ value: 'btt_b', label: 'Beta Triple Traditional', cost: '1168.31' }
 					]
 				},
 				summer_ab_abc: {
-					"Summer AB or ABC": [
+					'Returning Students': [
 						{ value: 'endeavor_dt_ab_abc', label: 'Endeavor Double Traditional', cost: '3075.30' },
 						{ value: 'endeavor_ds_ab_abc', label: 'Endeavor Double Suite', cost: '3733.20' },
 						{ value: 'endeavor_st_ab_abc', label: 'Endeavor Single Traditional', cost: '4165.85' },
-						{ value: 'endeavor_ss_ab_abc', label: 'Endeavor Single Suite', cost: '4632.50' },
+						{ value: 'endeavor_ss_ab_abc', label: 'Endeavor Single Suite', cost: '4632.50' }
 					]
 				},
 				summer_c_ac: {
-					"Summer C or AC": [
+					'Returning Students': [
 						{ value: 'endeavor_dt_c_ac', label: 'Endeavor Double Traditional', cost: '2568.78' },
 						{ value: 'endeavor_ds_c_ac', label: 'Endeavor Double Suite', cost: '3118.32' },
 						{ value: 'endeavor_st_c_ac', label: 'Endeavor Single Traditional', cost: '3479.71' },
-						{ value: 'endeavor_ss_c_ac', label: 'Endeavor Single Suite', cost: '3869.50' },
+						{ value: 'endeavor_ss_c_ac', label: 'Endeavor Single Suite', cost: '3869.50' }
 					]
-				},
+				}
 			},
 			st_pete: {
 				fall: {
@@ -360,27 +360,27 @@ export const dropdownOptions = readable({
 					]
 				},
 				summer_a: {
-					"Summer A": [
+					'Returning Students': [
 						{ value: 'sp_four_bed', label: '4 Person Private Bedroom', cost: '1777.62' },
-						{ value: 'sp_four_ds', label: '4 Person Double Suite', cost: '1714.41' },
+						{ value: 'sp_four_ds', label: '4 Person Double Suite', cost: '1714.41' }
 					]
 				},
 				summer_b: {
-					"Summer B": [
+					'Returning Students': [
 						{ value: 'sp_four_bed', label: '4 Person Private Bedroom', cost: '1777.62' },
-						{ value: 'sp_four_ds', label: '4 Person Double Suite', cost: '1714.41' },
+						{ value: 'sp_four_ds', label: '4 Person Double Suite', cost: '1714.41' }
 					]
 				},
 				summer_ab_abc: {
-					"Summer AB or ABC": [
+					'Returning Students': [
 						{ value: 'sp_four_bed_ab_abc', label: '4 Person Private Bedroom', cost: '3555.24' },
-						{ value: 'sp_four_ds_ab_abc', label: '4 Person Double Suite', cost: '3429.68' },
+						{ value: 'sp_four_ds_ab_abc', label: '4 Person Double Suite', cost: '3429.68' }
 					]
 				},
 				summer_c_ac: {
-					"Summer AB or ABC": [
+					'Returning Students': [
 						{ value: 'sp_four_bed_c_ac', label: '4 Person Private Bedroom', cost: '2935.14' },
-						{ value: 'sp_four_ds_c_ac', label: '4 Person Double Suite', cost: '2831.58' },
+						{ value: 'sp_four_ds_c_ac', label: '4 Person Double Suite', cost: '2831.58' }
 					]
 				}
 			},
@@ -445,35 +445,35 @@ export const dropdownOptions = readable({
 					]
 				},
 				summer_a: {
-					"Summer A": [
+					'Summer A': [
 						{ value: 'open_access_a_b', label: 'Open Access', cost: '1075' },
 						{ value: 'bull_block_75', label: 'BULL Block 75', cost: '919' },
 						{ value: 'ace_b2b_open', label: 'ACE & B2B Open Access', cost: '949' },
-						{ value: 'sss_open', label: 'SSS Open Access', cost: '1140' },
+						{ value: 'sss_open', label: 'SSS Open Access', cost: '1140' }
 					]
 				},
 				summer_b: {
-					"Summer B": [
+					'Summer B': [
 						{ value: 'open_access_a_b', label: 'Open Access', cost: '1075' },
 						{ value: 'bull_block_75', label: 'BULL Block 75', cost: '919' },
 						{ value: 'ace_b2b_open', label: 'ACE & B2B Open Access', cost: '949' },
-						{ value: 'sss_open', label: 'SSS Open Access', cost: '1140' },
+						{ value: 'sss_open', label: 'SSS Open Access', cost: '1140' }
 					]
 				},
 				summer_ab_abc: {
-					"Summer AB or ABC": [
+					'Summer AB or ABC': [
 						{ value: 'open_access_ab_abc', label: 'Open Access', cost: '2150' },
 						{ value: 'bull_block_75', label: 'BULL Block 75', cost: '919' },
 						{ value: 'ace_b2b_open', label: 'ACE & B2B Open Access', cost: '949' },
-						{ value: 'sss_open', label: 'SSS Open Access', cost: '1140' },
+						{ value: 'sss_open', label: 'SSS Open Access', cost: '1140' }
 					]
 				},
 				summer_c_ac: {
-					"Summer C or AC": [
+					'Summer C or AC': [
 						{ value: 'open_access_c_ac', label: 'Open Access', cost: '1655' },
 						{ value: 'bull_block_75', label: 'BULL Block 75', cost: '919' },
 						{ value: 'ace_b2b_open', label: 'ACE & B2B Open Access', cost: '949' },
-						{ value: 'sss_open', label: 'SSS Open Access', cost: '1140' },
+						{ value: 'sss_open', label: 'SSS Open Access', cost: '1140' }
 					]
 				}
 			},
@@ -519,7 +519,7 @@ export const dropdownOptions = readable({
 						{ value: 'sp_any_15', label: 'Any 15', cost: '2150' },
 						{ value: 'sp_bull_175', label: 'BULL Block 175', cost: '1900' }
 					]
-				},
+				}
 			},
 			sarasota: {}
 		}

@@ -94,16 +94,8 @@ export const funding = writable({
 });
 
 export let tuition_fees_total = derived(
-	[
-		tuition_fees,
-		student_information,
-		static_vars
-	],
-	([
-		$tuition_fees,
-		$student_information,
-		$static_vars
-	]) => {
+	[tuition_fees, student_information, static_vars],
+	([$tuition_fees, $student_information, $static_vars]) => {
 		let credit_cost = 0;
 		let flat_fees = 0;
 
@@ -141,7 +133,7 @@ export let housing_food_total = derived(
 		if ($student_information.campus != 'sarasota') {
 			if ($student_information.campus === 'tampa' || $student_information.campus === 'st_pete') {
 				if ($housing_food.food_plan === 'no_food_plan') {
-					$housing_food.food_plan = 'no_food_plan';
+					$housing_food.food_plan = 'nothing';
 				}
 				if ($housing_food.on_campus.housing === 'nothing') {
 					$housing_food.on_campus.housing = 'nothing';
@@ -202,7 +194,7 @@ export let transportation_total = derived(
 			transportation =
 				tp.parking_pass +
 				(tp.car_payment + tp.insurance + tp.gas + tp.maintenance) *
-				$semester_months[$student_information.semester];
+					$semester_months[$student_information.semester];
 		}
 		// If the student is not bringing a vehicle we only add the other trnasport field
 		// to the total.
