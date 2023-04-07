@@ -17,7 +17,7 @@
 <div id="form" class="w-full">
 	<div class="flex justify-between py-4">
 		<div class="flex space-x-3">
-			<h1 class="text-3xl font-medium text-[#006747] rounded-sm">{step_name}</h1>
+			<h1 class="text-3xl font-medium text-[#006747]">{step_name}</h1>
 			{#if $current_step === $steps.indexOf('Summary')}
 				<!-- svelte-ignore a11y-click-events-have-key-events -->
 				<box-icon

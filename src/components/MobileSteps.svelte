@@ -1,24 +1,15 @@
 <script>
 	import { current_step, validated } from '../store.js';
-	import { steps } from '../constants.js';
+	import { goto } from '$app/navigation';
 
-	function incStep() {
+	function switchStep(id) {
 		if (Object.keys($validated).length != 0) {
 			return;
 		}
-		if ($current_step !== $steps.length - 1) {
-			$current_step = $current_step + 1;
-		}
-	}
-
-	function decStep() {
-		if ($current_step !== 0) {
-			$current_step = $current_step - 1;
-		}
-	}
-
-	function switchStep(id) {
 		current_step.set(id);
+		setTimeout(() => {
+			goto('#start-content');
+		}, 50);
 	}
 </script>
 

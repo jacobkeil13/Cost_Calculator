@@ -64,19 +64,9 @@ export const transportation = writable({
 export const personal = writable({
 	takeout_coffee: 0,
 	groceries: 0,
-	health_care: 0,
-	personal_care: 0,
 	phone_bill: 0,
-	entertainment_social: 0,
-	travel_trips: 0,
 	subscriptions_memberships: 0,
-	clothing: 0,
-	family_expenses: 0,
-	org_dues: 0,
-	hobbies: 0,
-	pets: 0,
-	holidays_gifts: 0,
-	laundry: 0
+	custom_expenses: []
 });
 
 export const funding = writable({
@@ -145,7 +135,9 @@ export let housing_food_total = derived(
 			if ($student_information.campus != 'sarasota') {
 				housing_food += $housing_cost[$housing_food.on_campus.housing];
 			}
-			housing_food += $llc_cost[$housing_food.on_campus.llc];
+			if ($student_information.semester === 'fall' || $student_information.semester === 'spring') {
+				housing_food += $llc_cost[$housing_food.on_campus.llc];
+			}
 		}
 		// If the student is living off campus with parents/family we add
 		// any utility fees they might pay.
@@ -210,20 +202,19 @@ export let personal_total = derived(
 		personal =
 			($personal.takeout_coffee +
 				$personal.groceries +
-				$personal.health_care +
-				$personal.personal_care +
 				$personal.phone_bill +
-				$personal.entertainment_social +
-				$personal.travel_trips +
-				$personal.subscriptions_memberships +
-				$personal.clothing +
-				$personal.family_expenses +
-				$personal.org_dues +
-				$personal.hobbies +
-				$personal.pets +
-				$personal.holidays_gifts +
-				$personal.laundry) *
+				$personal.subscriptions_memberships) *
 			$semester_months[$student_information.semester];
+
+		if ($personal.custom_expenses.length != 0) {
+			$personal.custom_expenses.forEach((expense) => {
+				if (expense.concurrency === 'semesterly') {
+					personal += expense.amount;
+				} else if (expense.concurrency === 'monthly') {
+					personal += expense.amount * $semester_months[$student_information.semester];
+				}
+			});
+		}
 
 		return personal;
 	}
@@ -275,6 +266,7 @@ export let funding_total = derived(
 		if (
 			$student_information.tuition === 'out_of_state' &&
 			$student_information.level === 'undergraduate' &&
+			($student_information.semester === 'fall' || $student_information.semester === 'fall') &&
 			$funding.has_fl_prepaid === 'prepaid_no'
 		) {
 			if ($funding.has_green_gold === 'gg_yes') {

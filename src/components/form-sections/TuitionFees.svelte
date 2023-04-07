@@ -14,6 +14,7 @@
 
 <div in:fly={{ y: -10, duration: 200 }}>
 	<RangeField
+		tooltip_text="Enter your expected/current number of credit hours."
 		label="How many credit hours are you taking?"
 		bind:value={calc_data.credit_hours}
 		min="1"
@@ -21,6 +22,7 @@
 		step="1"
 	/>
 	<RangeMoneyField
+		tooltip_text="Enter lab fee costs, if applicable. These are included in your registration in OASIS."
 		label="Do you have any lab fees?"
 		bind:value={calc_data.lab_fees}
 		min="0"
@@ -29,6 +31,7 @@
 		concurrency="per semester"
 	/>
 	<RangeMoneyField
+		tooltip_text="e.g. Excess Credit Hours, Repeat Course Surcharges, etc."
 		label="Do you have any additional fees?"
 		bind:value={calc_data.other_fees}
 		min="0"
@@ -37,6 +40,7 @@
 		concurrency="per semester"
 	/>
 	<RangeMoneyField
+		tooltip_text="Automatic flat fee for campus."
 		disabled
 		label="Campus flat fees:"
 		value={$static_vars.flat_fees.value}

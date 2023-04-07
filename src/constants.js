@@ -34,6 +34,7 @@ export const semester_months = readable({
 	spring: 4.5,
 	summer_a: 1.5,
 	summer_b: 1.5,
+	summer_bc: 2.75,
 	summer_c_ac: 2.5,
 	summer_ab_abc: 3
 });
@@ -183,13 +184,6 @@ export const steps = readable([
 	'Summary'
 ]);
 
-export let errors = {
-	campus: "Campus is a required field.",
-	level: "Level is a required field.",
-	tuition: "Tuition is a required field.",
-	semester: "Semester is a required field."
-}
-
 export const dropdownOptions = readable({
 	student_information: {
 		campus: [
@@ -210,6 +204,7 @@ export const dropdownOptions = readable({
 			{ value: 'spring', label: 'Spring' },
 			{ value: 'summer_a', label: 'Summer A' },
 			{ value: 'summer_b', label: 'Summer B' },
+			{ value: 'summer_bc', label: 'Summer BC' },
 			{ value: 'summer_c_ac', label: 'Summer C or AC' },
 			{ value: 'summer_ab_abc', label: 'Summer AB or ABC' }
 		]
@@ -309,6 +304,14 @@ export const dropdownOptions = readable({
 						{ value: 'btt_b', label: 'Beta Triple Traditional', cost: '1168.31' }
 					]
 				},
+				summer_bc: {
+					'Returning Students': [
+						{ value: 'endeavor_dt_c_ac', label: 'Endeavor Double Traditional', cost: '2568.78' },
+						{ value: 'endeavor_ds_c_ac', label: 'Endeavor Double Suite', cost: '3118.32' },
+						{ value: 'endeavor_st_c_ac', label: 'Endeavor Single Traditional', cost: '3479.71' },
+						{ value: 'endeavor_ss_c_ac', label: 'Endeavor Single Suite', cost: '3869.50' }
+					]
+				},
 				summer_ab_abc: {
 					'Returning Students': [
 						{ value: 'endeavor_dt_ab_abc', label: 'Endeavor Double Traditional', cost: '3075.30' },
@@ -371,6 +374,12 @@ export const dropdownOptions = readable({
 					'Returning Students': [
 						{ value: 'sp_four_bed', label: '4 Person Private Bedroom', cost: '1777.62' },
 						{ value: 'sp_four_ds', label: '4 Person Double Suite', cost: '1714.41' }
+					]
+				},
+				summer_bc: {
+					'Returning Students': [
+						{ value: 'sp_four_bed_c_ac', label: '4 Person Private Bedroom', cost: '2935.14' },
+						{ value: 'sp_four_ds_c_ac', label: '4 Person Double Suite', cost: '2831.58' }
 					]
 				},
 				summer_ab_abc: {
@@ -470,6 +479,14 @@ export const dropdownOptions = readable({
 						{ value: 'sss_open', label: 'SSS Open Access', cost: '1140' }
 					]
 				},
+				summer_bc: {
+					'First Time': [
+						{ value: 'open_access_c_ac', label: 'Open Access', cost: '1655' },
+						{ value: 'bull_block_75', label: 'BULL Block 75', cost: '919' },
+						{ value: 'ace_b2b_open', label: 'ACE & B2B Open Access', cost: '949' },
+						{ value: 'sss_open', label: 'SSS Open Access', cost: '1140' }
+					]
+				},
 				summer_ab_abc: {
 					'First Time': [
 						{ value: 'open_access_ab_abc', label: 'Open Access', cost: '2150' },
@@ -504,30 +521,32 @@ export const dropdownOptions = readable({
 				},
 				summer_a: {
 					'First Time': [
-						{ value: 'sp_open_access', label: 'Open Access', cost: '2275' },
-						{ value: 'sp_any_15', label: 'Any 15', cost: '2150' },
-						{ value: 'sp_bull_175', label: 'BULL Block 175', cost: '1900' }
+						{ value: 'open_access_a_b', label: 'Open Access', cost: '1075' },
+						{ value: 'bull_block_75', label: 'BULL Block 75', cost: '919' }
 					]
 				},
 				summer_b: {
 					'First Time': [
-						{ value: 'sp_open_access', label: 'Open Access', cost: '2275' },
-						{ value: 'sp_any_15', label: 'Any 15', cost: '2150' },
-						{ value: 'sp_bull_175', label: 'BULL Block 175', cost: '1900' }
+						{ value: 'open_access_a_b', label: 'Open Access', cost: '1075' },
+						{ value: 'bull_block_75', label: 'BULL Block 75', cost: '919' }
+					]
+				},
+				summer_bc: {
+					'First Time': [
+						{ value: 'open_access_c_ac', label: 'Open Access', cost: '1655' },
+						{ value: 'bull_block_75', label: 'BULL Block 75', cost: '919' }
 					]
 				},
 				summer_ab_abc: {
 					'First Time': [
-						{ value: 'sp_open_access', label: 'Open Access', cost: '2275' },
-						{ value: 'sp_any_15', label: 'Any 15', cost: '2150' },
-						{ value: 'sp_bull_175', label: 'BULL Block 175', cost: '1900' }
+						{ value: 'open_access_ab_abc', label: 'Open Access', cost: '2150' },
+						{ value: 'bull_block_75', label: 'BULL Block 75', cost: '919' }
 					]
 				},
 				summer_c_ac: {
 					'First Time': [
-						{ value: 'sp_open_access', label: 'Open Access', cost: '2275' },
-						{ value: 'sp_any_15', label: 'Any 15', cost: '2150' },
-						{ value: 'sp_bull_175', label: 'BULL Block 175', cost: '1900' }
+						{ value: 'open_access_c_ac', label: 'Open Access', cost: '1655' },
+						{ value: 'bull_block_75', label: 'BULL Block 75', cost: '919' }
 					]
 				}
 			},

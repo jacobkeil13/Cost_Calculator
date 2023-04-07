@@ -1,6 +1,11 @@
 <script>
 	import { createEventDispatcher } from 'svelte';
-	export let label, button, type;
+	import { tooltip } from '../misc/tooltip.js';
+	export let label,
+		button,
+		type,
+		tooltip_text = '',
+		link = '';
 	const dispatch = createEventDispatcher();
 
 	function addEvent() {
@@ -21,7 +26,27 @@
 </script>
 
 <div class="form-control">
-	<h1>{label}</h1>
+	{#if label}
+		<div class="flex space-x-3 mb-2">
+			<h1 class="font-semibold">{label}</h1>
+			{#if tooltip_text != ''}
+				<box-icon
+					class="w-[20px] fill-green-800 cursor-pointer"
+					title={tooltip_text}
+					name="help-circle"
+					use:tooltip
+				/>
+			{/if}
+			{#if link != ''}
+				<!-- svelte-ignore a11y-click-events-have-key-events -->
+				<box-icon
+					on:click={() => window.open(link, '_blank')}
+					class="w-[20px] fill-green-800 cursor-pointer"
+					name="link-external"
+				/>
+			{/if}
+		</div>
+	{/if}
 	<div name="button-row" class="flex justify-between space-x-3">
 		<input
 			placeholder="Name..."
@@ -40,7 +65,7 @@
 			class="w-full border-2 border-gray-400 rounded-sm py-1 px-2"
 			bind:value={data.amount}
 		/>
-		{#if type === 'scholarship'}
+		{#if type === 'scholarship' || type === 'expense'}
 			<select
 				bind:value={data.concurrency}
 				name="type"

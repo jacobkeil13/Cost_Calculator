@@ -1,11 +1,16 @@
 <script>
+	import { tooltip } from '../misc/tooltip.js';
 	export let label,
 		value,
 		min,
 		max,
 		step,
 		concurrency,
-		disabled = false;
+		disabled = false,
+		tooltip_text = '',
+		link = '';
+
+	let clientX;
 
 	function handleInput(e) {
 		if (parseInt(e.target.value) === null || parseInt(e.target.value) < parseInt(min)) {
@@ -14,21 +19,43 @@
 	}
 </script>
 
+<svelte:window bind:outerWidth={clientX} />
+
 <div class="form-control">
 	{#if label}
-		<h1 class="font-semibold">{label}</h1>
+		<div class="flex space-x-3">
+			<h1 class="font-semibold">{label}</h1>
+			{#if tooltip_text != ''}
+				<box-icon
+					class="w-[20px] fill-green-800 cursor-pointer"
+					title={tooltip_text}
+					name="help-circle"
+					use:tooltip
+				/>
+			{/if}
+			{#if link != ''}
+				<!-- svelte-ignore a11y-click-events-have-key-events -->
+				<box-icon
+					on:click={() => window.open(link, '_blank')}
+					class="w-[20px] fill-green-800 cursor-pointer"
+					name="link-external"
+				/>
+			{/if}
+		</div>
 	{/if}
 	<div class="flex space-x-2">
-		<input
-			{disabled}
-			type="range"
-			{min}
-			{max}
-			{step}
-			bind:value
-			class="slider"
-			class:faded={disabled}
-		/>
+		{#if clientX > 960}
+			<input
+				{disabled}
+				type="range"
+				{min}
+				{max}
+				{step}
+				bind:value
+				class="slider"
+				class:faded={disabled}
+			/>
+		{/if}
 		<div class="flex flex-col">
 			<div class="flex">
 				<label for="value" class="text-xl">$</label>
@@ -41,7 +68,9 @@
 					{max}
 					{step}
 					bind:value
-					class="border-green-900 border-b-2 px-1 bg-transparent w-[80px] text-xl font-medium"
+					class="border-green-900 border-b-2 px-1 bg-transparent text-xl font-medium {clientX > 960
+						? 'w-[80px]'
+						: 'w-[calc(100vw-56px)]'}"
 					class:faded={disabled}
 				/>
 			</div>

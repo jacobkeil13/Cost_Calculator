@@ -12,6 +12,8 @@
 
 <div in:fly={{ y: -10, duration: 200 }}>
 	<RangeMoneyField
+		tooltip_text="Use USF Bookstore website to find the best prices."
+		link="https://tap.usf.edu/"
 		label="How much are you planning to spend on books?"
 		bind:value={calc_data.books}
 		min="0"
@@ -20,6 +22,7 @@
 		concurrency="per semester"
 	/>
 	<RangeMoneyField
+		tooltip_text="e.g. laptop, pens, pencils, calculators, clickers, etc."
 		label="How much are you planning to spend on course-specific supplies?"
 		bind:value={calc_data.supplies}
 		min="0"

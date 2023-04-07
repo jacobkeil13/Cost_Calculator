@@ -1,5 +1,12 @@
 <script>
-	export let label, value, min, max, step;
+	import { tooltip } from '../misc/tooltip.js';
+	export let label,
+		value,
+		min,
+		max,
+		step,
+		tooltip_text = '';
+	let clientX;
 
 	function handleInput(e) {
 		if (parseInt(e.target.value) > parseInt(max)) {
@@ -8,12 +15,26 @@
 	}
 </script>
 
+<svelte:window bind:outerWidth={clientX} />
+
 <div class="form-control">
 	{#if label}
-		<h1 class="font-semibold">{label}</h1>
+		<div class="flex space-x-3">
+			<h1 class="font-semibold">{label}</h1>
+			{#if tooltip_text != ''}
+				<box-icon
+					class="w-[20px] fill-green-800 cursor-pointer"
+					title={tooltip_text}
+					name="help-circle"
+					use:tooltip
+				/>
+			{/if}
+		</div>
 	{/if}
 	<div class="flex space-x-2">
-		<input type="range" {min} {max} {step} bind:value class="slider" />
+		{#if clientX > 960}
+			<input type="range" {min} {max} {step} bind:value class="slider" />
+		{/if}
 		<input
 			on:input={handleInput}
 			type="number"
@@ -22,7 +43,9 @@
 			{max}
 			{step}
 			bind:value
-			class="border-green-900 border-b-2 px-1 bg-transparent w-[80px] text-xl font-medium"
+			class="border-green-900 border-b-2 px-1 bg-transparent text-xl font-medium {clientX > 960
+				? 'w-[80px]'
+				: 'w-[calc(100vw-3rem)]'}"
 		/>
 	</div>
 </div>

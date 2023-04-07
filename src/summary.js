@@ -118,7 +118,7 @@ export const review_data = derived(
 						mobile: 'Campus fees:',
 						desktop: 'Campus fees:'
 					},
-					value: '$' + $static_vars.flat_fees[$student_information.campus] + '/sem'
+					value: '$' + $static_vars.flat_fees.value + '/sem'
 				}
 			],
 			housing_food: [
@@ -320,38 +320,10 @@ export const review_data = derived(
 				},
 				{
 					question: {
-						mobile: 'Health care:',
-						desktop: 'What are you spending on health care?'
-					},
-					value: '$' + $personal.health_care + '/mo'
-				},
-				{
-					question: {
-						mobile: 'Personal care:',
-						desktop: 'What are you spending on personal care?'
-					},
-					value: '$' + $personal.personal_care + '/mo'
-				},
-				{
-					question: {
 						mobile: 'Cell phone bill:',
 						desktop: 'What are you spending on cell phone bill?'
 					},
 					value: '$' + $personal.phone_bill + '/mo'
-				},
-				{
-					question: {
-						mobile: 'Entertainment & social life:',
-						desktop: 'What are you spending on entertainment and social life?'
-					},
-					value: '$' + $personal.entertainment_social + '/mo'
-				},
-				{
-					question: {
-						mobile: 'Travel & trips:',
-						desktop: 'What are you travel and trips?'
-					},
-					value: '$' + $personal.travel_trips + '/mo'
 				},
 				{
 					question: {
@@ -362,52 +334,10 @@ export const review_data = derived(
 				},
 				{
 					question: {
-						mobile: 'Clothing & accessories:',
-						desktop: 'What are you spending on clothing and accessories?'
+						mobile: 'Expenses:',
+						desktop: 'Do you have any expenses?'
 					},
-					value: '$' + $personal.clothing + '/mo'
-				},
-				{
-					question: {
-						mobile: 'Family expenses:',
-						desktop: 'What are you spending on family expenses?'
-					},
-					value: '$' + $personal.family_expenses + '/mo'
-				},
-				{
-					question: {
-						mobile: 'Organization dues:',
-						desktop: 'What are you spending on organization dues?'
-					},
-					value: '$' + $personal.org_dues + '/mo'
-				},
-				{
-					question: {
-						mobile: 'Hobbies:',
-						desktop: 'What are you spending on hobbies?'
-					},
-					value: '$' + $personal.hobbies + '/mo'
-				},
-				{
-					question: {
-						mobile: 'Pets:',
-						desktop: 'What are you spending on pets?'
-					},
-					value: '$' + $personal.pets + '/mo'
-				},
-				{
-					question: {
-						mobile: 'Holidays & gifts:',
-						desktop: 'What are you spending on holidays and gifts?'
-					},
-					value: '$' + $personal.holidays_gifts + '/mo'
-				},
-				{
-					question: {
-						mobile: 'Laundry:',
-						desktop: 'What are you spending on laundry?'
-					},
-					value: '$' + $personal.laundry + '/mo'
+					value: $personal.custom_expenses
 				}
 			],
 			funding: [

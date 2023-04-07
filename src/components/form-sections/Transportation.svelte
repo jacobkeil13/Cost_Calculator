@@ -22,6 +22,8 @@
 
 	{#if calc_data.has_vehicle === 'vehicle_yes'}
 		<RangeMoneyField
+			tooltip_text="All vehicles on campus must have a parking permit."
+			link="https://www.usf.edu/administrative-services/parking/"
 			label="How much is your parking pass?"
 			bind:value={calc_data.parking_pass}
 			min="0"
@@ -54,6 +56,7 @@
 			concurrency="per month"
 		/>
 		<RangeMoneyField
+			tooltip_text="e.g. oil changes, tire replacements, etc."
 			label="How much are you spending on car maintenance?"
 			bind:value={calc_data.maintenance}
 			min="0"
@@ -65,6 +68,7 @@
 
 	{#if calc_data.has_vehicle === 'vehicle_no'}
 		<RangeMoneyField
+			tooltip_text="e.g. Uber, Lyft, etc."
 			label="What other transportation do you have?"
 			bind:value={calc_data.other_transport}
 			min="0"

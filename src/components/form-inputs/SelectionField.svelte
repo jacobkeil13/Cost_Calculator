@@ -6,8 +6,7 @@
 		options = [],
 		handleChange = false,
 		tooltip_text = '',
-		error = undefined,
-		error_text = '';
+		link = '';
 
 	const dispatch = createEventDispatcher();
 	function onHandleEvent() {
@@ -23,23 +22,28 @@
 			<h1 class="font-semibold mb-2">{label}</h1>
 			{#if tooltip_text != ''}
 				<box-icon
-					class="w-[20px] fill-green-800"
+					class="w-[20px] fill-green-800 cursor-pointer"
 					title={tooltip_text}
 					name="help-circle"
 					use:tooltip
 				/>
 			{/if}
+			{#if link != ''}
+				<!-- svelte-ignore a11y-click-events-have-key-events -->
+				<box-icon
+					on:click={() => window.open(link, '_blank')}
+					class="w-[20px] fill-green-800 cursor-pointer"
+					name="link-external"
+				/>
+			{/if}
 		</div>
 	{/if}
-	<select bind:value on:change={onHandleEvent}>
+	<select class:active={value === 'nothing'} bind:value on:change={onHandleEvent}>
 		<option value="nothing" selected disabled>Select one</option>
 		{#each options as option}
 			<option class="active:bg-white" value={option.value}>{option.label}</option>
 		{/each}
 	</select>
-	{#if error != null}
-		<h1 class="text-red-700">{error_text}</h1>
-	{/if}
 </div>
 
 <style>
@@ -55,7 +59,7 @@
 		border-radius: 0.1rem;
 	}
 
-	select::selection {
-		color: red;
+	.active {
+		border-color: rgb(185 28 28);
 	}
 </style>

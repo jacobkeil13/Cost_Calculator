@@ -261,11 +261,23 @@
 	</ReviewSection>
 	<ReviewSection title="Personal" edit="Personal">
 		{#if $personal_total != 0}
-			{#each $review_data.personal as personal}
-				{#if parseInt(personal.value.replace('$', '').replace('/mo', '')) != 0}
-					<ReviewRow question={personal.question[flexWidth]} value={personal.value} />
+			{#each $review_data.personal as personal, i}
+				{#if i !== 4}
+					{#if parseInt(personal.value.replace('$', '').replace('/mo', '')) != 0}
+						<ReviewRow question={personal.question[flexWidth]} value={personal.value} />
+					{/if}
 				{/if}
 			{/each}
+			{#if $review_data.personal[4].value.length > 0}
+				{#each $review_data.personal[4].value as expense}
+					{#if expense.amount !== 0}
+						<ReviewRow
+							question={expense.name}
+							value={'$' + expense.amount + `${expense.concurrency === 'monthly' ? '/mo' : '/sem'}`}
+						/>
+					{/if}
+				{/each}
+			{/if}
 			<ReviewRow
 				question="Total:"
 				value={'$' +

@@ -8,16 +8,24 @@
 		transportation_total,
 		personal_total,
 		funding_total,
-		validated
+		validated,
+		housing_food
 	} from '../store.js';
+	import { goto } from '$app/navigation';
 	import MobileSteps from './MobileSteps.svelte';
+	import { food_plan_cost } from '../constants.js';
 	export let clientX;
 
 	let bg_color = 'bg-[#006747] text-white py-1 px-3 rounded-sm font-medium';
 	$: sections = [
 		{ name: 'Student Information', id: 0, amount: 0 },
 		{ name: 'Tuition & Fees', id: 1, amount: $tuition_fees_total },
-		{ name: 'Housing & Food', id: 2, amount: $housing_food_total },
+		{
+			name: 'Housing',
+			id: 2,
+			amount: $housing_food_total - $food_plan_cost[$housing_food.food_plan]
+		},
+		{ name: 'Food', id: 2, amount: $food_plan_cost[$housing_food.food_plan] },
 		{ name: 'Books & Supplies', id: 3, amount: $books_supplies_total },
 		{ name: 'Transportation', id: 4, amount: $transportation_total },
 		{ name: 'Personal', id: 5, amount: $personal_total },
@@ -30,6 +38,9 @@
 			return;
 		}
 		current_step.set(step_num);
+		setTimeout(() => {
+			goto('#start-content');
+		}, 50);
 	}
 </script>
 
@@ -85,6 +96,10 @@
 				</div>
 			{/each}
 		</div>
+	{/if}
+	{#if clientX > 960}
+		<h1 class="text-2xl font-medium text-[#006747] mb-2">Notes</h1>
+		<textarea class="border-2 border-gray-300 w-full rounded-md p-2 h-32 focus:outline-none" />
 	{/if}
 	{#if clientX < 960}
 		<MobileSteps />

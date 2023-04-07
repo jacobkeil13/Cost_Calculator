@@ -1,18 +1,30 @@
 <script>
+	import { tooltip } from '../misc/tooltip.js';
 	export let label,
 		value,
 		options = {},
 		extra_option = null,
-		disabled = false;
+		disabled = false,
+		tooltip_text = '';
 
 	let styles = Object.keys(options);
 </script>
 
 <div class="form-control">
 	{#if label}
-		<h1 class="font-semibold mb-2">{label}</h1>
+		<div class="flex space-x-3">
+			<h1 class="font-semibold mb-2">{label}</h1>
+			{#if tooltip_text != ''}
+				<box-icon
+					class="w-[20px] fill-green-800 cursor-pointer"
+					title={tooltip_text}
+					name="help-circle"
+					use:tooltip
+				/>
+			{/if}
+		</div>
 	{/if}
-	<select {disabled} bind:value>
+	<select class:active={value === 'nothing'} {disabled} bind:value>
 		<option value="nothing" selected disabled>Select one</option>
 		{#if extra_option}
 			<option class={extra_option.style} value={extra_option.value}>{extra_option.label}</option>
@@ -45,5 +57,9 @@
 		padding: 0.25rem 0.5rem;
 		border-width: 2px;
 		border-radius: 0.1rem;
+	}
+
+	.active {
+		border-color: rgb(185 28 28);
 	}
 </style>

@@ -1,19 +1,23 @@
 <script>
 	import { current_step, validated } from '../store.js';
+	import { goto } from '$app/navigation';
 	import { steps } from '../constants.js';
 
 	function incStep() {
-		if (Object.keys($validated).length != 0) {
-			return;
-		}
 		if ($current_step !== $steps.length - 1) {
 			$current_step = $current_step + 1;
+			setTimeout(() => {
+				goto('#start-content');
+			}, 50);
 		}
 	}
 
 	function decStep() {
 		if ($current_step !== 0) {
 			$current_step = $current_step - 1;
+			setTimeout(() => {
+				goto('#start-content');
+			}, 50);
 		}
 	}
 </script>
@@ -28,6 +32,7 @@
 	{/if}
 	{#if $current_step !== $steps.length - 1}
 		<button
+			disabled={Object.keys($validated).length !== 0}
 			on:click={incStep}
 			class="flex justify-between items-center px-3 py-2 bg-[#006747] text-white rounded-md"
 			>{$steps[$current_step + 1]} <box-icon name="chevron-right" class="fill-white" /></button
