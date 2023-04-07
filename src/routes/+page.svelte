@@ -10,7 +10,7 @@
 
 <svelte:window bind:outerWidth={clientX} />
 
-<main class="relative h-screen">
+<main class="relative">
 	{#if clientX >= 960}
 		<div class="grid grid-cols-[2fr_1fr] gap-4 p-6">
 			<section class="pr-3">
@@ -28,7 +28,7 @@
 		<div class="p-6">
 			<Form />
 		</div>
-		<div class="h-32" />
+		<div class="h-[165px]" />
 		<div class="fixed bottom-0">
 			<FormTotal {clientX} />
 		</div>

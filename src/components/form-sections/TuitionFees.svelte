@@ -39,7 +39,7 @@
 	<RangeMoneyField
 		disabled
 		label="Campus flat fees:"
-		value={$static_vars.flat_fees[$student_information.campus]}
+		value={$static_vars.flat_fees.value}
 		min="0"
 		max="100"
 		step="5"

@@ -15,7 +15,6 @@
 
 	function handleChange() {
 		if ($student_information.campus === 'sarasota') {
-			// housing_food_data.living_plan = 'off_campus_parents';
 			housing_food_data.living_plan = 'nothing';
 		} else {
 			housing_food_data.living_plan = 'nothing';

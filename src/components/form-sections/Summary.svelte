@@ -11,11 +11,12 @@
 		student_information,
 		transportation,
 		transportation_total,
-		tuition_fees_total
+		tuition_fees_total,
+		total
 	} from '../../store';
 	import ReviewRow from '../form-display/ReviewRow.svelte';
 	import ReviewSection from '../form-display/ReviewSection.svelte';
-	import { enums, semester_months, static_vars } from '../../constants.js';
+	import { enums, semester_months } from '../../constants.js';
 
 	let clientX;
 
@@ -24,6 +25,32 @@
 
 <svelte:window bind:outerWidth={clientX} />
 
+<div class="pb-6">
+	{#if $total > 0}
+		<h1 class="text-xl text-red-700 font-semibold">
+			You may not have enough funding to pay for your college costs. If you need help, schedule a
+			<span
+				><a
+					class="text-blue-700 underline"
+					href="https://nam04.safelinks.protection.outlook.com/?url=https%3A%2F%2Foutlook.office365.com%2Fowa%2Fcalendar%2FUSFBull2BullFinancialAidEducationProgram%40usfedu.onmicrosoft.com%2Fbookings%2Fs%2FYdTKpGOEK0Wsr455UIrULg2&data=05%7C01%7Cjacobkeil%40usf.edu%7Cef2eec5a261848fae7c608db36e2bff0%7C741bf7dee2e546df8d6782607df9deaa%7C0%7C0%7C638164119724193304%7CUnknown%7CTWFpbGZsb3d8eyJWIjoiMC4wLjAwMDAiLCJQIjoiV2luMzIiLCJBTiI6Ik1haWwiLCJXVCI6Mn0%3D%7C3000%7C%7C%7C&sdata=wHfm1TrHSane2GHXw0GezyCWBXohExRoSY6VGdoObDw%3D&reserved=0"
+					target="_blank">Financial Wellness</a
+				></span
+			> session with our staff to help you explore additional payment options.
+		</h1>
+	{:else}
+		<h1 class="text-xl text-green-700 font-semibold">
+			Great! It looks like you may have enough funding to pay for your college costs. If needed, you
+			may schedule a <span
+				><a
+					class="text-blue-700 underline"
+					href="https://nam04.safelinks.protection.outlook.com/?url=https%3A%2F%2Foutlook.office365.com%2Fowa%2Fcalendar%2FUSFBull2BullFinancialAidEducationProgram%40usfedu.onmicrosoft.com%2Fbookings%2Fs%2F4RodD-j65kmZQogRRWMUnA2&data=05%7C01%7Cjacobkeil%40usf.edu%7Cef2eec5a261848fae7c608db36e2bff0%7C741bf7dee2e546df8d6782607df9deaa%7C0%7C0%7C638164119724193304%7CUnknown%7CTWFpbGZsb3d8eyJWIjoiMC4wLjAwMDAiLCJQIjoiV2luMzIiLCJBTiI6Ik1haWwiLCJXVCI6Mn0%3D%7C3000%7C%7C%7C&sdata=mEJe61OqZXE%2B0bntJrasPc6ihy5mWrhNkjcDu8vKLBo%3D&reserved=0"
+					target="_blank">Money Management</a
+				></span
+			> session with a peer financial educator to make sure you are budgeting your money and help you
+			stay on track!
+		</h1>
+	{/if}
+</div>
 <div in:fly={{ y: -10, duration: 200 }}>
 	<ReviewSection title="Student Information" edit="Student Information">
 		{#each $review_data.student_information as data}

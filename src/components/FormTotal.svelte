@@ -2,7 +2,6 @@
 	import {
 		total,
 		current_step,
-		student_information,
 		tuition_fees_total,
 		housing_food_total,
 		books_supplies_total,
@@ -11,6 +10,7 @@
 		funding_total,
 		validated
 	} from '../store.js';
+	import MobileSteps from './MobileSteps.svelte';
 	export let clientX;
 
 	let bg_color = 'bg-[#006747] text-white py-1 px-3 rounded-sm font-medium';
@@ -85,5 +85,8 @@
 				</div>
 			{/each}
 		</div>
+	{/if}
+	{#if clientX < 960}
+		<MobileSteps />
 	{/if}
 </div>

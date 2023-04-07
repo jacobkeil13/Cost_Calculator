@@ -41,7 +41,7 @@
 					{max}
 					{step}
 					bind:value
-					class="border-green-900 border-b-2 px-1 bg-transparent text-xl font-medium"
+					class="border-green-900 border-b-2 px-1 bg-transparent w-[80px] text-xl font-medium"
 					class:faded={disabled}
 				/>
 			</div>
