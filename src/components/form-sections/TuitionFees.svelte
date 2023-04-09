@@ -31,7 +31,7 @@
 		concurrency="per semester"
 	/>
 	<RangeMoneyField
-		tooltip_text="e.g. Excess Credit Hours, Repeat Course Surcharges, etc."
+		tooltip_text="e.g. Excess credit hours, Repeat course surcharges, Distance learning, etc."
 		label="Do you have any additional fees?"
 		bind:value={calc_data.other_fees}
 		min="0"

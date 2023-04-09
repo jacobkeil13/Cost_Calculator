@@ -8,7 +8,8 @@
 		concurrency,
 		disabled = false,
 		tooltip_text = '',
-		link = '';
+		link = '',
+		canDelete = false;
 
 	let clientX;
 
@@ -59,20 +60,39 @@
 		<div class="flex flex-col">
 			<div class="flex">
 				<label for="value" class="text-xl">$</label>
-				<input
-					{disabled}
-					on:input={handleInput}
-					type="number"
-					name="value"
-					{min}
-					{max}
-					{step}
-					bind:value
-					class="border-green-900 border-b-2 px-1 bg-transparent text-xl font-medium {clientX > 960
-						? 'w-[80px]'
-						: 'w-[calc(100vw-56px)]'}"
-					class:faded={disabled}
-				/>
+				{#if canDelete}
+					<input
+						{disabled}
+						on:input={handleInput}
+						type="number"
+						name="value"
+						{min}
+						{max}
+						{step}
+						bind:value
+						class="border-green-900 border-b-2 px-1 bg-transparent text-xl font-medium {clientX >
+						960
+							? 'w-[80px]'
+							: `w-[calc(100vw-100px)]`}"
+						class:faded={disabled}
+					/>
+				{:else}
+					<input
+						{disabled}
+						on:input={handleInput}
+						type="number"
+						name="value"
+						{min}
+						{max}
+						{step}
+						bind:value
+						class="border-green-900 border-b-2 px-1 bg-transparent text-xl font-medium {clientX >
+						960
+							? 'w-[80px]'
+							: `w-[calc(100vw-56px)]`}"
+						class:faded={disabled}
+					/>
+				{/if}
 			</div>
 			<p class="text-sm">{concurrency}</p>
 		</div>

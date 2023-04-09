@@ -14,7 +14,9 @@
 	import { goto } from '$app/navigation';
 	import MobileSteps from './MobileSteps.svelte';
 	import { food_plan_cost } from '../constants.js';
-	export let clientX;
+	import FloatingIcons from './FloatingIcons.svelte';
+	export let clientX,
+		quickAccessIsOpen = true;
 
 	let bg_color = 'bg-[#006747] text-white py-1 px-3 rounded-sm font-medium';
 	$: sections = [
@@ -45,11 +47,9 @@
 </script>
 
 <div
-	class="{clientX < 960 ? 'p-6 w-screen' : 'border-l-2 pl-6'} {clientX < 960
-		? Math.round($total) < 0
-			? 'bg-[#006747]'
-			: 'bg-red-700'
-		: ''}"
+	class="{clientX < 960 ? 'bg-[#006747]' : ''} {clientX < 960
+		? 'p-6 w-screen'
+		: 'border-l-2 pl-6'} {quickAccessIsOpen ? 'h-[500px]' : ''}"
 >
 	<h2
 		class="text-center text-lg {clientX < 960 ? 'text-white font-medium' : 'text-black font-bold'}"
@@ -78,7 +78,7 @@
 					class="flex justify-between items-center cursor-pointer"
 					on:click={() => switchStep(section.id)}
 				>
-					<h1 class="text-xl {$current_step === section.id ? bg_color : 'font-semibold'}">
+					<h1 class="text-xl font-semibold {$current_step === section.id ? 'text-[#006747]' : ''}">
 						{section.name}{section.name != 'Student Information' && section.name != 'Summary'
 							? ':'
 							: ''}
@@ -96,12 +96,38 @@
 				</div>
 			{/each}
 		</div>
-	{/if}
-	{#if clientX > 960}
-		<h1 class="text-2xl font-medium text-[#006747] mb-2">Notes</h1>
-		<textarea class="border-2 border-gray-300 w-full rounded-md p-2 h-32 focus:outline-none" />
+		<div>
+			<h1 class="text-2xl font-medium text-[#006747] mb-2">Notes</h1>
+			<textarea class="border-2 border-gray-300 w-full rounded-md p-2 h-32 focus:outline-none" />
+		</div>
 	{/if}
 	{#if clientX < 960}
 		<MobileSteps />
 	{/if}
+	{#if clientX < 960 && quickAccessIsOpen}
+		<div class="flex flex-col pt-6">
+			{#each sections as section}
+				<!-- svelte-ignore a11y-click-events-have-key-events -->
+				<div class="flex justify-between items-center cursor-pointer">
+					<h1 class="text-2xl text-[#ebebeb] font-medium">
+						{section.name}{section.name != 'Student Information' && section.name != 'Summary'
+							? ':'
+							: ''}
+					</h1>
+					<h1
+						class="text-2xl {section.id === 6 ? 'text-[#83ff9c]' : 'text-[#ebebeb]'} font-semibold"
+					>
+						{#if section.name != 'Student Information' && section.name != 'Summary'}
+							${section.amount.toLocaleString(undefined, {
+								minimumFractionDigits: 2,
+								maximumFractionDigits: 2
+							})}
+						{/if}
+					</h1>
+				</div>
+			{/each}
+		</div>
+	{/if}
+
+	<FloatingIcons {clientX} step={$current_step} />
 </div>

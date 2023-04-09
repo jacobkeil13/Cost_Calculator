@@ -143,6 +143,7 @@
 			{#each calc_data.scholarships as scholarship, index}
 				<div class="flex items-center">
 					<RangeMoneyField
+						canDelete="true"
 						label={scholarship.name}
 						bind:value={scholarship.amount}
 						min="0"

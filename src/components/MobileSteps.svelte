@@ -36,6 +36,13 @@
 	/>
 	<!-- svelte-ignore a11y-click-events-have-key-events -->
 	<box-icon
+		on:click={() => switchStep(2)}
+		class:active={$current_step === 2}
+		name="bowl-hot"
+		type="solid"
+	/>
+	<!-- svelte-ignore a11y-click-events-have-key-events -->
+	<box-icon
 		on:click={() => switchStep(3)}
 		class:active={$current_step === 3}
 		name="book"

@@ -7,6 +7,7 @@
 		tooltip_text = '',
 		link = '';
 	const dispatch = createEventDispatcher();
+	let clientX;
 
 	function addEvent() {
 		dispatch('add', data);
@@ -24,6 +25,8 @@
 		hours: undefined
 	};
 </script>
+
+<svelte:window bind:outerWidth={clientX} />
 
 <div class="form-control">
 	{#if label}
@@ -47,7 +50,7 @@
 			{/if}
 		</div>
 	{/if}
-	<div name="button-row" class="flex justify-between space-x-3">
+	<div name="button-row" class={clientX < 960 ? 'space-y-1' : 'flex justify-between space-x-3'}>
 		<input
 			placeholder="Name..."
 			type="text"

@@ -62,6 +62,7 @@
 		{#each calc_data.custom_expenses as expense, index}
 			<div class="flex items-center">
 				<RangeMoneyField
+					canDelete="true"
 					label={expense.name}
 					bind:value={expense.amount}
 					min="0"
