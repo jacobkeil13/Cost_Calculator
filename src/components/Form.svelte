@@ -24,7 +24,7 @@
 					on:click={() => window.print()}
 					type="solid"
 					name="printer"
-					class="fill-black cursor-pointer mt-2"
+					class="fill-[#05553c] cursor-pointer mt-2"
 				/>
 			{/if}
 		</div>

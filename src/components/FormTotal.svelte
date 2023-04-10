@@ -47,9 +47,7 @@
 </script>
 
 <div
-	class="{clientX < 960 ? 'bg-[#006747]' : ''} {clientX < 960
-		? 'p-6 w-screen'
-		: 'border-l-2 pl-6'} {quickAccessIsOpen ? 'h-[500px]' : ''}"
+	class="{clientX < 960 ? 'bg-[#006747]' : ''} {clientX < 960 ? 'p-6 w-screen' : 'border-l-2 pl-6'}"
 >
 	<h2
 		class="text-center text-lg {clientX < 960 ? 'text-white font-medium' : 'text-black font-bold'}"

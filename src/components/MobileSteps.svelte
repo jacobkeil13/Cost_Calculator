@@ -25,7 +25,7 @@
 	<box-icon
 		on:click={() => switchStep(1)}
 		class:active={$current_step === 1}
-		name="money-withdraw"
+		name="dollar-circle"
 	/>
 	<!-- svelte-ignore a11y-click-events-have-key-events -->
 	<box-icon
