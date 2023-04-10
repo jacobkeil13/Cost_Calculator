@@ -12,6 +12,10 @@
 	import Summary from './form-sections/Summary.svelte';
 
 	$: step_name = $steps[$current_step];
+
+	function print() {
+		window.print();
+	}
 </script>
 
 <div id="form" class="w-full">
@@ -21,17 +25,18 @@
 			{#if $current_step === $steps.indexOf('Summary')}
 				<!-- svelte-ignore a11y-click-events-have-key-events -->
 				<box-icon
-					on:click={() => window.print()}
+					on:click={print}
 					type="solid"
 					name="printer"
 					class="fill-[#05553c] cursor-pointer mt-2"
 				/>
 			{/if}
 		</div>
-		<button
-			on:click={() => location.reload()}
-			class="px-2 py-1 bg-[#a71b26] hover:bg-[#cf2836] text-white rounded-sm">Reset</button
-		>
+		<div id="start-over" class="flex items-center space-x-2">
+			<!-- svelte-ignore a11y-click-events-have-key-events -->
+			<box-icon on:click={() => location.reload()} name="reset" />
+			<h1 class="hidden transition-all">Start over</h1>
+		</div>
 	</div>
 	{#if $current_step === $steps.indexOf('Student Information')}
 		<StudentInfo />
@@ -52,3 +57,12 @@
 	{/if}
 	<FormControls />
 </div>
+
+<style>
+	#start-over h1 {
+		transition: all 0.2s ease;
+	}
+	#start-over:hover > h1 {
+		display: block;
+	}
+</style>

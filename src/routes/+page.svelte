@@ -15,7 +15,7 @@
 
 <svelte:window bind:outerWidth={clientX} />
 
-<main id="start-content" class="relative min-h-[calc(100vh-450px)]">
+<main id="start-content" class="relative min-h-[800px]">
 	{#if clientX >= 960}
 		<div class="grid grid-cols-[2fr_1fr] gap-4 p-6">
 			<section class="pr-3">

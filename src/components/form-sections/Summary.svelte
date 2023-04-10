@@ -1,6 +1,7 @@
 <script>
 	import { fly } from 'svelte/transition';
 	import { review_data } from '../../summary.js';
+	import { notes } from '../../store';
 	import {
 		books_supplies_total,
 		funding,
@@ -21,6 +22,26 @@
 	let clientX;
 
 	$: flexWidth = clientX < 960 ? 'mobile' : 'desktop';
+
+	function roundDollarSign(num, times) {
+		if (num < 0) {
+			return (
+				'-$' +
+				(num * times * -1).toLocaleString(undefined, {
+					minimumFractionDigits: 2,
+					maximumFractionDigits: 2
+				})
+			);
+		} else if (num >= 0) {
+			return (
+				'$' +
+				(num * times).toLocaleString(undefined, {
+					minimumFractionDigits: 2,
+					maximumFractionDigits: 2
+				})
+			);
+		}
+	}
 </script>
 
 <svelte:window bind:outerWidth={clientX} />
@@ -370,4 +391,30 @@
 			/>
 		{/if}
 	</ReviewSection>
+	{#if $student_information.semester === 'spring' || $student_information.semester === 'fall'}
+		<ReviewSection
+			title="Looking ahead..."
+			alt_text="Values are calculated without personal and college funding."
+		>
+			<ReviewRow
+				question="Estimated costs for Fall and Spring:"
+				value={roundDollarSign($total + $funding_total, 2)}
+			/>
+			<ReviewRow
+				question="Estimated costs for two years:"
+				value={roundDollarSign($total + $funding_total, 4)}
+			/>
+			<ReviewRow
+				question="Estimated costs for four years:"
+				value={roundDollarSign($total + $funding_total, 8)}
+			/>
+		</ReviewSection>
+	{/if}
+	{#if $notes.length !== 0}
+		<ReviewSection title="Notes">
+			{#each $notes as note}
+				<ReviewRow question={note} />
+			{/each}
+		</ReviewSection>
+	{/if}
 </div>

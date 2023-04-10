@@ -3,7 +3,6 @@
 	import { fly } from 'svelte/transition';
 	import RangeMoneyField from '../form-inputs/RangeMoneyField.svelte';
 	import AddButtonGroup from '../form-inputs/AddButtonGroup.svelte';
-	import DoubleNumberField from '../form-inputs/DoubleNumberField.svelte';
 
 	let calc_data = $personal;
 	let expense_list = Object.keys(calc_data);

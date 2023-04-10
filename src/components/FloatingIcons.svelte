@@ -82,6 +82,6 @@
 	}
 
 	.other {
-		border: 3px #d6d6d6 solid;
+		border: 3px #e1e1e1 solid;
 	}
 </style>

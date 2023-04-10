@@ -9,16 +9,17 @@
 		personal_total,
 		funding_total,
 		validated,
-		housing_food
+		housing_food,
+		notes
 	} from '../store.js';
 	import { goto } from '$app/navigation';
 	import MobileSteps from './MobileSteps.svelte';
-	import { food_plan_cost } from '../constants.js';
+	import { food_plan_cost, steps } from '../constants.js';
 	import FloatingIcons from './FloatingIcons.svelte';
+	import Notes from './form-inputs/Notes.svelte';
 	export let clientX,
 		quickAccessIsOpen = true;
 
-	let bg_color = 'bg-[#006747] text-white py-1 px-3 rounded-sm font-medium';
 	$: sections = [
 		{ name: 'Student Information', id: 0, amount: 0 },
 		{ name: 'Tuition & Fees', id: 1, amount: $tuition_fees_total },
@@ -34,6 +35,10 @@
 		{ name: 'Funding', id: 6, amount: $funding_total },
 		{ name: 'Summary', id: 7, amount: 0 }
 	];
+
+	$: {
+		notes.set($notes);
+	}
 
 	function switchStep(step_num) {
 		if (Object.keys($validated).length != 0) {
@@ -94,10 +99,9 @@
 				</div>
 			{/each}
 		</div>
-		<div>
-			<h1 class="text-2xl font-medium text-[#006747] mb-2">Notes</h1>
-			<textarea class="border-2 border-gray-300 w-full rounded-md p-2 h-32 focus:outline-none" />
-		</div>
+		{#if $current_step !== $steps.indexOf('Summary')}
+			<Notes />
+		{/if}
 	{/if}
 	{#if clientX < 960}
 		<MobileSteps />

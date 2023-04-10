@@ -83,6 +83,9 @@ export const funding = writable({
 	other_funding: 0
 });
 
+export const notes = writable([]);
+export const lookAheadWithoutFunding = writable(false);
+
 export let tuition_fees_total = derived(
 	[tuition_fees, student_information, static_vars],
 	([$tuition_fees, $student_information, $static_vars]) => {
