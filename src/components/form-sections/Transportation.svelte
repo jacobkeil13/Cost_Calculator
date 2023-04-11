@@ -32,6 +32,7 @@
 			concurrency="per semester"
 		/>
 		<RangeMoneyField
+			tooltip_text="Enter zero if paid by others."
 			label="How much is your car payment?"
 			bind:value={calc_data.car_payment}
 			min="0"
@@ -40,6 +41,7 @@
 			concurrency="per month"
 		/>
 		<RangeMoneyField
+			tooltip_text="Enter zero if paid by others."
 			label="How much is your car insurance?"
 			bind:value={calc_data.insurance}
 			min="0"
@@ -48,6 +50,7 @@
 			concurrency="per month"
 		/>
 		<RangeMoneyField
+			tooltip_text="Enter zero if paid by others."
 			label="How much do you spend on gas?"
 			bind:value={calc_data.gas}
 			min="0"

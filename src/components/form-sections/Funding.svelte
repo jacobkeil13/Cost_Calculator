@@ -101,7 +101,7 @@
 		<SelectionField
 			tooltip_text="Need more information? Click the external link."
 			link="https://www.usf.edu/financial-aid/brightfutures/index.aspx"
-			label="Do you qualify for the Bright Futures Award??"
+			label="Do you qualify for the Bright Futures Award?"
 			options={funding_options.bright_futures}
 			bind:value={calc_data.bright_futures}
 		/>

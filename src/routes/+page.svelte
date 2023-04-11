@@ -49,6 +49,16 @@
 				/>
 			{/if}
 
+			<!-- svelte-ignore a11y-click-events-have-key-events -->
+			{#if $current_step === $steps.indexOf('Summary')}
+				<box-icon
+					on:click={() => window.print()}
+					name="printer"
+					type="solid"
+					class="absolute top-2 left-2 w-6 h-6 z-10 fill-white cursor-pointer"
+				/>
+			{/if}
+
 			<FormTotal {clientX} {quickAccessIsOpen} />
 		</div>
 	{/if}

@@ -16,6 +16,12 @@
 		$notes = $notes;
 		notes.set($notes);
 	}
+
+	function onEnter(e) {
+		if (e.code === 'Enter') {
+			addNote();
+		}
+	}
 </script>
 
 <div>
@@ -29,14 +35,21 @@
 		/>
 	</div>
 	<div class="flex items-center border-2 border-[#006747] w-full rounded-sm">
-		<input bind:value={currentNote} type="text" class="w-full px-1 flex-grow" />
+		<input
+			on:keydown={onEnter}
+			placeholder="e.g. Stop buying lottery tickets..."
+			bind:value={currentNote}
+			type="text"
+			class="w-full px-1 flex-grow"
+		/>
 		<!-- svelte-ignore a11y-click-events-have-key-events -->
 		<div
 			on:click={addNote}
 			id="add-button"
-			class="flex justify-center items-center w-10 bg-[#006747] cursor-pointer"
+			class="flex justify-center items-center w-10 bg-[#006747] cursor-pointer font-medium text-white"
 		>
-			<box-icon name="plus" class="fill-white" />
+			<!-- <box-icon name="plus" class="fill-white" /> -->
+			Add
 		</div>
 	</div>
 	<ul class="list-disc pl-5">

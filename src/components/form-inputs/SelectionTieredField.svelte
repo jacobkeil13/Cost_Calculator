@@ -13,15 +13,17 @@
 <div class="form-control">
 	{#if label}
 		<div class="flex space-x-3">
-			<h1 class="font-semibold mb-2">{label}</h1>
-			{#if tooltip_text != ''}
-				<box-icon
-					class="w-[20px] fill-green-800 cursor-pointer"
-					title={tooltip_text}
-					name="help-circle"
-					use:tooltip
-				/>
-			{/if}
+			<h1 class="font-medium text-xl mb-2">
+				{label}
+				{#if tooltip_text != ''}
+					<box-icon
+						class="w-[20px] pt-[6px] fill-green-800 cursor-pointer"
+						title={tooltip_text}
+						name="help-circle"
+						use:tooltip
+					/>
+				{/if}
+			</h1>
 		</div>
 	{/if}
 	<select class:active={value === 'nothing'} {disabled} bind:value>
@@ -56,7 +58,7 @@
 		width: 100%;
 		padding: 0.25rem 0.5rem;
 		border-width: 2px;
-		border-radius: 0.1rem;
+		border-radius: 0.375rem;
 	}
 
 	.active {

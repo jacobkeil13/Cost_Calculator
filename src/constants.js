@@ -467,8 +467,6 @@ export const dropdownOptions = readable({
 					'First Time': [
 						{ value: 'open_access_a_b', label: 'Open Access', cost: '1075' },
 						{ value: 'bull_block_75', label: 'BULL Block 75', cost: '919' },
-						{ value: 'ace_b2b_open', label: 'ACE & B2B Open Access', cost: '949' },
-						{ value: 'sss_open', label: 'SSS Open Access', cost: '1140' }
 					]
 				},
 				summer_b: {
@@ -483,24 +481,18 @@ export const dropdownOptions = readable({
 					'First Time': [
 						{ value: 'open_access_c_ac', label: 'Open Access', cost: '1655' },
 						{ value: 'bull_block_75', label: 'BULL Block 75', cost: '919' },
-						{ value: 'ace_b2b_open', label: 'ACE & B2B Open Access', cost: '949' },
-						{ value: 'sss_open', label: 'SSS Open Access', cost: '1140' }
 					]
 				},
 				summer_ab_abc: {
 					'First Time': [
 						{ value: 'open_access_ab_abc', label: 'Open Access', cost: '2150' },
 						{ value: 'bull_block_75', label: 'BULL Block 75', cost: '919' },
-						{ value: 'ace_b2b_open', label: 'ACE & B2B Open Access', cost: '949' },
-						{ value: 'sss_open', label: 'SSS Open Access', cost: '1140' }
 					]
 				},
 				summer_c_ac: {
 					'First Time': [
 						{ value: 'open_access_c_ac', label: 'Open Access', cost: '1655' },
 						{ value: 'bull_block_75', label: 'BULL Block 75', cost: '919' },
-						{ value: 'ace_b2b_open', label: 'ACE & B2B Open Access', cost: '949' },
-						{ value: 'sss_open', label: 'SSS Open Access', cost: '1140' }
 					]
 				}
 			},

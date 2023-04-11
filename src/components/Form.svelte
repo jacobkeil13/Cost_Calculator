@@ -32,10 +32,10 @@
 				/>
 			{/if}
 		</div>
-		<div id="start-over" class="flex items-center space-x-2">
-			<!-- svelte-ignore a11y-click-events-have-key-events -->
-			<box-icon on:click={() => location.reload()} name="reset" />
-			<h1 class="hidden transition-all">Start over</h1>
+		<!-- svelte-ignore a11y-click-events-have-key-events -->
+		<div on:click={() => location.reload()} id="start-over" class="flex items-center space-x-1">
+			<h1 class="font-semibold">Start over</h1>
+			<box-icon name="reset" />
 		</div>
 	</div>
 	{#if $current_step === $steps.indexOf('Student Information')}
@@ -59,10 +59,22 @@
 </div>
 
 <style>
-	#start-over h1 {
-		transition: all 0.2s ease;
-	}
 	#start-over:hover > h1 {
-		display: block;
+		font-weight: 600;
+		color: rgb(185 28 28);
+		opacity: 1;
+	}
+	#start-over:hover > box-icon {
+		fill: rgb(185 28 28);
+	}
+	#start-over {
+		cursor: pointer;
+	}
+	#start-over > h1 {
+		opacity: 0;
+		transition: all 0.2s ease-in-out;
+	}
+	#start-over > box-icon {
+		transition: all 0.2s ease-in-out;
 	}
 </style>

@@ -72,6 +72,7 @@
 
 <style>
 	box-icon {
+		fill: rgb(58, 58, 58);
 		cursor: pointer;
 		width: 20px;
 		height: 20px;

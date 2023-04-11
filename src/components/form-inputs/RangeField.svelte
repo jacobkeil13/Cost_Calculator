@@ -20,15 +20,17 @@
 <div class="form-control">
 	{#if label}
 		<div class="flex space-x-3">
-			<h1 class="font-semibold">{label}</h1>
-			{#if tooltip_text != ''}
-				<box-icon
-					class="w-[20px] fill-green-800 cursor-pointer"
-					title={tooltip_text}
-					name="help-circle"
-					use:tooltip
-				/>
-			{/if}
+			<h1 class="font-medium text-xl">
+				{label}
+				{#if tooltip_text != ''}
+					<box-icon
+						class="w-[20px] pt-[6px] fill-green-800 cursor-pointer"
+						title={tooltip_text}
+						name="help-circle"
+						use:tooltip
+					/>
+				{/if}
+			</h1>
 		</div>
 	{/if}
 	<div class="flex space-x-2">

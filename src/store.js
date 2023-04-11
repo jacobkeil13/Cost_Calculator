@@ -62,10 +62,10 @@ export const transportation = writable({
 });
 
 export const personal = writable({
-	takeout_coffee: 0,
-	groceries: 0,
-	phone_bill: 0,
-	subscriptions_memberships: 0,
+	takeout_coffee: 225,
+	groceries: 60,
+	phone_bill: 85,
+	subscriptions_memberships: 120,
 	custom_expenses: []
 });
 
@@ -257,11 +257,12 @@ export let funding_total = derived(
 			if ($funding.when_purchased === 'prepaid_plan_before') {
 				funding += $static_vars.tuition_diff * $tuition_fees.credit_hours;
 			}
-			if ($funding.bright_futures === 'fms') {
-				funding += $bright_futures_cost.fms_fee;
-			} else if ($funding.bright_futures === 'fas') {
-				funding += $bright_futures_cost.fas_fee;
-			}
+		}
+
+		if ($funding.bright_futures === 'fms') {
+			funding += $bright_futures_cost.fms_fee;
+		} else if ($funding.bright_futures === 'fas') {
+			funding += $bright_futures_cost.fas_fee;
 		}
 
 		// If the student is out of state and doesn't have florida prepaid we ask if they are receiving

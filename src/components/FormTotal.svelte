@@ -1,4 +1,6 @@
 <script>
+	import { fly } from 'svelte/transition';
+	import { tooltip } from './misc/tooltip.js';
 	import {
 		total,
 		current_step,
@@ -54,18 +56,44 @@
 <div
 	class="{clientX < 960 ? 'bg-[#006747]' : ''} {clientX < 960 ? 'p-6 w-screen' : 'border-l-2 pl-6'}"
 >
-	<h2
-		class="text-center text-lg {clientX < 960 ? 'text-white font-medium' : 'text-black font-bold'}"
-	>
-		Total Semester {$total < 0 ? 'Surplus' : 'Shortfall'}
-	</h2>
+	<div class="flex justify-center space-x-1">
+		{#if $total < 0}
+			<h1
+				class="text-center text-lg {clientX < 960
+					? 'text-white font-medium'
+					: 'text-black font-semibold'}"
+			>
+				Total Semester Surplus
+			</h1>
+			<box-icon
+				class="w-[20px] pt-[6px] {clientX < 960 ? 'fill-white' : 'text-green-800'} cursor-pointer"
+				title="Estimate of how much extra money you have after expenses."
+				name="help-circle"
+				use:tooltip
+			/>
+		{:else}
+			<h1
+				class="text-center text-lg {clientX < 960
+					? 'text-white font-medium'
+					: 'text-black font-semibold'}"
+			>
+				Total Semester Shortfall
+			</h1>
+			<box-icon
+				class="w-[20px] pt-[6px] {clientX < 960 ? 'fill-white' : 'text-green-800'} cursor-pointer"
+				title="Estimate of how much money you still need after expenses."
+				name="help-circle"
+				use:tooltip
+			/>
+		{/if}
+	</div>
 	<h1
 		class="text-center text-5xl rounded-md {$total < 1
 			? clientX < 960
-				? 'text-white'
+				? 'text-[#8cdd78]'
 				: 'text-[#2a990e]'
 			: clientX < 960
-			? 'text-white'
+			? 'text-red-300'
 			: 'text-red-700'}"
 	>
 		${($total < 0 ? $total * -1 : $total).toLocaleString(undefined, {
@@ -78,16 +106,22 @@
 			{#each sections as section}
 				<!-- svelte-ignore a11y-click-events-have-key-events -->
 				<div
-					class="flex justify-between items-center cursor-pointer"
+					class="validate flex justify-between items-center cursor-pointer"
 					on:click={() => switchStep(section.id)}
 				>
-					<h1 class="text-xl font-semibold {$current_step === section.id ? 'text-[#006747]' : ''}">
+					<h1
+						class="validate text-xl font-semibold {$current_step === section.id
+							? 'text-[#006747]'
+							: ''}"
+					>
 						{section.name}{section.name != 'Student Information' && section.name != 'Summary'
 							? ':'
 							: ''}
 					</h1>
 					<h1
-						class="text-xl {section.id === 6 ? 'text-[#2a990e]' : 'text-[#000000]'} font-semibold"
+						class="validate text-xl {section.id === 6
+							? 'text-[#2a990e]'
+							: 'text-[#000000]'} font-semibold"
 					>
 						{#if section.name != 'Student Information' && section.name != 'Summary'}
 							${section.amount.toLocaleString(undefined, {
@@ -107,7 +141,7 @@
 		<MobileSteps />
 	{/if}
 	{#if clientX < 960 && quickAccessIsOpen}
-		<div class="flex flex-col pt-6">
+		<div in:fly={{ y: 100, duration: 100 }} class="flex flex-col pt-6">
 			{#each sections as section}
 				<!-- svelte-ignore a11y-click-events-have-key-events -->
 				<div class="flex justify-between items-center cursor-pointer">
