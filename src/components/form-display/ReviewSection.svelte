@@ -1,4 +1,5 @@
 <script>
+	import { goto } from '$app/navigation';
 	import { current_step } from '../../store';
 	import { steps } from '../../constants';
 	export let title,
@@ -7,6 +8,7 @@
 
 	function switchStep(id) {
 		current_step.set(id);
+		goto('#start-content');
 	}
 </script>
 

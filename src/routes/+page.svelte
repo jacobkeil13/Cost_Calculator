@@ -55,7 +55,7 @@
 					on:click={() => window.print()}
 					name="printer"
 					type="solid"
-					class="absolute top-2 left-2 w-6 h-6 z-10 fill-white cursor-pointer"
+					class="absolute top-3 left-3 w-6 h-6 z-10 fill-white cursor-pointer"
 				/>
 			{/if}
 

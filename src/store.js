@@ -1,4 +1,4 @@
-import { derived, readable, writable } from 'svelte/store';
+import { derived, writable } from 'svelte/store';
 import {
 	static_vars,
 	enums,
@@ -62,10 +62,10 @@ export const transportation = writable({
 });
 
 export const personal = writable({
-	takeout_coffee: 225,
-	groceries: 60,
-	phone_bill: 85,
-	subscriptions_memberships: 120,
+	takeout_coffee: 0,
+	groceries: 0,
+	phone_bill: 0,
+	subscriptions_memberships: 0,
 	custom_expenses: []
 });
 
@@ -183,7 +183,7 @@ export let transportation_total = derived(
 			transportation =
 				tp.parking_pass +
 				(tp.car_payment + tp.insurance + tp.gas + tp.maintenance) *
-				$semester_months[$student_information.semester];
+					$semester_months[$student_information.semester];
 		}
 		// If the student is not bringing a vehicle we only add the other trnasport field
 		// to the total.
@@ -356,7 +356,7 @@ export const validated = derived([student_information], ($student_information) =
 		if ($student_information[0][key] === 'nothing') {
 			error[key] = 'invalid';
 		}
-	})
+	});
 
 	return error;
 });

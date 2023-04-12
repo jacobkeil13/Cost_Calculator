@@ -1,21 +1,32 @@
 <script>
+	import { personal } from '../../store.js';
 	import { quantize, interpolatePlasma, pie, arc } from 'd3';
-	let data = [
-		{ expense: 'Takeout/Coffee', cost: '225' },
-		{ expense: 'Groceries', cost: '60' },
-		{ expense: 'Cell Bill', cost: '85' },
-		{ expense: 'Subs', cost: '120' },
-		{ expense: 'Other', cost: '50' }
-	];
+	let data = [];
+	let other_expenses = { expense: 'Other', cost: 0 };
 
-	const width = 400; // the outer width of the chart, in pixels
+	$personal.custom_expenses.forEach((expense) => {
+		other_expenses.cost += expense.amount;
+	});
+
+	data.push(
+		{ expense: 'Takeout & Coffee', cost: $personal.takeout_coffee },
+		{ expense: 'Groceries', cost: $personal.groceries },
+		{ expense: 'Cell Bill', cost: $personal.phone_bill },
+		{ expense: 'Subs', cost: $personal.subscriptions_memberships }
+	);
+
+	if (other_expenses.cost !== 0) {
+		data.push(other_expenses);
+	}
+
+	const width = 500; // the outer width of the chart, in pixels
 	const height = width; // the outer height of the chart, in pixels
 	const percent = false; // format values as percentages (true/false)
-	const fontSize = 12; // the font size of the x and y values
+	const fontSize = 15; // the font size of the x and y values
 	const strokeWidth = 0; // the width of stroke separating wedges
 	const strokeLinejoin = 'round'; // line join style of stroke separating wedges
 	const outerRadius = Math.min(width, height) * 0.5 - 60; // the outer radius of the circle, in pixels
-	const innerRadius = 65; // the inner radius of the chart, in pixels
+	const innerRadius = 75; // the inner radius of the chart, in pixels
 	const labelPosition = 0.3; // the position of the label offset from center
 	const labelRadius = innerRadius * labelPosition + outerRadius * 0.6; // center radius of labels
 	const strokeColorWOR = 'white'; //stroke color when inner radius is greater than 0
@@ -57,9 +68,9 @@
 			stroke-width={strokeWidth}
 			stroke-linejoin={strokeLinejoin}
 		/>
-		<g text-anchor="middle" transform="translate({arcLabel.centroid(wedge)})">
+		<g class="fill-white" text-anchor="middle" transform="translate({arcLabel.centroid(wedge)})">
 			<text font-size={fontSize}>
-				<tspan font-weight="bold">{@html xVals[i]}</tspan>
+				<tspan class="font-medium">{@html xVals[i]}</tspan>
 				<tspan x="0" dy="1.1em">${data[i].cost}</tspan>
 			</text>
 		</g>

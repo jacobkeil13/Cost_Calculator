@@ -18,7 +18,6 @@
 	import ReviewRow from '../form-display/ReviewRow.svelte';
 	import ReviewSection from '../form-display/ReviewSection.svelte';
 	import { enums, semester_months } from '../../constants.js';
-	import PersonalViz from '../data-viz/PersonalViz.svelte';
 
 	let clientX;
 
