@@ -346,9 +346,14 @@ export const review_data = derived(
 						mobile: 'Has Florida prepaid:',
 						desktop: 'Do you have a Florida prepaid plan?'
 					},
-					value:
-						$dropdownOptions.funding.fl_prepaid.find((i) => i.value === $funding.has_fl_prepaid)
-							.label || 'None picked',
+					value: function () {
+						try {
+							return $dropdownOptions.funding.fl_prepaid.find((i) => i.value === $funding.has_fl_prepaid)
+								.label;
+						} catch (error) {
+							return "None picked"
+						}
+					},
 					style: function () {
 						return this.value === 'None picked' ? 'text-red-700' : '';
 					}
@@ -358,10 +363,15 @@ export const review_data = derived(
 						mobile: 'When purchased:',
 						desktop: 'When did you purchase your Florida prepaid plan?'
 					},
-					value:
-						$dropdownOptions.funding.prepaid_purchase.find(
-							(i) => i.value === $funding.when_purchased
-						).label || 'None picked',
+					value: function () {
+						try {
+							return $dropdownOptions.funding.prepaid_purchase.find(
+								(i) => i.value === $funding.when_purchased
+							).label;
+						} catch (error) {
+							return "None picked"
+						}
+					},
 					style: function () {
 						return this.value === 'None picked' ? 'text-red-700' : '';
 					}
@@ -371,10 +381,15 @@ export const review_data = derived(
 						mobile: 'Prepaid plan:',
 						desktop: 'Which plan did you purchase?'
 					},
-					value:
-						$dropdownOptions.funding[$funding.when_purchased].find(
-							(i) => i.value === $funding.prepaid_plan
-						).label || 'None picked',
+					value: function () {
+						try {
+							return $dropdownOptions.funding[$funding.when_purchased].find(
+								(i) => i.value === $funding.prepaid_plan
+							).label;
+						} catch (error) {
+							return "None picked"
+						}
+					},
 					style: function () {
 						return this.value === 'None picked' ? 'text-red-700' : '';
 					}
@@ -384,9 +399,14 @@ export const review_data = derived(
 						mobile: 'Bright futures:',
 						desktop: 'Do you qualify for the Bright Futures award?'
 					},
-					value:
-						$dropdownOptions.funding.bright_futures.find((i) => i.value === $funding.bright_futures)
-							.label || 'None picked',
+					value: function () {
+						try {
+							return $dropdownOptions.funding.bright_futures.find((i) => i.value === $funding.bright_futures)
+								.label;
+						} catch (error) {
+							return "None picked"
+						}
+					},
 					style: function () {
 						return this.value === 'None picked' ? 'text-red-700' : '';
 					}
@@ -396,10 +416,15 @@ export const review_data = derived(
 						mobile: 'Green and gold:',
 						desktop: 'Do you qualify for the Green and Gold scholarship?'
 					},
-					value:
-						$dropdownOptions.funding.gg_scholarship.gg_options.find(
-							(i) => i.value === $funding.green_gold_award
-						).label || 'None picked',
+					value: function () {
+						try {
+							return $dropdownOptions.funding.gg_scholarship.gg_options.find(
+								(i) => i.value === $funding.green_gold_award
+							).label;
+						} catch (error) {
+							return "None picked"
+						}
+					},
 					style: function () {
 						return this.value === 'None picked' ? 'text-red-700' : '';
 					}

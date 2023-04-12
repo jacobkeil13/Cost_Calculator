@@ -23,7 +23,7 @@
 		{#if edit != 'nothing'}
 			<!-- svelte-ignore a11y-click-events-have-key-events -->
 			<box-icon
-				on:click={switchStep($steps.indexOf(title))}
+				on:click={switchStep($steps.indexOf(edit))}
 				type="solid"
 				name="edit"
 				class="fill-[#242424] cursor-pointer mb-2"

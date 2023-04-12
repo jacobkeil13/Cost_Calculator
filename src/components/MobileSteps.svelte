@@ -91,6 +91,6 @@
 		width: 32px;
 	}
 	.active {
-		fill: #f5e189;
+		fill: #ffe46e;
 	}
 </style>

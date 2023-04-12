@@ -17,6 +17,6 @@ select:focus {
 	outline: none;
 }
 
-option:checked {
-	background-color: none;
+select option:checked {
+	background-color: #dfdfdf;
 }

@@ -37,7 +37,7 @@
 	<div class="flex items-center border-2 border-[#006747] w-full rounded-sm">
 		<input
 			on:keydown={onEnter}
-			placeholder="e.g. Stop buying lottery tickets..."
+			placeholder="e.g. Stop buying takeout and coffee..."
 			bind:value={currentNote}
 			type="text"
 			class="w-full px-1 flex-grow"

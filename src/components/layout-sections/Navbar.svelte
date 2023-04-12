@@ -7,7 +7,9 @@
 	<div class="flex justify-between items-center w-screen max-w-5xl mx-auto px-6">
 		<div class="flex space-x-3">
 			<USFLogo />
-			<h1 class="font-bold tracking-wider max-w-lg">UNIVERSITY OF SOUTH FLORIDA</h1>
+			{#if clientX > 960}
+				<h1 class="font-bold tracking-wider max-w-lg">UNIVERSITY OF SOUTH FLORIDA</h1>
+			{/if}
 		</div>
 		{#if clientX < 960}
 			<box-icon name="menu" class="fill-white" />
@@ -20,7 +22,10 @@
 	</div>
 </nav>
 <div class="bg-[#3F565E] h-[120px] flex justify-between items-center">
-	<div class="flex items-center w-screen max-w-5xl mx-auto px-6">
-		<h1 class="font-semibold tracking-wide text-4xl text-white">OFFICE OF FINANCIAL AID</h1>
+	<div class="flex flex-col w-screen max-w-5xl mx-auto px-6">
+		<h1 class="font-semibold tracking-wide {clientX < 960 ? 'text-3xl' : 'text-4xl'} text-white">
+			OFFICE OF FINANCIAL AID
+		</h1>
+		<p class="text-[#8cdd78] font-semibold text-2xl">USF COST CALCULATOR</p>
 	</div>
 </div>

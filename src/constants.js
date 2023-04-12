@@ -40,6 +40,7 @@ export const semester_months = readable({
 });
 
 export const florida_prepaid_cost = readable({
+	nothing: 0,
 	tuition_plan: 117.08,
 	tuition_local: 153.56,
 	tuition_diff: 163.96,
@@ -109,28 +110,37 @@ export const green_gold_cost = readable({
 		12: 4365.84,
 		13: 4729.66,
 		14: 5093.48,
-		15: 5457.3,
-		16: 5500.0,
-		17: 5500.0,
-		18: 5500.0
+		15: 5457.30,
+		16: 5500.00,
+		17: 5500.00,
+		18: 5500.00
 	},
 	directors: {
-		12: 4000.0,
-		13: 4000.0,
-		14: 4000.0,
-		15: 4000.0,
-		16: 4000.0,
-		17: 4000.0,
-		18: 4000.0
+		12: 4000.00,
+		13: 4000.00,
+		14: 4000.00,
+		15: 4000.00,
+		16: 4000.00,
+		17: 4000.00,
+		18: 4000.00
 	},
 	scholars: {
-		12: 2500.0,
-		13: 2500.0,
-		14: 2500.0,
-		15: 2500.0,
-		16: 2500.0,
-		17: 2500.0,
-		18: 2500.0
+		12: 2500.00,
+		13: 2500.00,
+		14: 2500.00,
+		15: 2500.00,
+		16: 2500.00,
+		17: 2500.00,
+		18: 2500.00
+	},
+	student_scholarship: {
+		12: 500.00,
+		13: 500.00,
+		14: 500.00,
+		15: 500.00,
+		16: 500.00,
+		17: 500.00,
+		18: 500.00
 	}
 });
 
@@ -593,7 +603,8 @@ export const dropdownOptions = readable({
 			gg_options: [
 				{ value: 'presidential', label: 'Presidential Award' },
 				{ value: 'directors', label: 'Directors Award' },
-				{ value: 'scholars', label: 'Scholars Award' }
+				{ value: 'scholars', label: 'Scholars Award' },
+				{ value: 'student_scholarship', label: 'International Student Scholarship' }
 			]
 		}
 	}

@@ -59,7 +59,7 @@
 	<div class="flex justify-center space-x-1">
 		{#if $total < 0}
 			<h1
-				class="text-center text-lg {clientX < 960
+				class="text-center text-xl {clientX < 960
 					? 'text-white font-medium'
 					: 'text-black font-semibold'}"
 			>
@@ -71,9 +71,9 @@
 				name="help-circle"
 				use:tooltip
 			/>
-		{:else}
+		{:else if $total > 0}
 			<h1
-				class="text-center text-lg {clientX < 960
+				class="text-center text-xl {clientX < 960
 					? 'text-white font-medium'
 					: 'text-black font-semibold'}"
 			>

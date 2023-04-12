@@ -1,9 +1,14 @@
 <script>
+	import { total } from '../store';
 	export let clientX, step;
 </script>
 
 {#if clientX > 960}
-	<div class="absolute flex flex-col -left-[15px] top-[114px] space-y-[8px]">
+	<div
+		class="{$total === 0
+			? 'top-[85px]'
+			: 'top-[114px]'} absolute flex flex-col -left-[15px] space-y-[8px]"
+	>
 		<div
 			class="flex justify-center items-center w-8 h-8 bg-white rounded-full"
 			class:active={step === 0}
@@ -82,7 +87,15 @@
 		border: 3px #006747 solid;
 	}
 
+	.active > box-icon {
+		fill: #006747;
+	}
+
 	.other {
 		border: 3px #e1e1e1 solid;
+	}
+
+	.other > box-icon {
+		fill: #9e9e9e;
 	}
 </style>

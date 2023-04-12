@@ -2,7 +2,6 @@
 	import { createEventDispatcher } from 'svelte';
 	import { tooltip } from '../misc/tooltip.js';
 	export let label,
-		button,
 		type,
 		tooltip_text = '',
 		link = '';
@@ -70,7 +69,7 @@
 			class="w-full border-2 border-gray-400 rounded-sm py-1 px-2"
 			bind:value={data.amount}
 		/>
-		{#if type === 'scholarship' || type === 'expense'}
+		{#if type === 'expense'}
 			<select
 				bind:value={data.concurrency}
 				name="type"
@@ -91,8 +90,11 @@
 				class="w-full border-2 border-gray-400 rounded-sm py-1 px-2"
 			/>
 		{/if}
+		<button
+			class="flex justify-center items-center px-2 py-1 bg-[#006747] text-white rounded-sm"
+			on:click={addEvent}
+		>
+			<box-icon name="plus" class="fill-white" />
+		</button>
 	</div>
-	<button class="px-2 py-1 bg-[#006747] text-white rounded-sm mt-2" on:click={addEvent}
-		>{button}</button
-	>
 </div>

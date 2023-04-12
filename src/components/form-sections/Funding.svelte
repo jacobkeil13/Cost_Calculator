@@ -31,7 +31,7 @@
 			calc_data.scholarships.push({
 				name: data.detail.name === '' ? 'Scholarship' : data.detail.name,
 				amount: data.detail.amount || 0,
-				concurrency: data.detail.concurrency === 'nothing' ? 'semesterly' : data.detail.concurrency
+				concurrency: 'semesterly'
 			});
 		}
 		if (data.detail.type === 'job') {
@@ -69,7 +69,8 @@
 	{#if gg_eligible}
 		<SelectionField
 			tooltip_text="Fall 2018 admitted students and beyond. Merit based scholarship from the Office of Admissions"
-			label="Are you receiving a USF Green and Gold Scholarship?"
+			link="https://www.usf.edu/admissions/freshmen/admissions-scholarships/nonflorida.aspx"
+			label="Are you receiving a USF Green and Gold Waiver or International Scholarship?"
 			options={funding_options.gg_scholarship.has_scholarship}
 			bind:value={calc_data.has_green_gold}
 		/>
@@ -134,7 +135,6 @@
 			tooltip_text="Need more information? Click the external link."
 			link="https://www.usf.edu/financial-aid/scholarships/"
 			label="List scholarships:"
-			button="Add Scholarship"
 			type="scholarship"
 			on:add={handleAdd}
 		/>
@@ -161,7 +161,7 @@
 			{/each}
 		{/if}
 
-		<AddButtonGroup label="List jobs:" button="Add Job" type="job" on:add={handleAdd} />
+		<AddButtonGroup label="List jobs:" type="job" on:add={handleAdd} />
 
 		{#if calc_data.jobs.length != 0}
 			{#each calc_data.jobs as job, index}

@@ -52,8 +52,8 @@
 		/>
 	{/each}
 	<AddButtonGroup
+		tooltip_text="e.g. Laundry, Gifts, Clothing, Pets, etc."
 		label="List other expenses:"
-		button="Add Expense"
 		type="expense"
 		on:add={handleAdd}
 	/>

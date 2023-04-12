@@ -22,6 +22,17 @@
 	let clientX;
 
 	$: flexWidth = clientX < 960 ? 'mobile' : 'desktop';
+	$: jobSum = 0;
+
+	$: {
+		$funding.jobs.forEach((job) => {
+			jobSum +=
+				job.hours *
+				job.amount *
+				enums.WEEKS_IN_MONTH *
+				$semester_months[$student_information.semester];
+		});
+	}
 
 	function roundDollarSign(num, times) {
 		if (num < 0) {
@@ -314,33 +325,33 @@
 			</div>
 		{/if}
 	</ReviewSection>
-	<ReviewSection title="Funding" edit="Funding">
+	<ReviewSection title="College Funding" edit="Funding">
 		<ReviewRow
 			question={$review_data.funding[0].question[flexWidth]}
-			value={$review_data.funding[0].value}
+			value={$review_data.funding[0].value()}
 			style={$review_data.funding[0].style()}
 		/>
 		{#if $funding.has_fl_prepaid === 'prepaid_yes'}
 			<ReviewRow
 				question={$review_data.funding[1].question[flexWidth]}
-				value={$review_data.funding[1].value}
+				value={$review_data.funding[1].value()}
 				style={$review_data.funding[1].style()}
 			/>
 			<ReviewRow
 				question={$review_data.funding[2].question[flexWidth]}
-				value={$review_data.funding[2].value}
+				value={$review_data.funding[2].value()}
 				style={$review_data.funding[2].style()}
 			/>
 		{/if}
 		<ReviewRow
 			question={$review_data.funding[3].question[flexWidth]}
-			value={$review_data.funding[3].value}
+			value={$review_data.funding[3].value()}
 			style={$review_data.funding[3].style()}
 		/>
 		{#if $funding.has_fl_prepaid === 'prepaid_no' && $student_information.tuition === 'out_of_state' && $student_information.level === 'undergraduate'}
 			<ReviewRow
 				question={$review_data.funding[4].question[flexWidth]}
-				value={$review_data.funding[4].value}
+				value={$review_data.funding[4].value()}
 				style={$review_data.funding[4].style()}
 			/>
 		{/if}
@@ -366,19 +377,6 @@
 				/>
 			{/each}
 		{/if}
-		{#if $review_data.funding[8].value.length > 0}
-			{#each $review_data.funding[8].value as job}
-				<ReviewRow
-					question={job.name}
-					value={'$' +
-						job.amount *
-							job.hours *
-							enums.WEEKS_IN_MONTH *
-							$semester_months[$student_information.semester] +
-						'/sem'}
-				/>
-			{/each}
-		{/if}
 		{#if $funding_total != 0}
 			<ReviewRow
 				question="Total:"
@@ -391,6 +389,32 @@
 			/>
 		{/if}
 	</ReviewSection>
+	{#if $funding.jobs.length !== 0}
+		<ReviewSection title="Personal Funding" alt_text="Jobs are not calculated into your funding.">
+			{#if $review_data.funding[8].value.length > 0}
+				{#each $review_data.funding[8].value as job}
+					<ReviewRow
+						question={job.name}
+						value={'$' +
+							job.amount *
+								job.hours *
+								enums.WEEKS_IN_MONTH *
+								$semester_months[$student_information.semester] +
+							'/sem'}
+					/>
+				{/each}
+			{/if}
+			<ReviewRow
+				question="Total:"
+				value={'$' +
+					jobSum.toLocaleString(undefined, {
+						minimumFractionDigits: 2,
+						maximumFractionDigits: 2
+					})}
+				style="font-semibold text-green-700"
+			/>
+		</ReviewSection>
+	{/if}
 	{#if $student_information.semester === 'spring' || $student_information.semester === 'fall'}
 		<ReviewSection
 			title="Looking ahead..."

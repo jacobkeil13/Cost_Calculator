@@ -70,12 +70,12 @@ export const personal = writable({
 });
 
 export const funding = writable({
-	has_fl_prepaid: 'prepaid_no',
-	has_green_gold: 'gg_no',
-	when_purchased: 'prepaid_plan_before',
-	prepaid_plan: 'tuition_plan',
-	bright_futures: 'bf_no',
-	green_gold_award: 'scholars',
+	has_fl_prepaid: 'nothing',
+	has_green_gold: 'nothing',
+	when_purchased: 'nothing',
+	prepaid_plan: 'nothing',
+	bright_futures: 'nothing',
+	green_gold_award: 'nothing',
 	grants: 0,
 	loans: 0,
 	scholarships: [],
@@ -87,14 +87,18 @@ export const notes = writable([]);
 export const lookAheadWithoutFunding = writable(false);
 
 export let tuition_fees_total = derived(
-	[tuition_fees, student_information, static_vars],
-	([$tuition_fees, $student_information, $static_vars]) => {
+	[tuition_fees, student_information, funding, static_vars],
+	([$tuition_fees, $student_information, $funding, $static_vars]) => {
 		let credit_cost = 0;
 		let flat_fees = 0;
 
 		// If the student is in state or out of state check if they are a graduate or undergraduate
 		// student and set the correct credit cost.
-		credit_cost = $static_vars[$student_information.level][$student_information.tuition];
+		if ($student_information.tuition === "out_of_state" && $funding.has_fl_prepaid === 'prepaid_yes') {
+			credit_cost = $static_vars[$student_information.level]['in_state'];
+		} else {
+			credit_cost = $static_vars[$student_information.level][$student_information.tuition];
+		}
 
 		// Set the flat fee for the student based on the campus they pick.
 		if ($tuition_fees.credit_hours !== 0) {
@@ -183,7 +187,7 @@ export let transportation_total = derived(
 			transportation =
 				tp.parking_pass +
 				(tp.car_payment + tp.insurance + tp.gas + tp.maintenance) *
-					$semester_months[$student_information.semester];
+				$semester_months[$student_information.semester];
 		}
 		// If the student is not bringing a vehicle we only add the other trnasport field
 		// to the total.
@@ -252,13 +256,16 @@ export let funding_total = derived(
 		// If Florida prepaid is yes, then we multiply the plan value by the chosen credit hours.
 		if ($funding.has_fl_prepaid === 'prepaid_yes') {
 			funding +=
-				$florida_prepaid_cost[$funding.prepaid_plan] * $tuition_fees.credit_hours +
-				$static_vars.prepaid_fee;
+				$florida_prepaid_cost[$funding.prepaid_plan] * $tuition_fees.credit_hours;
+			if ($funding.prepaid_plan !== 'nothing' && $tuition_fees.credit_hours !== 0) {
+				funding += $static_vars.prepaid_fee;
+			}
 			if ($funding.when_purchased === 'prepaid_plan_before') {
 				funding += $static_vars.tuition_diff * $tuition_fees.credit_hours;
 			}
 		}
 
+		// Add the flat fee for bright futures if it is picked.
 		if ($funding.bright_futures === 'fms') {
 			funding += $bright_futures_cost.fms_fee;
 		} else if ($funding.bright_futures === 'fas') {
@@ -299,18 +306,6 @@ export let funding_total = derived(
 				} else if (scholarship.concurrency === 'monthly') {
 					funding += scholarship.amount * $semester_months[$student_information.semester];
 				}
-			});
-		}
-
-		// Adding the correct funding for each job added by multiplying the monthly earnings by
-		// the chosen semester length.
-		if ($funding.jobs.length != 0) {
-			$funding.jobs.forEach((job) => {
-				funding +=
-					job.hours *
-					job.amount *
-					enums.WEEKS_IN_MONTH *
-					$semester_months[$student_information.semester];
 			});
 		}
 
