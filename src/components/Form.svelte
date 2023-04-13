@@ -10,6 +10,9 @@
 	import TuitionFees from './form-sections/TuitionFees.svelte';
 	import FormControls from './FormControls.svelte';
 	import Summary from './form-sections/Summary.svelte';
+	import Errors from './Errors.svelte';
+
+	let clientX;
 
 	$: step_name = $steps[$current_step];
 
@@ -18,7 +21,14 @@
 	}
 </script>
 
+<svelte:window bind:outerWidth={clientX} />
+
 <div id="form" class="w-full">
+	{#if clientX < 960}
+		<Errors />
+	{:else if clientX > 960 && $current_step === $steps.indexOf('Funding')}
+		<Errors />
+	{/if}
 	<div class="flex justify-between py-4">
 		<div class="flex space-x-3">
 			<h1 class="text-3xl font-medium text-[#006747]">{step_name}</h1>
@@ -35,7 +45,7 @@
 		<!-- svelte-ignore a11y-click-events-have-key-events -->
 		<div on:click={() => location.reload()} id="start-over" class="flex items-center space-x-1">
 			<h1 class="font-semibold">Start over</h1>
-			<box-icon name="reset" />
+			<box-icon name="reset" class="fill-[#6d6d6d]" />
 		</div>
 	</div>
 	{#if $current_step === $steps.indexOf('Student Information')}
@@ -65,6 +75,7 @@
 		opacity: 1;
 	}
 	#start-over:hover > box-icon {
+		transform: rotate(-180deg);
 		fill: rgb(185 28 28);
 	}
 	#start-over {
@@ -75,6 +86,6 @@
 		transition: all 0.2s ease-in-out;
 	}
 	#start-over > box-icon {
-		transition: all 0.2s ease-in-out;
+		transition: all 0.4s ease-in-out;
 	}
 </style>

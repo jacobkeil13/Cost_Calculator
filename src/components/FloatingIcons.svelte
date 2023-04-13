@@ -70,7 +70,7 @@
 			class:active={step === 7}
 			class:other={step !== 7}
 		>
-			<box-icon name="spreadsheet" />
+			<box-icon name="spreadsheet" type="solid" />
 		</div>
 	</div>
 {/if}

@@ -12,7 +12,9 @@
 		funding_total,
 		validated,
 		housing_food,
-		notes
+		notes,
+		student_information,
+		funding
 	} from '../store.js';
 	import { goto } from '$app/navigation';
 	import MobileSteps from './MobileSteps.svelte';
@@ -51,6 +53,11 @@
 			goto('#start-content');
 		}, 50);
 	}
+
+	$: tuitionAdjusted =
+		($student_information.tuition === 'out_of_state' ||
+			$student_information.tuition === 'international') &&
+		$funding.has_fl_prepaid === 'prepaid_yes';
 </script>
 
 <div
@@ -110,13 +117,21 @@
 					on:click={() => switchStep(section.id)}
 				>
 					<h1
-						class="validate text-xl font-semibold {$current_step === section.id
+						class="validate relative text-xl font-semibold {$current_step === section.id
 							? 'text-[#006747]'
 							: ''}"
 					>
 						{section.name}{section.name != 'Student Information' && section.name != 'Summary'
 							? ':'
 							: ''}
+						{#if section.name === 'Tuition & Fees' && tuitionAdjusted}
+							<box-icon
+								class="absolute w-[18px] top-[3px] left-28 fill-red-700 cursor-pointer"
+								title="Tuition adjusted to In-State rate since you have Florida prepaid Out-Of-State."
+								name="help-circle"
+								use:tooltip
+							/>
+						{/if}
 					</h1>
 					<h1
 						class="validate text-xl {section.id === 6
@@ -128,6 +143,7 @@
 								minimumFractionDigits: 2,
 								maximumFractionDigits: 2
 							})}
+							<span class="text-black font-medium text-sm">/sem</span>
 						{/if}
 					</h1>
 				</div>
@@ -144,20 +160,39 @@
 		<div in:fly={{ y: 100, duration: 100 }} class="flex flex-col pt-6">
 			{#each sections as section}
 				<!-- svelte-ignore a11y-click-events-have-key-events -->
-				<div class="flex justify-between items-center cursor-pointer">
-					<h1 class="text-2xl text-[#ebebeb] font-medium">
+				<div
+					class="validate flex justify-between items-center cursor-pointer"
+					on:click={() => switchStep(section.id)}
+				>
+					<h1
+						class="validate relative text-2xl text-[#ebebeb] font-medium {$current_step ===
+						section.id
+							? 'text-[#fdea94]'
+							: ''}"
+					>
 						{section.name}{section.name != 'Student Information' && section.name != 'Summary'
 							? ':'
 							: ''}
+						{#if section.name === 'Tuition & Fees' && tuitionAdjusted}
+							<box-icon
+								class="absolute w-[18px] top-[5px] left-32 fill-white cursor-pointer"
+								title="Tuition adjusted to In-State rate since you have Florida prepaid Out-Of-State."
+								name="help-circle"
+								use:tooltip
+							/>
+						{/if}
 					</h1>
 					<h1
-						class="text-2xl {section.id === 6 ? 'text-[#83ff9c]' : 'text-[#ebebeb]'} font-semibold"
+						class="validate text-2xl {section.id === 6
+							? 'text-[#83ff9c]'
+							: 'text-[#ebebeb]'} font-semibold"
 					>
 						{#if section.name != 'Student Information' && section.name != 'Summary'}
 							${section.amount.toLocaleString(undefined, {
 								minimumFractionDigits: 2,
 								maximumFractionDigits: 2
 							})}
+							<span class="text-white font-medium text-sm">/sem</span>
 						{/if}
 					</h1>
 				</div>

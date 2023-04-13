@@ -8,17 +8,20 @@ export const static_vars = readable({
 	nothing: {
 		nothing: 0,
 		in_state: 0,
-		out_of_state: 0
+		out_of_state: 0,
+		international: 0
 	},
 	graduate: {
 		nothing: 0,
 		in_state: 431.43,
-		out_of_state: 877.17
+		out_of_state: 877.17,
+		international: 877.17,
 	},
 	undergraduate: {
 		nothing: 0,
 		in_state: 211.19,
-		out_of_state: 575.01
+		out_of_state: 575.01,
+		international: 575.01
 	},
 	flat_fees: {
 		nothing: 0,
@@ -51,13 +54,13 @@ export const housing_cost = readable({
 	nothing: 0,
 	beta_castor_hall: 3070,
 	greek_village: 3070,
-	village_single: 4088,
-	village_double: 5538,
+	village_single: 5538,
+	village_double: 4088,
 	cjmph_double: 3900,
 	cjmph_corner_double: 4960,
-	village_suite_single: 4710,
+	village_suite_single: 6158,
 	village_suite_double: 4963,
-	village_suite_des: 6158,
+	village_suite_des: 4710,
 	km_apartment: 4148,
 	chkm_apartment: 4648,
 	holly_apartment: 5148,
@@ -207,7 +210,8 @@ export const dropdownOptions = readable({
 		],
 		tuition: [
 			{ value: 'in_state', label: 'In-State' },
-			{ value: 'out_of_state', label: 'Out-Of-State' }
+			{ value: 'out_of_state', label: 'Out-Of-State' },
+			{ value: 'international', label: 'International' },
 		],
 		semester: [
 			{ value: 'fall', label: 'Fall' },
@@ -316,10 +320,10 @@ export const dropdownOptions = readable({
 				},
 				summer_bc: {
 					'Returning Students': [
-						{ value: 'endeavor_dt_c_ac', label: 'Endeavor Double Traditional', cost: '2568.78' },
-						{ value: 'endeavor_ds_c_ac', label: 'Endeavor Double Suite', cost: '3118.32' },
-						{ value: 'endeavor_st_c_ac', label: 'Endeavor Single Traditional', cost: '3479.71' },
-						{ value: 'endeavor_ss_c_ac', label: 'Endeavor Single Suite', cost: '3869.50' }
+						{ value: 'endeavor_dt_ab_abc', label: 'Endeavor Double Traditional', cost: '3075.30' },
+						{ value: 'endeavor_ds_ab_abc', label: 'Endeavor Double Suite', cost: '3733.20' },
+						{ value: 'endeavor_st_ab_abc', label: 'Endeavor Single Traditional', cost: '4165.85' },
+						{ value: 'endeavor_ss_ab_abc', label: 'Endeavor Single Suite', cost: '4632.50' }
 					]
 				},
 				summer_ab_abc: {
@@ -348,30 +352,28 @@ export const dropdownOptions = readable({
 					Pelican: [
 						{ value: 'four_apartment', label: '4 Person Apartment Style', cost: '4671' },
 						{ value: 'two_studio', label: '2 Person Studio Apartment', cost: '4505' },
-						{ value: 'triple_pelican', label: 'Triple', cost: '2922' }
+						{ value: 'triple_pelican', label: 'Shared Bedroom', cost: '2922' }
 					],
 					Osprey: [
-						{ value: 'three_ss', label: '3 Person Shared Room', cost: '4671' },
+						{ value: 'three_ss', label: '3 Person Single Suite', cost: '4671' },
 						{ value: 'four_ss', label: '4 Person Single Suite', cost: '4671' },
-						{ value: 'four_ds', label: '4 Person Double Suite', cost: '4505' },
-						{ value: 'triple_osprey', label: 'Triple', cost: '2922' }
+						{ value: 'four_ds', label: '4 Person Double Suite', cost: '4505' }
 					]
 				},
 				spring: {
 					'Ibis Hall': [
 						{ value: 'two_shared', label: '2 Person Shared Room', cost: '4505' },
-						{ value: 'three_shared', label: '3 Person Shared Room', cost: '2922' }
+						{ value: 'three_shared', label: '3 Person Triple', cost: '2922' }
 					],
 					Pelican: [
 						{ value: 'four_apartment', label: '4 Person Apartment Style', cost: '4671' },
 						{ value: 'two_studio', label: '2 Person Studio Apartment', cost: '4505' },
-						{ value: 'triple_pelican', label: 'Triple', cost: '2922' }
+						{ value: 'triple_pelican', label: 'Shared Bedroom', cost: '2922' }
 					],
 					Osprey: [
-						{ value: 'three_ss', label: '3 Person Shared Room', cost: '4671' },
+						{ value: 'three_ss', label: '3 Person Single Suite', cost: '4671' },
 						{ value: 'four_ss', label: '4 Person Single Suite', cost: '4671' },
-						{ value: 'four_ds', label: '4 Person Double Suite', cost: '4505' },
-						{ value: 'triple_osprey', label: 'Triple', cost: '2922' }
+						{ value: 'four_ds', label: '4 Person Double Suite', cost: '4505' }
 					]
 				},
 				summer_a: {
@@ -600,12 +602,16 @@ export const dropdownOptions = readable({
 				{ value: 'gg_no', label: 'No' },
 				{ value: 'gg_yes', label: 'Yes' }
 			],
-			gg_options: [
-				{ value: 'presidential', label: 'Presidential Award' },
-				{ value: 'directors', label: 'Directors Award' },
-				{ value: 'scholars', label: 'Scholars Award' },
-				{ value: 'student_scholarship', label: 'International Student Scholarship' }
-			]
+			gg_options: {
+				'Green & Gold': [
+					{ value: 'presidential', label: 'Presidential Award' },
+					{ value: 'directors', label: 'Directors Award' },
+					{ value: 'scholars', label: 'Scholars Award' },
+				],
+				'Scholarships': [
+					{ value: 'student_scholarship', label: 'International Student Scholarship' }
+				]
+			}
 		}
 	}
 });

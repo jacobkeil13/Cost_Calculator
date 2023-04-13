@@ -33,7 +33,7 @@
 		<SelectionTieredField
 			disabled={$student_information.campus === 'sarasota'}
 			label="What housing are you staying in?"
-			options={housingFood?.housing[$student_information.campus][$student_information.semester]}
+			options={housingFood.housing[$student_information.campus][$student_information.semester]}
 			bind:value={calc_data.on_campus.housing}
 		/>
 		<SelectionField

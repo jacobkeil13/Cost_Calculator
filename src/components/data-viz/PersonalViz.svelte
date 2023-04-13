@@ -9,17 +9,19 @@
 	});
 
 	data.push(
-		{ expense: 'Takeout & Coffee', cost: $personal.takeout_coffee },
-		{ expense: 'Groceries', cost: $personal.groceries },
-		{ expense: 'Cell Bill', cost: $personal.phone_bill },
-		{ expense: 'Subs', cost: $personal.subscriptions_memberships }
+		{ expense: 'Takeout & Coffee', cost: $personal.takeout_coffee === 0 ? 225 : 225 },
+		{ expense: 'Groceries', cost: $personal.groceries === 0 ? 60 : 60 },
+		{ expense: 'Cell Bill', cost: $personal.phone_bill === 0 ? 85 : 85 },
+		{ expense: 'Subs', cost: $personal.subscriptions_memberships === 0 ? 125 : 125 }
 	);
 
 	if (other_expenses.cost !== 0) {
 		data.push(other_expenses);
 	}
 
-	const width = 500; // the outer width of the chart, in pixels
+	let clientX = 500;
+
+	const width = clientX - 24; // the outer width of the chart, in pixels
 	const height = width; // the outer height of the chart, in pixels
 	const percent = false; // format values as percentages (true/false)
 	const fontSize = 15; // the font size of the x and y values
@@ -59,6 +61,8 @@
 	const arcLabel = arc().innerRadius(labelRadius).outerRadius(labelRadius);
 </script>
 
+<svelte:window bind:outerWidth={clientX} />
+
 <svg {width} {height} viewBox="{-width / 2} {-height / 2} {width} {height}">
 	{#each wedges as wedge, i}
 		<path
@@ -76,6 +80,3 @@
 		</g>
 	{/each}
 </svg>
-
-<style>
-</style>

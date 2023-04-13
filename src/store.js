@@ -94,7 +94,7 @@ export let tuition_fees_total = derived(
 
 		// If the student is in state or out of state check if they are a graduate or undergraduate
 		// student and set the correct credit cost.
-		if ($student_information.tuition === "out_of_state" && $funding.has_fl_prepaid === 'prepaid_yes') {
+		if (($student_information.tuition === "out_of_state" || $student_information.tuition === "international") && $funding.has_fl_prepaid === 'prepaid_yes') {
 			credit_cost = $static_vars[$student_information.level]['in_state'];
 		} else {
 			credit_cost = $static_vars[$student_information.level][$student_information.tuition];
@@ -266,16 +266,16 @@ export let funding_total = derived(
 		}
 
 		// Add the flat fee for bright futures if it is picked.
-		if ($funding.bright_futures === 'fms') {
+		if ($funding.bright_futures === 'fms' && $tuition_fees.credit_hours !== 0) {
 			funding += $bright_futures_cost.fms_fee;
-		} else if ($funding.bright_futures === 'fas') {
+		} else if ($funding.bright_futures === 'fas' && $tuition_fees.credit_hours !== 0) {
 			funding += $bright_futures_cost.fas_fee;
 		}
 
 		// If the student is out of state and doesn't have florida prepaid we ask if they are receiving
 		// a green and gold scholarship. If yes, then we add the cost of their pick.
 		if (
-			$student_information.tuition === 'out_of_state' &&
+			($student_information.tuition === 'out_of_state' || $student_information.tuition === 'international') &&
 			$student_information.level === 'undergraduate' &&
 			($student_information.semester === 'fall' || $student_information.semester === 'fall') &&
 			$funding.has_fl_prepaid === 'prepaid_no'

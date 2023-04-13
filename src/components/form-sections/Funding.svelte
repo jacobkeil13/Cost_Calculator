@@ -6,12 +6,14 @@
 	import RangeMoneyField from '../form-inputs/RangeMoneyField.svelte';
 	import AddButtonGroup from '../form-inputs/AddButtonGroup.svelte';
 	import DoubleNumberField from '../form-inputs/DoubleNumberField.svelte';
+	import SelectionTieredField from '../form-inputs/SelectionTieredField.svelte';
 
 	let funding_options = $dropdownOptions.funding;
 	let calc_data = $funding;
 	$: gg_eligible =
 		calc_data.has_fl_prepaid === 'prepaid_no' &&
-		$student_information.tuition === 'out_of_state' &&
+		($student_information.tuition === 'out_of_state' ||
+			$student_information.tuition === 'international') &&
 		$student_information.level === 'undergraduate' &&
 		($student_information.semester === 'fall' || $student_information.semester === 'spring') &&
 		$tuition_fees.credit_hours > 11;
@@ -22,7 +24,12 @@
 			: funding_options.prepaid_plan_after;
 
 	$: {
-		// console.log(gg_eligible);
+		funding.set(calc_data);
+	}
+
+	function handleChange() {
+		calc_data.prepaid_plan = 'nothing';
+		calc_data = calc_data;
 		funding.set(calc_data);
 	}
 
@@ -60,7 +67,7 @@
 <div in:fly={{ y: -10, duration: 200 }}>
 	<SelectionField
 		tooltip_text="Need more information? Click the external link."
-		link="https://www.myfloridaprepaid.com/"
+		link="https://www.usf.edu/business-finance/controller/student-services/student-accounting/florida-prepaid.aspx"
 		label="Do you have a Florida prepaid plan?"
 		options={funding_options.fl_prepaid}
 		bind:value={calc_data.has_fl_prepaid}
@@ -70,14 +77,14 @@
 		<SelectionField
 			tooltip_text="Fall 2018 admitted students and beyond. Merit based scholarship from the Office of Admissions"
 			link="https://www.usf.edu/admissions/freshmen/admissions-scholarships/nonflorida.aspx"
-			label="Are you receiving a USF Green and Gold Waiver or International Scholarship?"
+			label="Are you receiving a USF Green & Gold Waiver or International Scholarship?"
 			options={funding_options.gg_scholarship.has_scholarship}
 			bind:value={calc_data.has_green_gold}
 		/>
 		{#if calc_data.has_green_gold === 'gg_yes'}
-			<SelectionField
+			<SelectionTieredField
 				tooltip_text="Refer to your terms and conditions in OASIS."
-				label="Which USF Green and Gold Scholarship are you receiving?"
+				label="Which award are you receiving?"
 				options={funding_options.gg_scholarship.gg_options}
 				bind:value={calc_data.green_gold_award}
 			/>
@@ -85,17 +92,21 @@
 	{/if}
 	{#if calc_data.has_fl_prepaid === 'prepaid_yes'}
 		<SelectionField
+			handleChange={true}
+			on:handle={handleChange}
 			tooltip_text="Contracts purchased before 1/1/07 are exempt from paying the tuition differential fee."
 			label="When did you purchase your Florida prepaid plan?"
 			options={funding_options.prepaid_purchase}
 			bind:value={calc_data.when_purchased}
 		/>
-		<SelectionField
-			tooltip_text="Review your contract to determine your plan type."
-			label="Which plan did you purchase?"
-			options={plans}
-			bind:value={calc_data.prepaid_plan}
-		/>
+		{#if calc_data.when_purchased !== 'nothing'}
+			<SelectionField
+				tooltip_text="Review your contract to determine your plan type."
+				label="Which plan did you purchase?"
+				options={plans}
+				bind:value={calc_data.prepaid_plan}
+			/>
+		{/if}
 	{/if}
 
 	{#if $student_information.tuition === 'in_state'}

@@ -57,29 +57,55 @@
 
 <svelte:window bind:outerWidth={clientX} />
 
-<div class="pb-6">
+<div
+	class="px-2 py-1 border-2 {$total <= 0
+		? 'border-[#107455] bg-[#006747]/10'
+		: 'border-red-700 bg-red-700/10'} rounded-lg mb-2"
+>
 	{#if $total > 0}
-		<h1 class="text-xl text-red-700 font-semibold">
+		<h1 class="text-xl font-medium">
 			You may not have enough funding to pay for your college costs. If you need help, schedule a
 			<span
 				><a
-					class="text-blue-700 underline"
+					class="text-[#107455] underline"
 					href="https://nam04.safelinks.protection.outlook.com/?url=https%3A%2F%2Foutlook.office365.com%2Fowa%2Fcalendar%2FUSFBull2BullFinancialAidEducationProgram%40usfedu.onmicrosoft.com%2Fbookings%2Fs%2FYdTKpGOEK0Wsr455UIrULg2&data=05%7C01%7Cjacobkeil%40usf.edu%7Cef2eec5a261848fae7c608db36e2bff0%7C741bf7dee2e546df8d6782607df9deaa%7C0%7C0%7C638164119724193304%7CUnknown%7CTWFpbGZsb3d8eyJWIjoiMC4wLjAwMDAiLCJQIjoiV2luMzIiLCJBTiI6Ik1haWwiLCJXVCI6Mn0%3D%7C3000%7C%7C%7C&sdata=wHfm1TrHSane2GHXw0GezyCWBXohExRoSY6VGdoObDw%3D&reserved=0"
 					target="_blank">Financial Wellness</a
 				></span
 			> session with our staff to help you explore additional payment options.
 		</h1>
 	{:else}
-		<h1 class="text-xl text-green-700 font-semibold">
+		<h1 class="text-xl font-medium">
 			Great! It looks like you may have enough funding to pay for your college costs. If needed, you
 			may schedule a <span
 				><a
-					class="text-blue-700 underline"
+					class="text-[#107455] underline"
 					href="https://nam04.safelinks.protection.outlook.com/?url=https%3A%2F%2Foutlook.office365.com%2Fowa%2Fcalendar%2FUSFBull2BullFinancialAidEducationProgram%40usfedu.onmicrosoft.com%2Fbookings%2Fs%2F4RodD-j65kmZQogRRWMUnA2&data=05%7C01%7Cjacobkeil%40usf.edu%7Cef2eec5a261848fae7c608db36e2bff0%7C741bf7dee2e546df8d6782607df9deaa%7C0%7C0%7C638164119724193304%7CUnknown%7CTWFpbGZsb3d8eyJWIjoiMC4wLjAwMDAiLCJQIjoiV2luMzIiLCJBTiI6Ik1haWwiLCJXVCI6Mn0%3D%7C3000%7C%7C%7C&sdata=mEJe61OqZXE%2B0bntJrasPc6ihy5mWrhNkjcDu8vKLBo%3D&reserved=0"
 					target="_blank">Money Management</a
 				></span
 			> session with a peer financial educator to make sure you are budgeting your money and help you
 			stay on track!
+		</h1>
+		<br />
+		<h1 class="text-xl font-medium">
+			Subscribe to
+			<span
+				><a
+					class="text-[#107455] underline"
+					href="http://www.usf.edu/business-finance/controller/student-services/student-accounting/edeposit.aspx"
+					>eDeposit</a
+				></span
+			>
+			in
+			<span
+				><a class="text-[#107455] underline" href="https://bannersso.usf.edu/ssomanager/c/SSB"
+					>OASIS</a
+				></span
+			>. If you are eligible to receive a refund after
+			<span
+				><a class="text-[#107455] underline" href="https://www.usf.edu/financial-aid/disbursement/"
+					>payment of financial aid</a
+				></span
+			> is made, you will receive it faster than a paper check by mail.
 		</h1>
 	{/if}
 </div>
@@ -348,7 +374,7 @@
 			value={$review_data.funding[3].value()}
 			style={$review_data.funding[3].style()}
 		/>
-		{#if $funding.has_fl_prepaid === 'prepaid_no' && $student_information.tuition === 'out_of_state' && $student_information.level === 'undergraduate'}
+		{#if $funding.has_fl_prepaid === 'prepaid_no' && ($student_information.tuition === 'out_of_state' || $student_information.tuition === 'international') && $student_information.level === 'undergraduate'}
 			<ReviewRow
 				question={$review_data.funding[4].question[flexWidth]}
 				value={$review_data.funding[4].value()}
@@ -390,7 +416,10 @@
 		{/if}
 	</ReviewSection>
 	{#if $funding.jobs.length !== 0}
-		<ReviewSection title="Personal Funding" alt_text="Jobs are not calculated into your funding.">
+		<ReviewSection
+			title="Personal Funding"
+			alt_text="Jobs are not calculated into your college funding."
+		>
 			{#if $review_data.funding[8].value.length > 0}
 				{#each $review_data.funding[8].value as job}
 					<ReviewRow

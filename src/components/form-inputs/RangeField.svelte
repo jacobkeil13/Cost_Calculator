@@ -12,6 +12,9 @@
 		if (parseInt(e.target.value) > parseInt(max)) {
 			value = max;
 		}
+		if (parseInt(e.target.value) < parseInt(min)) {
+			value = min;
+		}
 	}
 </script>
 

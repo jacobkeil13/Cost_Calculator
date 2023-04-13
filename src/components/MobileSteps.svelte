@@ -82,6 +82,7 @@
 		on:click={() => switchStep(7)}
 		class:active={$current_step === 7}
 		name="spreadsheet"
+		type="solid"
 	/>
 </div>
 
@@ -91,6 +92,6 @@
 		width: 32px;
 	}
 	.active {
-		fill: #ffe46e;
+		fill: #fdea94;
 	}
 </style>

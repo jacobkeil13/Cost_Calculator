@@ -61,3 +61,10 @@
 		>
 	{/if}
 </div>
+
+<style>
+	button:focus {
+		outline: none;
+		background-color: #009163;
+	}
+</style>
