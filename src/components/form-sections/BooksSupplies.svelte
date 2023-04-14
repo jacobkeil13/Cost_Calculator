@@ -13,6 +13,7 @@
 <div in:fly={{ y: -10, duration: 200 }}>
 	<RangeMoneyField
 		tooltip_text="Use USF Bookstore website to find the best prices."
+		tooltip_text_link="TAP (Textbook Affordability Project) web page."
 		link="https://tap.usf.edu/"
 		label="How much are you planning to spend on books?"
 		bind:value={calc_data.books}

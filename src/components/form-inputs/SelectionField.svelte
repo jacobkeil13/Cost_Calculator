@@ -6,6 +6,7 @@
 		options = [],
 		handleChange = false,
 		tooltip_text = '',
+		tooltip_text_link = '',
 		link = '',
 		isValidated = '';
 
@@ -34,8 +35,10 @@
 					<!-- svelte-ignore a11y-click-events-have-key-events -->
 					<box-icon
 						on:click={() => window.open(link, '_blank')}
+						title={tooltip_text_link}
 						class="w-[20px] pt-[6px] fill-green-800 cursor-pointer"
 						name="link-external"
+						use:tooltip
 					/>
 				{/if}
 			</h1>

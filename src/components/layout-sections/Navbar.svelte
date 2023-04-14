@@ -8,16 +8,24 @@
 		<div class="flex space-x-3">
 			<USFLogo />
 			{#if clientX > 960}
-				<h1 class="font-bold tracking-wider max-w-lg">UNIVERSITY OF SOUTH FLORIDA</h1>
+				<a href="https://usf.edu/" target="_blank" class="hover:underline">
+					<h1 class="font-bold tracking-wider max-w-lg">UNIVERSITY OF SOUTH FLORIDA</h1></a
+				>
 			{/if}
 		</div>
 		{#if clientX < 960}
 			<box-icon name="menu" class="fill-white" />
 		{:else}
 			<div class="flex items-center space-x-3 text-lg">
-				<a class="border-gray-500 border-r-2 px-3" href="http://">MyUSF</a>
-				<a class="" href="http://">Directory</a>
-				<box-icon name="search" class="fill-white cursor-pointer" />
+				<a
+					class="border-gray-500 border-r-2 px-3 hover:underline"
+					href="https://my.usf.edu/"
+					target="_blank">MyUSF</a
+				>
+				<a class="hover:underline" href="https://directory.usf.edu/" target="_blank">Directory</a>
+				<a href="https://usfweb.usf.edu/search/" target="_blank" class="flex items-center">
+					<box-icon name="search" class="fill-white cursor-pointer" />
+				</a>
 			</div>
 		{/if}
 	</div>
@@ -52,7 +60,9 @@
 						points="178 0 0 0 164.32 244 0 488 178 488 342.32 244 178 0"
 					/></svg
 				>
-				<h1 class="text-white text-xl hover:underline">GIVE NOW</h1>
+				<h1 class="text-white text-xl hover:underline">
+					<a href="https://giving.usf.edu/get-involved/giving-week" target="_blank">GIVE NOW</a>
+				</h1>
 			</div>
 		{/if}
 	</div>

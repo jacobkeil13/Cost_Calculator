@@ -67,6 +67,7 @@
 <div in:fly={{ y: -10, duration: 200 }}>
 	<SelectionField
 		tooltip_text="Need more information? Click the external link."
+		tooltip_text_link="Florida prepaid web page."
 		link="https://www.usf.edu/business-finance/controller/student-services/student-accounting/florida-prepaid.aspx"
 		label="Do you have a Florida prepaid plan?"
 		options={funding_options.fl_prepaid}
@@ -76,6 +77,7 @@
 	{#if gg_eligible}
 		<SelectionField
 			tooltip_text="Fall 2018 admitted students and beyond. Merit based scholarship from the Office of Admissions"
+			tooltip_text_link="Out of state waivers and scholarships web page."
 			link="https://www.usf.edu/admissions/freshmen/admissions-scholarships/nonflorida.aspx"
 			label="Are you receiving a USF Green & Gold Waiver or International Scholarship?"
 			options={funding_options.gg_scholarship.has_scholarship}
@@ -121,6 +123,7 @@
 
 	<RangeMoneyField
 		tooltip_text="Need more information? Click the external link."
+		tooltip_text_link="USF grants web page."
 		link="https://www.usf.edu/financial-aid/grants/index.aspx"
 		label="Do you have any grants?"
 		bind:value={calc_data.grants}
@@ -132,6 +135,7 @@
 
 	<RangeMoneyField
 		tooltip_text="Need more information? Click the external link."
+		tooltip_text_link="USF loans web page."
 		link="https://www.usf.edu/financial-aid/loans/index.aspx"
 		label="Do you have any loans?"
 		bind:value={calc_data.loans}
@@ -144,6 +148,7 @@
 	<div class="space-y-6">
 		<AddButtonGroup
 			tooltip_text="Need more information? Click the external link."
+			tooltip_text_link="Financial aid scholarships web page."
 			link="https://www.usf.edu/financial-aid/scholarships/"
 			label="List scholarships:"
 			type="scholarship"

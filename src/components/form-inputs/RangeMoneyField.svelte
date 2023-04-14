@@ -8,6 +8,7 @@
 		concurrency,
 		disabled = false,
 		tooltip_text = '',
+		tooltip_text_link = '',
 		link = '',
 		canDelete = false;
 
@@ -16,6 +17,12 @@
 	function handleInput(e) {
 		if (parseInt(e.target.value) === null || parseInt(e.target.value) < parseInt(min)) {
 			value = min;
+		}
+	}
+
+	function handleEmpty(e) {
+		if (e.target.value.length <= 0) {
+			value = parseInt(min);
 		}
 	}
 </script>
@@ -39,8 +46,10 @@
 					<!-- svelte-ignore a11y-click-events-have-key-events -->
 					<box-icon
 						on:click={() => window.open(link, '_blank')}
+						title={tooltip_text_link}
 						class="w-[20px] pt-[6px] fill-green-800 cursor-pointer"
 						name="link-external"
+						use:tooltip
 					/>
 				{/if}
 			</h1>
@@ -82,6 +91,7 @@
 					<input
 						{disabled}
 						on:input={handleInput}
+						on:focusout={handleEmpty}
 						type="number"
 						name="value"
 						{min}

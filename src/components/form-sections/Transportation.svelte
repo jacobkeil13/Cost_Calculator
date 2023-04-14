@@ -23,6 +23,7 @@
 	{#if calc_data.has_vehicle === 'vehicle_yes'}
 		<RangeMoneyField
 			tooltip_text="All vehicles on campus must have a parking permit."
+			tooltip_text_link="Parking and Transportation Services web page."
 			link="https://www.usf.edu/administrative-services/parking/"
 			label="How much is your parking pass?"
 			bind:value={calc_data.parking_pass}

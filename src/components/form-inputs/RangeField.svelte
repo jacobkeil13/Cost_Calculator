@@ -13,6 +13,12 @@
 			value = max;
 		}
 		if (parseInt(e.target.value) < parseInt(min)) {
+			value = parseInt(min);
+		}
+	}
+
+	function handleEmpty(e) {
+		if (e.target.value.length <= 0) {
 			value = min;
 		}
 	}
@@ -42,6 +48,7 @@
 		{/if}
 		<input
 			on:input={handleInput}
+			on:focusout={handleEmpty}
 			type="number"
 			name="value"
 			{min}

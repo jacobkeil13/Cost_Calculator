@@ -66,6 +66,7 @@
 		isValidated="student-drop"
 		tooltip_text="Check your residency on OASIS > Student > 
 			Student Records > View Student information."
+		tooltip_text_link="Tuition and fees information web page."
 		link="https://www.usf.edu/business-finance/controller/student-services/tuition-rates.aspx"
 		label="Tuition?"
 		options={studentInfo.tuition}
@@ -75,6 +76,7 @@
 		isValidated="student-drop"
 		tooltip_text="Semester costs are based on prior year rates 
 			and are updated as new rates are available."
+		tooltip_text_link="Important dates and deadlines web page."
 		link="https://www.usf.edu/registrar/calendars/"
 		handleChange={true}
 		on:handle={handleChange}

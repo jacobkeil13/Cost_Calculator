@@ -1,25 +1,7 @@
-<script>
-	let info_is_open = true;
-
-	const toggleMessage = () => {
-		info_is_open = !info_is_open;
-	};
-</script>
-
-<div class="grid grid-cols-[1fr_auto] text-md p-3 rounded-sm text-white bg-[#3F565E]">
-	{#if info_is_open}
-		<p>
-			Use our Cost Calculator to get an estimate of your college expenses. It will take about 10
-			minutes to crunch the numbers, but you will be able to understand how much your USF education
-			will cost and what options are available if you need more funding. Pre-arrival deposits
-			(admissions, housing, etc.) are not included in the calculator results. You can click the
-			reset button to start over.
-		</p>
-		<!-- svelte-ignore a11y-click-events-have-key-events -->
-		<box-icon on:click={toggleMessage} class="fill-white cursor-pointer" name="chevron-up" />
-	{:else}
-		<p class="">Click to read extra information...</p>
-		<!-- svelte-ignore a11y-click-events-have-key-events -->
-		<box-icon on:click={toggleMessage} class="fill-white cursor-pointer" name="chevron-down" />
-	{/if}
+<div class="px-2 py-1 border-2 rounded-lg mb-2 border-[#3F565E] bg-[#3F565E]/10">
+	<h1 class="text-xl font-medium">
+		Use our Cost Calculator to get an estimate of your college expenses. It will take about 10
+		minutes to crunch the numbers, but you will be able to understand how much your USF education
+		will cost and what options are available if you need more funding.
+	</h1>
 </div>

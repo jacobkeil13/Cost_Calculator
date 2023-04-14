@@ -12,13 +12,14 @@
 				<h1>Tampa, FL 33620</h1>
 				<h1>813-974-2011</h1>
 			</div>
-			<div class="flex space-x-2 fill-white">
-				<box-icon name="facebook-square" type="logo" />
-				<box-icon name="twitter" type="logo" />
-				<box-icon name="youtube" type="logo" />
-				<box-icon name="linkedin-square" type="logo" />
-				<box-icon name="instagram" type="logo" />
-				<box-icon name="snapchat" type="logo" />
+			<div class="flex space-x-2">
+				<a href="https://www.youtube.com/channel/UCpIGAmOeSeyCRi7y476-AZg" target="_blank"
+					><box-icon
+						name="youtube"
+						type="logo"
+						class="fill-white hover:fill-red-400 transition-all"
+					/></a
+				>
 			</div>
 		</div>
 		<div
