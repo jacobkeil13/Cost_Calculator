@@ -75,6 +75,7 @@
 					<input
 						{disabled}
 						on:input={handleInput}
+						on:focusout={handleEmpty}
 						type="number"
 						name="value"
 						{min}

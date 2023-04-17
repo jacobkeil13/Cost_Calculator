@@ -19,7 +19,7 @@
 
 	function handleEmpty(e) {
 		if (e.target.value.length <= 0) {
-			value = min;
+			value = parseInt(min);
 		}
 	}
 </script>

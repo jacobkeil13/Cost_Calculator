@@ -3,6 +3,30 @@
 	import { student_information } from '../../store';
 
 	export let value;
+
+	function handleHoursInput(e) {
+		if (parseInt(e.target.value) === null || parseInt(e.target.value) < 0) {
+			value.hours = 0;
+		}
+	}
+
+	function handleAmountInput(e) {
+		if (parseInt(e.target.value) === null || parseInt(e.target.value) < 0) {
+			value.amount = 0;
+		}
+	}
+
+	function handleHoursEmpty(e) {
+		if (e.target.value.length <= 0) {
+			value.hours = 0;
+		}
+	}
+
+	function handleAmountEmpty(e) {
+		if (e.target.value.length <= 0) {
+			value.amount = 0;
+		}
+	}
 </script>
 
 <div class="form-control">
@@ -14,6 +38,8 @@
 			<div class="flex">
 				<label for="per_hour" class="text-xl">$</label>
 				<input
+					on:input={handleHoursInput}
+					on:focusout={handleHoursEmpty}
 					min="0"
 					type="number"
 					name="per_hour"
@@ -25,6 +51,8 @@
 		</div>
 		<div class="flex flex-col">
 			<input
+				on:input={handleAmountInput}
+				on:focusout={handleAmountEmpty}
 				min="0"
 				type="number"
 				name="hours_per_week"
