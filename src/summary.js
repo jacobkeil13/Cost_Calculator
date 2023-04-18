@@ -418,9 +418,8 @@ export const review_data = derived(
 					},
 					value: function () {
 						try {
-							return $dropdownOptions.funding.gg_scholarship.gg_options.find(
-								(i) => i.value === $funding.green_gold_award
-							).label;
+							if ($funding.green_gold_award === 'nothing') return "None Picked";
+							return searchObj($dropdownOptions.funding.gg_scholarship.gg_options, $funding.green_gold_award)
 						} catch (error) {
 							return "None picked"
 						}

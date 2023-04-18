@@ -65,7 +65,7 @@
 		{#if ggEligible && $funding.has_green_gold === 'nothing'}
 			<ErrorItem text="Choice of Green & Gold or Sholarship not selected." section="Funding" />
 		{/if}
-		{#if ggEligible && $funding.has_green_gold !== 'nothing' && $funding.green_gold_award === 'nothing'}
+		{#if ggEligible && $funding.has_green_gold === 'gg_yes' && $funding.green_gold_award === 'nothing'}
 			<ErrorItem text="Green & Gold or Scholarship award needs to be selected." section="Funding" />
 		{/if}
 	{/if}

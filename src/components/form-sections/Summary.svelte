@@ -369,15 +369,19 @@
 				style={$review_data.funding[2].style()}
 			/>
 		{/if}
-		<ReviewRow
-			question={$review_data.funding[3].question[flexWidth]}
-			value={$review_data.funding[3].value()}
-			style={$review_data.funding[3].style()}
-		/>
-		{#if $funding.has_fl_prepaid === 'prepaid_no' && ($student_information.tuition === 'out_of_state' || $student_information.tuition === 'international') && $student_information.level === 'undergraduate'}
+		{#if $student_information.tuition === 'in_state'}
+			<ReviewRow
+				question={$review_data.funding[3].question[flexWidth]}
+				value={$review_data.funding[3].value()}
+				style={$review_data.funding[3].style()}
+			/>
+		{/if}
+		{#if $funding.has_fl_prepaid === 'prepaid_no' && ($student_information.tuition === 'out_of_state' || $student_information.tuition === 'international') && $student_information.level === 'undergraduate' && $funding.has_green_gold === 'gg_yes'}
 			<ReviewRow
 				question={$review_data.funding[4].question[flexWidth]}
-				value={$review_data.funding[4].value()}
+				value={$review_data.funding[4].value() === 'None Picked'
+					? 'No'
+					: $review_data.funding[4].value()}
 				style={$review_data.funding[4].style()}
 			/>
 		{/if}
