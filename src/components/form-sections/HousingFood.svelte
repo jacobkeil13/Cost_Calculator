@@ -37,7 +37,7 @@
 			bind:value={calc_data.on_campus.housing}
 		/>
 		<SelectionField
-			label="What Living Learning Community are you a part of?"
+			label="What Living Learning Community (LLC) are you a part of?"
 			options={housingFood.llc[$student_information.campus]}
 			bind:value={calc_data.on_campus.llc}
 		/>
@@ -48,7 +48,7 @@
 			label="How much are you paying for rent & utilities?"
 			bind:value={calc_data.off_campus_parents.utility_fees}
 			min="0"
-			max="1000"
+			max="2000"
 			step="25"
 			concurrency="per month"
 		/>

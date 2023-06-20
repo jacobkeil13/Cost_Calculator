@@ -4,7 +4,8 @@
 		student_information,
 		tuition_fees,
 		housing_food,
-		funding
+		funding,
+		transportation
 	} from '../store.js';
 	import { steps } from '../constants.js';
 	import ErrorItem from './form-display/ErrorItem.svelte';
@@ -43,6 +44,9 @@
 		{/if}
 		{#if $housing_food.food_plan === 'nothing' && $student_information.campus !== 'sarasota'}
 			<ErrorItem text="You have not chosen a food plan." section="Housing & Food" />
+		{/if}
+		{#if $transportation.has_vehicle === 'vehicle_yes' && $transportation.parking_pass === 'nothing'}
+			<ErrorItem text="You need to choose a parking pass since you are bringing a vehicle." section="Transportation" />
 		{/if}
 		{#if $funding.has_fl_prepaid === 'nothing'}
 			<ErrorItem text="Florida prepaid option has not been selected." section="Funding" />

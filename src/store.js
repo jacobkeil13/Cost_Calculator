@@ -1,14 +1,14 @@
 import { derived, writable } from 'svelte/store';
 import {
 	static_vars,
-	enums,
 	semester_months,
 	florida_prepaid_cost,
 	housing_cost,
 	llc_cost,
 	bright_futures_cost,
 	green_gold_cost,
-	food_plan_cost
+	food_plan_cost,
+	parking_permits
 } from './constants';
 export const current_step = writable(0);
 
@@ -53,7 +53,7 @@ export const books_supplies = writable({
 
 export const transportation = writable({
 	has_vehicle: 'vehicle_no',
-	parking_pass: 0,
+	parking_pass: 'nothing',
 	car_payment: 0,
 	insurance: 0,
 	gas: 0,
@@ -177,19 +177,19 @@ export let books_supplies_total = derived([books_supplies], ([$books_supplies]) 
 });
 
 export let transportation_total = derived(
-	[transportation, student_information, semester_months],
-	([$transportation, $student_information, $semester_months]) => {
+	[transportation, student_information, semester_months, parking_permits],
+	([$transportation, $student_information, $semester_months, $parking_permits]) => {
 		let transportation = 0;
 
 		// If the student is bringing a vehicle we add all related fields to the total.
 		if ($transportation.has_vehicle === 'vehicle_yes') {
 			let tp = $transportation;
 			transportation =
-				tp.parking_pass +
+				tp.parking_pass === "nothing" ? 0 : $parking_permits[tp.parking_pass] +
 				(tp.car_payment + tp.insurance + tp.gas + tp.maintenance) *
 				$semester_months[$student_information.semester];
 		}
-		// If the student is not bringing a vehicle we only add the other trnasport field
+		// If the student is not bringing a vehicle we only add the other transport field
 		// to the total.
 		else if ($transportation.has_vehicle === 'vehicle_no') {
 			transportation =

@@ -1,5 +1,5 @@
 <script>
-	import { student_information, housing_food, validated } from '../../store.js';
+	import { student_information, housing_food, transportation, validated } from '../../store.js';
 	import { dropdownOptions } from '../../constants.js';
 	import { fly } from 'svelte/transition';
 	import SelectionField from '../form-inputs/SelectionField.svelte';
@@ -7,6 +7,7 @@
 	let studentInfo = $dropdownOptions.student_information;
 	let calc_data = $student_information;
 	let hfd = $housing_food;
+	let trn = $transportation;
 
 	$: {
 		student_information.set(calc_data);
@@ -23,7 +24,9 @@
 		hfd.on_campus.housing = 'nothing';
 		hfd.food_plan = 'nothing';
 		hfd.on_campus.llc = 'nothing';
+		trn.parking_pass = 'nothing';
 		hfd = hfd;
+		trn = trn;
 	}
 
 	document.addEventListener('click', (e) => {

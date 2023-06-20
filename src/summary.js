@@ -254,7 +254,7 @@ export const review_data = derived(
 						desktop: 'Are you bringing a vehicle to campus?'
 					},
 					value:
-						$dropdownOptions.transportation.find((i) => i.value === $transportation.has_vehicle)
+						$dropdownOptions.transportation.has_car.find((i) => i.value === $transportation.has_vehicle)
 							.label || 'None picked',
 					style: function () {
 						return this.value === 'None picked' ? 'text-red-700' : '';
@@ -263,9 +263,14 @@ export const review_data = derived(
 				{
 					question: {
 						mobile: 'Parking pass:',
-						desktop: 'How much is your parking pass?'
+						desktop: 'Which parking pass do you have?'
 					},
-					value: '$' + $transportation.parking_pass + '/sem'
+					value:
+						$dropdownOptions.transportation.parking_permits[$student_information.campus].find((i) => i.value === $transportation.parking_pass)
+							?.label || 'None picked',
+					style: function () {
+						return this.value === 'None picked' ? 'text-red-700' : '';
+					}
 				},
 				{
 					question: {

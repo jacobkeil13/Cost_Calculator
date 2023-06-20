@@ -149,31 +149,29 @@ export const green_gold_cost = readable({
 
 export const food_plan_cost = readable({
 	nothing: 0,
-	ss_none: 0,
 	no_food_plan: 0,
-	open_access: 2275,
-	any_15: 2150,
-	bull_175: 1900,
-	bull_60: 925,
-	bull_32: 620,
-	dd_300: 300,
-	dd_500: 500,
-	dd_1000: 1000,
+	open_access_vib: 2650,
+	open_access_seven: 2545,
+	open_access_summer_a_b: 1075,
+	open_access_summer_c: 1655,
+	open_access_summer_ab: 2150,
+	any_14: 2350,
+	bull_150_dd_450: 1948,
+	bull_150_dd_300: 1813,
+	bull_150_dd_150: 1673,
+	bull_80_dd_450: 1265,
+	bull_80_dd_300: 1120,
+	bull_80_dd_150: 975,
+	bull_50_dd_450: 975,
+	bull_50_dd_300: 840,
+	bull_50_dd_150: 695,
+	bull_summer: 919,
 	gold_plan: 248,
 	green_plan: 157,
 	rocky_plan: 94,
 	gdd_100: 100,
 	gdd_300: 300,
-	gdd_500: 500,
-	sp_open_access: 2275,
-	sp_any_15: 2150,
-	sp_bull_175: 1900,
-	open_access_a_b: 1075,
-	open_access_ab_abc: 2150,
-	open_access_c_ac: 1655,
-	bull_block_75: 919,
-	ace_b2b_open: 949,
-	sss_open: 1140
+	gdd_500: 500
 });
 
 export const llc_cost = readable({
@@ -184,6 +182,16 @@ export const llc_cost = readable({
 	education: 125,
 	bull_business: 225,
 	pre_nursing: 225
+});
+
+export const parking_permits = readable({
+	nothing: 0,
+	tampa_student_semester: 113,
+	tampa_nonstudent_semester: 91,
+	tampa_parknride_annual: 59,
+	st_pete_student_semester: 118,
+	st_pete_nonstudent_semester: 88,
+	sarasota_student_semester: 50,
 });
 
 export const steps = readable([
@@ -429,16 +437,20 @@ export const dropdownOptions = readable({
 			tampa: {
 				fall: {
 					'First Time': [
-						{ value: 'open_access', label: 'Open Access', cost: '2275' },
-						{ value: 'any_15', label: 'Any 15', cost: '2150' },
-						{ value: 'bull_175', label: 'BULL Block 175', cost: '1900' },
-						{ value: 'bull_60', label: 'BULL Block 60', cost: '925' },
-						{ value: 'bull_32', label: 'BULL Block 32', cost: '620' }
+						{ value: 'open_access_vib', label: 'Open Access VIB', cost: '2650' },
+						{ value: 'open_access_seven', label: 'Open Access', cost: '2545' },
+						{ value: 'any_14', label: 'Any 14', cost: '2350' },
 					],
-					'Dining Dollars': [
-						{ value: 'dd_300', label: 'Dining Dollars 300', cost: '300' },
-						{ value: 'dd_500', label: 'Dining Dollars 500', cost: '500' },
-						{ value: 'dd_1000', label: 'Dining Dollars 1000', cost: '1000' }
+					'Bull Block': [
+						{ value: 'bull_150_dd_450', label: 'Bull Block 150 (450 DD)', cost: '1948' },
+						{ value: 'bull_150_dd_300', label: 'Bull Block 150 (300 DD)', cost: '1813' },
+						{ value: 'bull_150_dd_150', label: 'Bull Block 150 (150 DD)', cost: '1673' },
+						{ value: 'bull_80_dd_450', label: 'Bull Block 80 (450 DD)', cost: '1265' },
+						{ value: 'bull_80_dd_300', label: 'Bull Block 80 (300 DD)', cost: '1120' },
+						{ value: 'bull_80_dd_150', label: 'Bull Block 80 (150 DD)', cost: '975' },
+						{ value: 'bull_50_dd_450', label: 'Bull Block 50 (450 DD)', cost: '975' },
+						{ value: 'bull_50_dd_300', label: 'Bull Block 50 (300 DD)', cost: '840' },
+						{ value: 'bull_50_dd_150', label: 'Bull Block 50 (150 DD)', cost: '695' }
 					],
 					'Graduate Students': [
 						{ value: 'gold_plan', label: 'Gold Plan ', cost: '248' },
@@ -453,16 +465,20 @@ export const dropdownOptions = readable({
 				},
 				spring: {
 					'First Time': [
-						{ value: 'open_access', label: 'Open Access', cost: '2275' },
-						{ value: 'any_15', label: 'Any 15', cost: '2150' },
-						{ value: 'bull_175', label: 'BULL Block 175', cost: '1900' },
-						{ value: 'bull_60', label: 'BULL Block 60', cost: '925' },
-						{ value: 'bull_32', label: 'BULL Block 32', cost: '620' }
+						{ value: 'open_access_vib', label: 'Open Access VIB', cost: '2650' },
+						{ value: 'open_access_seven', label: 'Open Access', cost: '2545' },
+						{ value: 'any_14', label: 'Any 14', cost: '2350' },
 					],
-					'Dining Dollars': [
-						{ value: 'dd_300', label: 'Dining Dollars 300', cost: '300' },
-						{ value: 'dd_500', label: 'Dining Dollars 500', cost: '500' },
-						{ value: 'dd_1000', label: 'Dining Dollars 1000', cost: '1000' }
+					'Bull Block': [
+						{ value: 'bull_150_dd_450', label: 'Bull Block 150 (450 DD)', cost: '1948' },
+						{ value: 'bull_150_dd_300', label: 'Bull Block 150 (300 DD)', cost: '1813' },
+						{ value: 'bull_150_dd_150', label: 'Bull Block 150 (150 DD)', cost: '1673' },
+						{ value: 'bull_80_dd_450', label: 'Bull Block 80 (450 DD)', cost: '1265' },
+						{ value: 'bull_80_dd_300', label: 'Bull Block 80 (300 DD)', cost: '1120' },
+						{ value: 'bull_80_dd_150', label: 'Bull Block 80 (150 DD)', cost: '975' },
+						{ value: 'bull_50_dd_450', label: 'Bull Block 50 (450 DD)', cost: '975' },
+						{ value: 'bull_50_dd_300', label: 'Bull Block 50 (300 DD)', cost: '840' },
+						{ value: 'bull_50_dd_150', label: 'Bull Block 50 (150 DD)', cost: '695' }
 					],
 					'Graduate Students': [
 						{ value: 'gold_plan', label: 'Gold Plan ', cost: '248' },
@@ -477,90 +493,146 @@ export const dropdownOptions = readable({
 				},
 				summer_a: {
 					'First Time': [
-						{ value: 'open_access_a_b', label: 'Open Access', cost: '1075' },
-						{ value: 'bull_block_75', label: 'BULL Block 75', cost: '919' },
+						{ value: 'open_access_summer_a_b', label: 'Summer Open Access', cost: '1075' },
+						{ value: 'bull_summer', label: 'BULL Block 75', cost: '919' }
 					]
 				},
 				summer_b: {
 					'First Time': [
-						{ value: 'open_access_a_b', label: 'Open Access', cost: '1075' },
-						{ value: 'bull_block_75', label: 'BULL Block 75', cost: '919' },
-						{ value: 'ace_b2b_open', label: 'ACE & B2B Open Access', cost: '949' },
-						{ value: 'sss_open', label: 'SSS Open Access', cost: '1140' }
+						{ value: 'open_access_summer_a_b', label: 'Summer Open Access', cost: '1075' },
+						{ value: 'bull_summer', label: 'BULL Block 75', cost: '919' }
 					]
 				},
 				summer_bc: {
 					'First Time': [
-						{ value: 'open_access_c_ac', label: 'Open Access', cost: '1655' },
-						{ value: 'bull_block_75', label: 'BULL Block 75', cost: '919' },
+						{ value: 'open_access_summer_c', label: 'Summer Open Access', cost: '1655' },
+						{ value: 'bull_summer', label: 'BULL Block 75', cost: '919' },
 					]
 				},
 				summer_ab_abc: {
 					'First Time': [
-						{ value: 'open_access_ab_abc', label: 'Open Access', cost: '2150' },
-						{ value: 'bull_block_75', label: 'BULL Block 75', cost: '919' },
+						{ value: 'open_access_summer_ab', label: 'Summer Open Access', cost: '2150' },
+						{ value: 'bull_summer', label: 'BULL Block 75', cost: '919' },
 					]
 				},
 				summer_c_ac: {
 					'First Time': [
-						{ value: 'open_access_c_ac', label: 'Open Access', cost: '1655' },
-						{ value: 'bull_block_75', label: 'BULL Block 75', cost: '919' },
+						{ value: 'open_access_summer_c', label: 'Summer Open Access', cost: '1655' },
+						{ value: 'bull_summer', label: 'BULL Block 75', cost: '919' },
 					]
 				}
 			},
 			st_pete: {
 				fall: {
 					'First Time': [
-						{ value: 'sp_open_access', label: 'Open Access', cost: '2275' },
-						{ value: 'sp_any_15', label: 'Any 15', cost: '2150' },
-						{ value: 'sp_bull_175', label: 'BULL Block 175', cost: '1900' }
+						{ value: 'open_access_vib', label: 'Open Access VIB', cost: '2650' },
+						{ value: 'open_access_seven', label: 'Open Access', cost: '2545' },
+						{ value: 'any_14', label: 'Any 14', cost: '2350' },
+					],
+					'Bull Block': [
+						{ value: 'bull_150_dd_450', label: 'Bull Block 150 (450 DD)', cost: '1948' },
+						{ value: 'bull_150_dd_300', label: 'Bull Block 150 (300 DD)', cost: '1813' },
+						{ value: 'bull_150_dd_150', label: 'Bull Block 150 (150 DD)', cost: '1673' },
+						{ value: 'bull_80_dd_450', label: 'Bull Block 80 (450 DD)', cost: '1265' },
+						{ value: 'bull_80_dd_300', label: 'Bull Block 80 (300 DD)', cost: '1120' },
+						{ value: 'bull_80_dd_150', label: 'Bull Block 80 (150 DD)', cost: '975' },
+						{ value: 'bull_50_dd_450', label: 'Bull Block 50 (450 DD)', cost: '975' },
+						{ value: 'bull_50_dd_300', label: 'Bull Block 50 (300 DD)', cost: '840' },
+						{ value: 'bull_50_dd_150', label: 'Bull Block 50 (150 DD)', cost: '695' }
+					],
+					'Graduate Students': [
+						{ value: 'gold_plan', label: 'Gold Plan ', cost: '248' },
+						{ value: 'green_plan', label: 'Green Plan', cost: '157' },
+						{ value: 'rocky_plan', label: 'Rocky Plan', cost: '94' }
+					],
+					'Graduate Dining Dollars': [
+						{ value: 'gdd_100', label: 'DD 100', cost: '100' },
+						{ value: 'gdd_300', label: 'DD 300', cost: '300' },
+						{ value: 'gdd_500', label: 'DD 500', cost: '500' }
 					]
 				},
 				spring: {
 					'First Time': [
-						{ value: 'sp_open_access', label: 'Open Access', cost: '2275' },
-						{ value: 'sp_any_15', label: 'Any 15', cost: '2150' },
-						{ value: 'sp_bull_175', label: 'BULL Block 175', cost: '1900' }
+						{ value: 'open_access_vib', label: 'Open Access VIB', cost: '2650' },
+						{ value: 'open_access_seven', label: 'Open Access', cost: '2545' },
+						{ value: 'any_14', label: 'Any 14', cost: '2350' },
+					],
+					'Bull Block': [
+						{ value: 'bull_150_dd_450', label: 'Bull Block 150 (450 DD)', cost: '1948' },
+						{ value: 'bull_150_dd_300', label: 'Bull Block 150 (300 DD)', cost: '1813' },
+						{ value: 'bull_150_dd_150', label: 'Bull Block 150 (150 DD)', cost: '1673' },
+						{ value: 'bull_80_dd_450', label: 'Bull Block 80 (450 DD)', cost: '1265' },
+						{ value: 'bull_80_dd_300', label: 'Bull Block 80 (300 DD)', cost: '1120' },
+						{ value: 'bull_80_dd_150', label: 'Bull Block 80 (150 DD)', cost: '975' },
+						{ value: 'bull_50_dd_450', label: 'Bull Block 50 (450 DD)', cost: '975' },
+						{ value: 'bull_50_dd_300', label: 'Bull Block 50 (300 DD)', cost: '840' },
+						{ value: 'bull_50_dd_150', label: 'Bull Block 50 (150 DD)', cost: '695' }
+					],
+					'Graduate Students': [
+						{ value: 'gold_plan', label: 'Gold Plan ', cost: '248' },
+						{ value: 'green_plan', label: 'Green Plan', cost: '157' },
+						{ value: 'rocky_plan', label: 'Rocky Plan', cost: '94' }
+					],
+					'Graduate Dining Dollars': [
+						{ value: 'gdd_100', label: 'DD 100', cost: '100' },
+						{ value: 'gdd_300', label: 'DD 300', cost: '300' },
+						{ value: 'gdd_500', label: 'DD 500', cost: '500' }
 					]
 				},
 				summer_a: {
 					'First Time': [
-						{ value: 'open_access_a_b', label: 'Open Access', cost: '1075' },
-						{ value: 'bull_block_75', label: 'BULL Block 75', cost: '919' }
+						{ value: 'open_access_summer_a_b', label: 'Summer Open Access', cost: '1075' },
+						{ value: 'bull_summer', label: 'BULL Block 75', cost: '919' }
 					]
 				},
 				summer_b: {
 					'First Time': [
-						{ value: 'open_access_a_b', label: 'Open Access', cost: '1075' },
-						{ value: 'bull_block_75', label: 'BULL Block 75', cost: '919' }
+						{ value: 'open_access_summer_a_b', label: 'Summer Open Access', cost: '1075' },
+						{ value: 'bull_summer', label: 'BULL Block 75', cost: '919' }
 					]
 				},
 				summer_bc: {
 					'First Time': [
-						{ value: 'open_access_c_ac', label: 'Open Access', cost: '1655' },
-						{ value: 'bull_block_75', label: 'BULL Block 75', cost: '919' }
+						{ value: 'open_access_summer_c', label: 'Summer Open Access', cost: '1655' },
+						{ value: 'bull_summer', label: 'BULL Block 75', cost: '919' },
 					]
 				},
 				summer_ab_abc: {
 					'First Time': [
-						{ value: 'open_access_ab_abc', label: 'Open Access', cost: '2150' },
-						{ value: 'bull_block_75', label: 'BULL Block 75', cost: '919' }
+						{ value: 'open_access_summer_ab', label: 'Summer Open Access', cost: '2150' },
+						{ value: 'bull_summer', label: 'BULL Block 75', cost: '919' },
 					]
 				},
 				summer_c_ac: {
 					'First Time': [
-						{ value: 'open_access_c_ac', label: 'Open Access', cost: '1655' },
-						{ value: 'bull_block_75', label: 'BULL Block 75', cost: '919' }
+						{ value: 'open_access_summer_c', label: 'Summer Open Access', cost: '1655' },
+						{ value: 'bull_summer', label: 'BULL Block 75', cost: '919' },
 					]
 				}
 			},
 			sarasota: {}
 		}
 	},
-	transportation: [
-		{ value: 'vehicle_no', label: 'No' },
-		{ value: 'vehicle_yes', label: 'Yes' }
-	],
+	transportation: {
+		has_car: [
+				{ value: 'vehicle_no', label: 'No' },
+				{ value: 'vehicle_yes', label: 'Yes' }
+		],
+		parking_permits: {
+			tampa: [
+				{ value: 'tampa_student_semester', label: 'Resident Student - Semester' },
+				{ value: 'tampa_nonstudent_semester', label: 'Non Resident Student - Semester' },
+				{ value: 'tampa_parknride_annual', label: 'Park-n-Ride - Annual' }
+			],
+			st_pete: [
+				{ value: 'st_pete_student_semester', label: 'Resident Student - Semester' },
+				{ value: 'st_pete_nonstudent_semester', label: 'Non Resident Student - Semester' },
+			],
+			sarasota: [
+				{ value: 'sarasota_student_semester', label: 'Student Permit - Semester' },
+			]
+		}
+	},
 	funding: {
 		fl_prepaid: [
 			{ value: 'prepaid_no', label: 'No' },

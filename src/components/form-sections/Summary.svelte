@@ -266,12 +266,11 @@
 			style={$review_data.transportation[0].style()}
 		/>
 		{#if $transportation.has_vehicle === 'vehicle_yes'}
-			{#if parseInt($review_data.transportation[1].value.replace('$', '').replace('/mo', '')) != 0}
-				<ReviewRow
-					question={$review_data.transportation[1].question[flexWidth]}
-					value={$review_data.transportation[1].value}
-				/>
-			{/if}
+			<ReviewRow
+				question={$review_data.transportation[1].question[flexWidth]}
+				value={$review_data.transportation[1].value}
+				style={$review_data.transportation[1].style()}
+			/>
 			{#if parseInt($review_data.transportation[2].value.replace('$', '').replace('/mo', '')) != 0}
 				<ReviewRow
 					question={$review_data.transportation[2].question[flexWidth]}
@@ -451,19 +450,19 @@
 	{#if $student_information.semester === 'spring' || $student_information.semester === 'fall'}
 		<ReviewSection
 			title="Looking ahead..."
-			alt_text="Values are calculated without personal and college funding."
+			alt_text="Values are calculated without transportation, personal, and college funding."
 		>
 			<ReviewRow
 				question="Estimated costs for Fall and Spring:"
-				value={roundDollarSign($total + $funding_total, 2)}
+				value={roundDollarSign($total + $funding_total - $transportation_total, 2)}
 			/>
 			<ReviewRow
 				question="Estimated costs for two years:"
-				value={roundDollarSign($total + $funding_total, 4)}
+				value={roundDollarSign($total + $funding_total - $transportation_total, 4)}
 			/>
 			<ReviewRow
 				question="Estimated costs for four years:"
-				value={roundDollarSign($total + $funding_total, 8)}
+				value={roundDollarSign($total + $funding_total - $transportation_total, 8)}
 			/>
 		</ReviewSection>
 	{/if}
